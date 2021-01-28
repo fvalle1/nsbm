@@ -14,8 +14,47 @@ class trisbm():
     def load_graph(self, filename="graph.xml.gz"):
         self.g = gt.load_graph(filename)
         
-    def fit(self, n_init = 5, verbose=True):
+        
+    def make_graph(self, df, get_kind):
+        """
+        :param df: DataFrame with words on index and texts on columns
+        :param get_kind: function that returns 1 or 2 given a word
+        """
+        self.g = gt.Graph(directed=False)
+        name = self.g.vp["name"] = self.g.new_vp("string")
+        kind = self.g.vp["kind"] = self.g.new_vp("int")
+        weight = self.g.ep["count"] = self.g.new_ep("float")
+        
+        for doc in df.columns:
+            d = self.g.add_vertex()
+            name[d] = doc
+            kind[d] = 0
+            
+        for word in df:
+            w = self.g.add_vertex()
+            name[w] = word
+            kind[w] = get_kind(word)
+            
+        D = df.shape[1]
+        
+        for i_doc, doc in enumerate(df.columns):
+            text = df[doc]
+            self.g.add_edge_list([(i_doc,D + x[0][0],np.log2(1+x[1])) for x in zip(enumerate(df.index),text)], eprops=[weight])
 
+        filter_edges = self.g.new_edge_property("bool")
+        for e in self.g.edges():
+            filter_edges[e] = weight[e]>0
+
+        self.g.set_edge_filter(filter_edges)
+        self.g.purge_edges()
+        self.g.clear_filters()
+        
+    def fit(self, n_init = 5, verbose=True):
+        """
+        Fit using minimize_nested_blockmodel_dl
+        
+        :param n_init:
+        """
         
         clabel = self.g.vp['kind']
         state_args = {'clabel': clabel, 'pclabel': clabel}
