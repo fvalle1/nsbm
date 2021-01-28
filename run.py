@@ -1,5 +1,10 @@
+import sys
+sys.path.append("/home/jovyan/")
 from trisbm import trisbm
 import numpy as np
+import os
+
+os.chdir("/home/jovyan/work/")
 
 model = trisbm()
 model.load_graph("graph.xml.gz")    

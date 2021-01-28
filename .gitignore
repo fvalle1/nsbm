@@ -3,4 +3,4 @@
 *.pdf
 
 __pycache__/
-.ipynbcheckpoints/
+.ipynb_checkpoints
