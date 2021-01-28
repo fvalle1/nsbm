@@ -1,0 +1,6 @@
+*.pkl
+*.gz
+*.pdf
+
+__pycache__/
+.ipynbcheckpoints/
