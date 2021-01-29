@@ -314,15 +314,15 @@ class trisbm():
             df.iloc[:V_t, t] = list_w
         df = df.dropna(how='all', axis=0)
         if format == 'csv':
-            fname_save = 'topsbm_level_%s_topics.csv' % (l)
+            fname_save = 'trisbm_level_%s_topics.csv' % (l)
             filename = os.path.join(path_save, fname_save)
             df.to_csv(filename, index=False, na_rep='')
         elif format == 'html':
-            fname_save = 'topsbm_level_%s_topics.html' % (l)
+            fname_save = 'trisbm_level_%s_topics.html' % (l)
             filename = os.path.join(path_save, fname_save)
             df.to_html(filename, index=False, na_rep='')
         elif format == 'tsv':
-            fname_save = 'topsbm_level_%s_topics.tsv' % (l)
+            fname_save = 'trisbm_level_%s_topics.tsv' % (l)
             filename = os.path.join(path_save, fname_save)
             df.to_csv(filename, index=False, na_rep='', sep='\t')
         else:
@@ -338,11 +338,11 @@ class trisbm():
             df.iloc[i_doc, 2:] = [h[1] for h in list_topicdist]
         df = df.dropna(how='all', axis=1)
         if format == 'csv':
-            fname_save = 'topsbm_level_%s_topic-dist.csv' % (l)
+            fname_save = 'trisbm_level_%s_topic-dist.csv' % (l)
             filename = os.path.join(path_save, fname_save)
             df.to_csv(filename, index=False, na_rep='')
         elif format == 'html':
-            fname_save = 'topsbm_level_%s_topic-dist.html' % (l)
+            fname_save = 'trisbm_level_%s_topic-dist.html' % (l)
             filename = os.path.join(path_save, fname_save)
             df.to_html(filename, index=False, na_rep='')
         else:
@@ -363,15 +363,15 @@ class trisbm():
             df.iloc[:V_t, t] = list_w
         df = df.dropna(how='all', axis=0)
         if format == 'csv':
-            fname_save = 'topsbm_level_%s_metadata.csv' % (l)
+            fname_save = 'trisbm_level_%s_metadata.csv' % (l)
             filename = os.path.join(path_save, fname_save)
             df.to_csv(filename, index=False, na_rep='')
         elif format == 'html':
-            fname_save = 'topsbm_level_%s_metadata.html' % (l)
+            fname_save = 'trisbm_level_%s_metadata.html' % (l)
             filename = os.path.join(path_save, fname_save)
             df.to_html(filename, index=False, na_rep='')
         elif format == 'tsv':
-            fname_save = 'topsbm_level_%s_metadata.tsv' % (l)
+            fname_save = 'trisbm_level_%s_metadata.tsv' % (l)
             filename = os.path.join(path_save, fname_save)
             df.to_csv(filename, index=False, na_rep='', sep='\t')
         else:
@@ -387,11 +387,11 @@ class trisbm():
             df.iloc[i_doc, 2:] = [h[1] for h in list_topicdist]
         df = df.dropna(how='all', axis=1)
         if format == 'csv':
-            fname_save = 'topsbm_level_%s_metadatum-dist.csv' % (l)
+            fname_save = 'trisbm_level_%s_metadatum-dist.csv' % (l)
             filename = os.path.join(path_save, fname_save)
             df.to_csv(filename, index=False, na_rep='')
         elif format == 'html':
-            fname_save = 'topsbm_level_%s_metadatum-dist.html' % (l)
+            fname_save = 'trisbm_level_%s_metadatum-dist.html' % (l)
             filename = os.path.join(path_save, fname_save)
             df.to_html(filename, index=False, na_rep='')
         else:
@@ -413,11 +413,11 @@ class trisbm():
             df.iloc[:D_t, t] = list_d
         df = df.dropna(how='all', axis=0)
         if format == 'csv':
-            fname_save = 'topsbm_level_%s_clusters.csv' % (l)
+            fname_save = 'trisbm_level_%s_clusters.csv' % (l)
             filename = os.path.join(path_save, fname_save)
             df.to_csv(filename, index=False, na_rep='')
         elif format == 'html':
-            fname_save = 'topsbm_level_%s_clusters.html' % (l)
+            fname_save = 'trisbm_level_%s_clusters.html' % (l)
             filename = os.path.join(path_save, fname_save)
             df.to_html(filename, index=False, na_rep='')
         else:
@@ -432,11 +432,11 @@ class trisbm():
         pwtw_df = pwtw_df.dropna(how='all', axis=0)
         pwtw_df.replace(np.nan, 0)
         if format == 'csv':
-            fname_save = "topsbm_level_%d_word-dist.csv" % l
+            fname_save = "trisbm_level_%d_word-dist.csv" % l
             filename = os.path.join(path_save, fname_save)
             pwtw_df.to_csv(filename, index=True, header=True, na_rep='')
         elif format == 'html':
-            fname_save = "topsbm_level_%d_word-dist.html" % l
+            fname_save = "trisbm_level_%d_word-dist.html" % l
             filename = os.path.join(path_save, fname_save)
             pwtw_df.to_html(filename, index=True, na_rep='')
         else:
@@ -452,11 +452,11 @@ class trisbm():
         pw_key_tk_df = pw_key_tk_df.dropna(how='all', axis=0)
         pw_key_tk_df.replace(np.nan, 0)
         if format == 'csv':
-            fname_save = "topsbm_level_%d_keyword-dist.csv" % l
+            fname_save = "trisbm_level_%d_keyword-dist.csv" % l
             filename = os.path.join(path_save, fname_save)
             pw_key_tk_df.to_csv(filename, index=True, header=True, na_rep='')
         elif format == 'html':
-            fname_save = "topsbm_level_%d_keyword-dist.html" % l
+            fname_save = "trisbm_level_%d_keyword-dist.html" % l
             filename = os.path.join(path_save, fname_save)
             pw_key_tk_df.to_html(filename, index=True, na_rep='')
         else:
