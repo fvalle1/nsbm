@@ -18,6 +18,8 @@ for _ in range(100):
 
 print("Entropy gain :", 100*(model.state.entropy()-state.entropy())/max([model.state.entropy(),state.entropy()]))    
 
-model.draw(output="network.pdf")
+model.save_data()
 
 model.dump_model("model.pkl")
+
+model.draw(output="network.pdf")
