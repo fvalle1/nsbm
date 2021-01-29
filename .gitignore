@@ -8,3 +8,5 @@ __pycache__/
 *.tsv
 *.png
 *.txt
+mirna/
+*.tar
