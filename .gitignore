@@ -8,3 +8,7 @@ __pycache__/
 *.tsv
 *.png
 *.txt
+mirna/
+sdist/
+trisbm.egg-info
+.DS_Store
