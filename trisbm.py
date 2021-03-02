@@ -63,7 +63,7 @@ class trisbm():
         self.words = df.index[self.g.vp['kind'].a[D:] == 1]
         self.keywords = df.index[self.g.vp['kind'].a[D:] == 2]
         
-    def fit(self, n_init = 5, verbose=True):
+    def fit(self, n_init = 5, verbose=True, *args, **kwargs):
         """
         Fit using minimize_nested_blockmodel_dl
         
@@ -92,7 +92,9 @@ class trisbm():
                                               }
                                           }
                                       },
-                                    verbose=verbose)
+                                    verbose=verbose,
+                                    *args, 
+                                    **kwargs)
             
             entropy = state.entropy()
             if entropy < min_entropy:
