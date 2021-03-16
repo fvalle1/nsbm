@@ -63,13 +63,15 @@ class trisbm():
         self.words = df.index[self.g.vp['kind'].a[D:] == 1]
         self.keywords = df.index[self.g.vp['kind'].a[D:] == 2]
         
-    def fit(self, n_init = 5, verbose=True, *args, **kwargs):
+    def fit(self, n_init = 5, verbose=True, deg_corr=True, overlap=False, parallel=True, *args, **kwargs):
         """
         Fit using minimize_nested_blockmodel_dl
         
         :param n_init:
         """
         
+        sequential = not parallel
+
         clabel = self.g.vp['kind']
         state_args = {'clabel': clabel, 'pclabel': clabel}
         state_args["eweight"] = self.g.ep.count
@@ -77,18 +79,18 @@ class trisbm():
         best_state = None
         for _ in range(n_init):
             state = gt.minimize_nested_blockmodel_dl(self.g, 
-                                    deg_corr=True,
-                                    overlap=False,
+                                    deg_corr = deg_corr,
+                                    overlap = overlap,
                                     state_args=state_args,
-                                    mcmc_args={'sequential': False},
-                                    mcmc_equilibrate_args={'mcmc_args': {'sequential': False}},
+                                    mcmc_args={'sequential': sequential},
+                                    mcmc_equilibrate_args={'mcmc_args': {'sequential': sequential}},
                                     mcmc_multilevel_args={
                                           'mcmc_equilibrate_args': {
-                                              'mcmc_args': {'sequential': False}
+                                              'mcmc_args': {'sequential': sequential}
                                           },
                                           'anneal_args': {
                                               'mcmc_equilibrate_args': {
-                                                   'mcmc_args': {'sequential': False}
+                                                   'mcmc_args': {'sequential': sequential}
                                               }
                                           }
                                       },
