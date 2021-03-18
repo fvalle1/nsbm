@@ -498,6 +498,9 @@ class trisbm():
             plt.matshow(e.todense())
             plt.savefig("mat_%d.png" % i)
         self.print_summary()
+        
+    def get_mdl(self):
+        return self.mdl
             
     def _get_shape(self):
         """
