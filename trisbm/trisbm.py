@@ -21,6 +21,7 @@ class trisbm():
     def save_graph(self, filename="graph.xml.gz")->None:
         """
         Save the graph
+
         :param filename: name of the graph stored
         """
         self.g.save(filename)
@@ -86,8 +87,8 @@ class trisbm():
         :param deg_corr: use deg corrected model
         :param overlap: use overlapping model
         :param parallel: perform parallel moves
-        :param  *args: positional arguments to pass to gt.minimize_nested_blockmodel_dl
-        :param  **kwargs: keywords arguments to pass to gt.minimize_nested_blockmodel_dl
+        :param  \*args: positional arguments to pass to gt.minimize_nested_blockmodel_dl
+        :param  \*\*kwargs: keywords arguments to pass to gt.minimize_nested_blockmodel_dl
         """
         
         sequential = not parallel
@@ -277,7 +278,8 @@ class trisbm():
     def topics(self, l=0, n=10):
         '''
         get the n most common words for each word-group in level l.
-        return tuples (word,P(w|tw))
+        
+        :return: tuples (word,P(w|tw))
         '''
         dict_groups = self.groups[l]
         Bw = dict_groups['Bw']
@@ -310,7 +312,8 @@ class trisbm():
     def metadata(self, l=0, n=10):
         '''
         get the n most common keywords for each keyword-group in level l.
-        return tuples (keyword,P(kw|tk))
+        
+        :return: tuples (keyword,P(kw|tk))
         '''
         dict_groups = self.groups[l]
         Bw = dict_groups['Bk']

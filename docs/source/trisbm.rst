@@ -1,7 +1,9 @@
 triSBM
 ======================
 
-.. automodule:: trisbm
+.. automodule:: trisbm.trisbm    
 .. autoclass:: trisbm.trisbm.trisbm
-    :members:
+    :members: fit
     :private-members:
+    :inherited-members:
+    :undoc-members:
