@@ -11,7 +11,6 @@ Welcome to trisbm's documentation!
    :caption: Contents:
 
 
-
 Indices and tables
 ==================
 
@@ -19,6 +18,11 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
-.. automodule:: trisbm
-.. autoclass:: trisbm.trisbm
-    :members:
+
+trisbm module
+==================
+
+.. toctree::
+  :maxdepth: 2
+
+  trisbm
