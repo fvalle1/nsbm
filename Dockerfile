@@ -1,8 +1,7 @@
-FROM jupyter/datascience-notebook
+FROM jupyter/datascience-notebook:latest
 
 RUN conda install -c conda-forge mamba -y
 RUN mamba install graph-tool -y
-
 
 WORKDIR /home/jovyan/work
 COPY run.py /home/jovyan/.

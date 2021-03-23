@@ -12,6 +12,4 @@ mirna/
 sdist/
 trisbm.egg-info
 .DS_Store
-*.tara
-wikipedia/
-wikipedia_key/
+*.tar

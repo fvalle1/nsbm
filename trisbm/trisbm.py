@@ -6,6 +6,9 @@ import os, sys
 import matplotlib.pyplot as plt
 
 class trisbm():
+    """
+    Class to run trisbm
+    """
     def __init__(self):
         self.g = gt.Graph(directed=False)
         self.state = None
@@ -15,18 +18,29 @@ class trisbm():
         self.keywords = None
         self.groups = []
         
-    def save_graph(self, filename="graph.xml.gz"):
+    def save_graph(self, filename="graph.xml.gz")->None:
+        """
+        Save the graph
+        :param filename: name of the graph stored
+        """
         self.g.save(filename)
         
-    def load_graph(self, filename="graph.xml.gz"):
+    def load_graph(self, filename="graph.xml.gz")->None:
+        """
+        Load a presaved graph
+
+        :param filename: graph to load
+        """
         self.g = gt.load_graph(filename)
         self.documents = [self.g.vp['name'][v] for v in self.g.vertices() if self.g.vp['kind'][v] == 0]
         self.words = [self.g.vp['name'][v] for v in self.g.vertices() if self.g.vp['kind'][v] == 1]
         self.keywords = [self.g.vp['name'][v] for v in self.g.vertices() if self.g.vp['kind'][v] == 2]
         
         
-    def make_graph(self, df, get_kind):
+    def make_graph(self, df: pd.DataFrame, get_kind)->None:
         """
+        Create a graph from a pandas dataframe
+
         :param df: DataFrame with words on index and texts on columns
         :param get_kind: function that returns 1 or 2 given a word
         """
@@ -63,11 +77,17 @@ class trisbm():
         self.words = df.index[self.g.vp['kind'].a[D:] == 1]
         self.keywords = df.index[self.g.vp['kind'].a[D:] == 2]
         
-    def fit(self, n_init = 5, verbose=True, deg_corr=True, overlap=False, parallel=True, *args, **kwargs):
+    def fit(self, n_init = 5, verbose=True, deg_corr=True, overlap=False, parallel=True, *args, **kwargs) -> None:
         """
         Fit using minimize_nested_blockmodel_dl
         
-        :param n_init:
+        :param n_init: number of initialisation. The best will be kept
+        :param verbose: Print output
+        :param deg_corr: use deg corrected model
+        :param overlap: use overlapping model
+        :param parallel: perform parallel moves
+        :param  *args: positional arguments to pass to gt.minimize_nested_blockmodel_dl
+        :param  **kwargs: keywords arguments to pass to gt.minimize_nested_blockmodel_dl
         """
         
         sequential = not parallel
@@ -121,8 +141,32 @@ class trisbm():
                 dict_groups_l = self.get_groups(l=l)
                 dict_groups_L[l] = dict_groups_l
         self.groups = dict_groups_L
-                
+
+    def dump_model(self, filename="trisbm.pkl"):
+        """
+        Dump model using pickle
+        """
+        with open(filename, 'wb') as f:
+            pickle.dump(self, f)
+
+    def get_mdl(self):
+        """
+        Get minimum description length
+        """
+        return self.mdl
+            
+    def _get_shape(self):
+        """
+        :return: tuple (number of documents, number of words, number of keywords)
+        """
+        D = int(np.sum(self.g.vp['kind'].a == 0)) #documents
+        W = int(np.sum(self.g.vp['kind'].a == 1)) #words
+        K = int(np.sum(self.g.vp['kind'].a == 2)) #keywords
+        return D, W, K
+
+    # Helper functions      
     def get_groups(self, l=0):
+        ""
         state_l = self.state.project_level(l).copy(overlap=True)
         state_l_edges = state_l.get_edge_blocks()
         B = state_l.B
@@ -299,7 +343,10 @@ class trisbm():
     def print_topics(self, l=0, format='csv', path_save=''):
         '''
         Print topics, topic-distributions, and document clusters for a given level in the hierarchy.
-        format: csv (default) or html
+        
+        :param l: level to store
+        :param format: csv (default) or html
+        :param path_save: path/to/store/file
         '''
         D, W, K = self._get_shape()
 
@@ -468,11 +515,6 @@ class trisbm():
 
     def draw(self, **kwargs) -> None:
         self.state.draw(subsample_edges = 5000, edge_pen_width = self.g.ep["count"], **kwargs)
-
-    def dump_model(self, filename="trisbm.pkl"):
-        with open(filename, 'wb') as f:
-            pickle.dump(self, f)
-            
             
             
     def print_summary(self, tofile=True):
@@ -498,15 +540,3 @@ class trisbm():
             plt.matshow(e.todense())
             plt.savefig("mat_%d.png" % i)
         self.print_summary()
-        
-    def get_mdl(self):
-        return self.mdl
-            
-    def _get_shape(self):
-        """
-        :return: tuple (number of documents, number of words, number of keywords)
-        """
-        D = int(np.sum(self.g.vp['kind'].a == 0)) #documents
-        W = int(np.sum(self.g.vp['kind'].a == 1)) #words
-        K = int(np.sum(self.g.vp['kind'].a == 2)) #keywords
-        return D, W, K
