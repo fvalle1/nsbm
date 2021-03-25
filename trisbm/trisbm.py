@@ -43,7 +43,7 @@ class trisbm():
         Create a graph from a pandas dataframe
 
         :param df: DataFrame with words on index and texts on columns
-        :param get_kind: function that returns 1 or 2 given a word
+        :param get_kind: function that returns 1 or 2 given an element of df.index. [1 for words 2 for keywords]
         """
         self.g = gt.Graph(directed=False)
         name = self.g.vp["name"] = self.g.new_vp("string")
