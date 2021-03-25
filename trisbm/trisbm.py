@@ -37,6 +37,18 @@ class trisbm():
         self.words = [self.g.vp['name'][v] for v in self.g.vertices() if self.g.vp['kind'][v] == 1]
         self.keywords = [self.g.vp['name'][v] for v in self.g.vertices() if self.g.vp['kind'][v] == 2]
         
+
+    def make_graph(self, df: pd.DataFrame, df_keyword: pd.DataFrame)->None:
+        """
+        Create a graph from two dataframes one with words, one with keywords
+
+        :param df: DataFrame with words on index and texts on columns
+        :param df_keyword: DataFrame with keywords on index and texts on columns
+        """
+        df_keyword = df_keyword.reindex(columns=df.columns)
+        df_keyword.index = ["#"+keyword for keyword in df_keyword.index]
+
+        return self.make_graph(df.append(df_keyword), lambda word: 1 if word in df.index else 2)
         
     def make_graph(self, df: pd.DataFrame, get_kind)->None:
         """
