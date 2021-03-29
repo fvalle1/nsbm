@@ -13,3 +13,4 @@ sdist/
 trisbm.egg-info
 .DS_Store
 *.tar
+.vscode/
