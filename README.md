@@ -12,3 +12,7 @@ The idea is to run SBM-based topic modeling on networks given keywords on docume
 docker build -t trisbm .
 docker run -it -u jovyan -v $PWD:/home/jovyan -p 8888:8888 trisbm
 ```
+
+# Documentation
+
+[Docs](https://fvalle1.github.io/trisbm/trisbm.html)
