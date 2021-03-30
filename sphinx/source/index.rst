@@ -22,6 +22,9 @@ Indices and tables
 trisbm module
 ==================
 
+install:
+`conda install trisbm -c conda-forge`
+
 .. toctree::
   :maxdepth: 2
 
