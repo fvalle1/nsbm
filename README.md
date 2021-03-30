@@ -11,13 +11,12 @@ The idea is to run SBM-based topic modeling on networks given keywords on docume
 # Run
 
 ```bash
-docker build -t trisbm .
-docker run -it -u jovyan -v $PWD:/home/jovyan -p 8888:8888 trisbm
+docker run -it -u jovyan -v $PWD:/home/jovyan -p 8888:8888 docker.pkg.github.com/fvalle1/trisbm/trisbm:latest
 ```
 
 # Documentation
 
-[Docs](https://fvalle1.github.io/trisbm/trisbm.html)
+[Docs](https://fvalle1.github.io/trisbm/)
 
 # License
 
