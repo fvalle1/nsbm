@@ -1,7 +1,7 @@
-name: stats
+name: trisbm
+channels:
+  - conda-forge
+  - defaults
 dependencies:
-  - numpy
-  - pandas
-  - matplotlib
-  - cloudpickle
+  - pip
   - graph-tool
