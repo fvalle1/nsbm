@@ -18,6 +18,12 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
+.. image:: ../../network.png
+   :width: 200px
+   :height: 100px
+   :scale: 50 %
+   :alt: tripartite network
+   :align: centera
 
 trisbm module
 ==================
