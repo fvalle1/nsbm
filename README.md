@@ -1,4 +1,6 @@
 [![DOI](https://zenodo.org/badge/DOI/10.TBA/TBA.svg)](https://doi.org/TBA)
+[![Documentation Status](https://readthedocs.org/projects/trisbm/badge/?version=latest)](https://trisbm.readthedocs.io/en/latest/?badge=latest)
+
 
 # tripartite Stochastic Block Modeling
 
@@ -17,6 +19,8 @@ docker run -it -u jovyan -v $PWD:/home/jovyan/work -p 8899:8888 docker.pkg.githu
 # Documentation
 
 [Docs](https://fvalle1.github.io/trisbm/)
+
+[Readthedocs](https://trisbm.readthedocs.io/en/latest/index.html)
 
 # License
 
