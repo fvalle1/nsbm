@@ -1,7 +1,10 @@
 name: trisbm
 channels:
   - conda-forge
-  - defaults
 dependencies:
-  - pip
+  - numpy
+  - matplotlib
   - graph-tool
+  - pip:
+    - cloudpickle
+    - pandas
