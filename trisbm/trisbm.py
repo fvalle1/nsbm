@@ -15,8 +15,9 @@ class trisbm():
         self.mdl = np.inf
         self.documents = None
         self.words = None
-        self.keywords = None
+        self.keywords = []
         self.groups = []
+        self.nbranches = 2
         
     def save_graph(self, filename="graph.xml.gz")->None:
         """
@@ -35,20 +36,34 @@ class trisbm():
         self.g = gt.load_graph(filename)
         self.documents = [self.g.vp['name'][v] for v in self.g.vertices() if self.g.vp['kind'][v] == 0]
         self.words = [self.g.vp['name'][v] for v in self.g.vertices() if self.g.vp['kind'][v] == 1]
-        self.keywords = [self.g.vp['name'][v] for v in self.g.vertices() if self.g.vp['kind'][v] == 2]
-        
+        metadata_indexes = np.unique(self.g.vp["kind"].a)
+        metadata_indexes = metadata_indexes[metadata_indexes > 1] #no doc or words
+        self.nbranches = len(metadata_indexes)-2
+        for i_keyword in metadata_indexes:
+            self.keywords[i_keyword] = [self.g.vp['name'][v]
+                                        for v in self.g.vertices() if self.g.vp['kind'][v] == i_keyword]
 
-    def make_graph(self, df: pd.DataFrame, df_keyword: pd.DataFrame)->None:
+
+    def make_graph_multiple_df(self, df: pd.DataFrame, df_keyword_list: list)->None:
         """
         Create a graph from two dataframes one with words, one with keywords
 
         :param df: DataFrame with words on index and texts on columns
         :param df_keyword: DataFrame with keywords on index and texts on columns
         """
-        df_keyword = df_keyword.reindex(columns=df.columns)
-        df_keyword.index = ["#"+keyword for keyword in df_keyword.index]
+        df_all = df.copy(deep =True)
+        for ikey,df_keyword in enumerate(df_keyword_list):
+            df_keyword = df_keyword.reindex(columns=df.columns)
+            df_keyword.index = ["".join(["#" for _ in range(ikey+1)])+keyword for keyword in df_keyword.index]
+            df_keyword["kind"] = ikey+2
+            df_all = df_all.append(df_keyword)
 
-        return self.make_graph(df.append(df_keyword), lambda word: 1 if word in df.index else 2)
+        def get_kind(word):
+            return 1 if word in df.index else df_all.at[word,"kind"]
+
+        self.nbranches = len(df_keyword_list)
+
+        return self.make_graph(df_all.drop("kind", axis=1), get_kind)
         
     def make_graph(self, df: pd.DataFrame, get_kind)->None:
         """
@@ -88,7 +103,8 @@ class trisbm():
         
         self.documents = df.columns
         self.words = df.index[self.g.vp['kind'].a[D:] == 1]
-        self.keywords = df.index[self.g.vp['kind'].a[D:] == 2]
+        for ik in range(2,2+self.nbranches):# 2 is doc and words
+            self.keywords.append(df.index[self.g.vp['kind'].a[D:] == ik])
         
     def fit(self, n_init = 5, verbose=True, deg_corr=True, overlap=False, parallel=True, *args, **kwargs) -> None:
         """
@@ -170,11 +186,11 @@ class trisbm():
             
     def _get_shape(self):
         """
-        :return: tuple (number of documents, number of words, number of keywords)
+        :return: list of tuples (number of documents, number of words, (number of keywords,...))
         """
         D = int(np.sum(self.g.vp['kind'].a == 0)) #documents
         W = int(np.sum(self.g.vp['kind'].a == 1)) #words
-        K = int(np.sum(self.g.vp['kind'].a == 2)) #keywords
+        K = [int(np.sum(self.g.vp['kind'].a == (k+2))) for k in range(self.nbranches)] #keywords
         return D, W, K
 
     # Helper functions      
@@ -186,10 +202,10 @@ class trisbm():
         D, W, K = self._get_shape()
 
         n_wb = np.zeros((W, B))  ## number of half-edges incident on word-node w and labeled as word-group tw
-        n_w_key_b = np.zeros((K, B))  ## number of half-edges incident on word-node w and labeled as word-group tw
+        n_w_key_b = [np.zeros((K[ik], B)) for ik in range(self.nbranches)]  ## number of half-edges incident on word-node w and labeled as word-group tw
         n_db = np.zeros((D, B))  ## number of half-edges incident on document-node d and labeled as document-group td
         n_dbw = np.zeros((D, B)) ## number of half-edges incident on document-node d and labeled as word-group tw
-        n_dbw_key = np.zeros((D, B)) ## number of half-edges incident on document-node d and labeled as keyword-group tw_key
+        n_dbw_key = [np.zeros((D, B)) for _ in range(self.nbranches)] ## number of half-edges incident on document-node d and labeled as keyword-group tw_key
 
         for e in self.g.edges():
             z1, z2 = state_l_edges[e]
@@ -197,15 +213,15 @@ class trisbm():
             v2 = e.target()
             weight = self.g.ep["count"][e]
             n_db[int(v1), z1] += weight
-            if self.g.vp['kind'][v2] == 1:
+            kind = self.g.vp['kind'][v2]
+            if kind == 1:
                 n_wb[int(v2) - D, z2] += weight
                 n_dbw[int(v1), z2] += weight
             else:
-                n_w_key_b[int(v2) - D - W, z2] += weight
-                n_dbw_key[int(v1), z2] += weight
+                n_w_key_b[kind-2][int(v2) - D - W - sum(K[:(kind-2)]), z2] += weight
+                n_dbw_key[kind-2][int(v1), z2] += weight
 
-        p_w = np.sum(n_wb, axis=1) / float(np.sum(n_wb))
-        p_w_key = np.sum(n_w_key_b, axis=1) / float(np.sum(n_w_key_b))
+        #p_w = np.sum(n_wb, axis=1) / float(np.sum(n_wb))
 
         ind_d = np.where(np.sum(n_db, axis=0) > 0)[0]
         Bd = len(ind_d)
@@ -218,31 +234,42 @@ class trisbm():
         ind_w2 = np.where(np.sum(n_dbw, axis=0) > 0)[0]
         n_dbw = n_dbw[:, ind_w2]
 
-        ind_w_key = np.where(np.sum(n_w_key_b, axis=0) > 0)[0]
-        Bk = len(ind_w_key)
-        n_w_key_b = n_w_key_b[:, ind_w_key]
-        
-        ind_w2_keyword = np.where(np.sum(n_dbw_key, axis=0) > 0)[0]
-        n_dbw_key = n_dbw_key[:, ind_w2_keyword]
+        ind_w_key = []
+        ind_w2_keyword = []
+        Bk = []
+
+        for ik in range(self.nbranches):
+            ind_w_key.append(np.where(np.sum(n_w_key_b[ik], axis=0) > 0)[0])
+            Bk.append(len(ind_w_key[ik]))
+            n_w_key_b[ik] = n_w_key_b[ik][:, ind_w_key[ik]]
+            
+            ind_w2_keyword.append(np.where(np.sum(n_dbw_key[ik], axis=0) > 0)[0])
+            n_dbw_key[ik] = n_dbw_key[ik][:, ind_w2_keyword[ik]]
         
 
         # group membership of each word-node P(t_w | w)
         p_tw_w = (n_wb / np.sum(n_wb, axis=1)[:, np.newaxis]).T
 
-        # group membership of each keyword-node P(t_k | keyword)
-        p_tk_w_key = (n_w_key_b / np.sum(n_w_key_b, axis=1)[:, np.newaxis]).T
+        p_tk_w_key = []
+        for ik in range(self.nbranches):
+            # group membership of each keyword-node P(t_k | keyword)
+            p_tk_w_key.append((n_w_key_b[ik] / np.sum(n_w_key_b[ik], axis=1)[:, np.newaxis]).T)
         
         ## topic-distribution for words P(w | t_w)
         p_w_tw = n_wb / np.sum(n_wb, axis=0)[np.newaxis, :]
         
-        ## topickey-distribution for keywords P(keyword | t_w_key)
-        p_w_key_tk = n_w_key_b / np.sum(n_w_key_b, axis=0)[np.newaxis, :]
+        p_w_key_tk = []
+        for ik in range(self.nbranches):
+            ## topickey-distribution for keywords P(keyword | t_w_key)
+            p_w_key_tk.append(n_w_key_b[ik] / np.sum(n_w_key_b[ik], axis=0)[np.newaxis, :])
         
         ## Mixture of word-groups into documetns P(t_w | d)
         p_tw_d = (n_dbw / np.sum(n_dbw, axis=1)[:, np.newaxis]).T
 
-        ## Mixture of word-groups into documetns P(t_w | d)
-        p_tk_d = (n_dbw_key / np.sum(n_dbw_key, axis=1)[:, np.newaxis]).T
+        p_tk_d = []
+        for ik in range(self.nbranches):
+            ## Mixture of word-groups into documetns P(t_w | d)
+            p_tk_d.append((n_dbw_key[ik] / np.sum(n_dbw_key[ik], axis=1)[:, np.newaxis]).T)
         
         # group membership of each doc-node P(t_d | d)
         p_td_d = (n_db / np.sum(n_db, axis=1)[:, np.newaxis]).T
@@ -321,17 +348,17 @@ class trisbm():
             list_topics_tw += [(tw, p_tw)]
         return list_topics_tw
     
-    def metadata(self, l=0, n=10):
+    def metadata(self, l=0, n=10, kind=2):
         '''
         get the n most common keywords for each keyword-group in level l.
         
         :return: tuples (keyword,P(kw|tk))
         '''
         dict_groups = self.groups[l]
-        Bw = dict_groups['Bk']
-        p_w_tw = dict_groups['p_w_key_tk']
+        Bw = dict_groups['Bk'][kind-2]
+        p_w_tw = dict_groups['p_w_key_tk'][kind-2]
 
-        words = self.keywords
+        words = self.keywords[kind-2]
 
         ## loop over all word-groups
         dict_group_keywords = {}
@@ -347,9 +374,9 @@ class trisbm():
             dict_group_keywords[tw] = list_words_tw
         return dict_group_keywords
 
-    def metadatumdist(self, doc_index, l=0):
+    def metadatumdist(self, doc_index, l=0, kind=2):
         dict_groups = self.groups[l]
-        p_tk_d = dict_groups['p_tk_d']
+        p_tk_d = dict_groups['p_tk_d'][kind-2]
         list_topics_tk = []
         for tk, p_tk in enumerate(p_tk_d[:, doc_index]):
             list_topics_tk += [(tk, p_tk)]
@@ -415,53 +442,55 @@ class trisbm():
             pass
         
         ## keywords
-        dict_metadata = self.metadata(l=l, n=-1)
+        for ik in range(2,2+self.nbranches):
+            dict_metadata = self.metadata(l=l, n=-1, kind=ik)
 
-        list_metadata = sorted(list(dict_metadata.keys()))
-        list_columns = ['Metadatum %s' % (t + 1) for t in list_metadata]
+            list_metadata = sorted(list(dict_metadata.keys()))
+            list_columns = ['Metadatum %s' % (t + 1) for t in list_metadata]
 
-        T = len(list_topics)
-        df = pd.DataFrame(columns=list_columns, index=range(K))
+            T = len(list_topics)
+            df = pd.DataFrame(columns=list_columns, index=range(K[ik-2]))
 
-        for t in list_metadata:
-            list_w = [h[0] for h in dict_metadata[t]]
-            V_t = len(list_w)
-            df.iloc[:V_t, t] = list_w
-        df = df.dropna(how='all', axis=0)
-        if format == 'csv':
-            fname_save = 'trisbm_level_%s_metadata.csv' % (l)
-            filename = os.path.join(path_save, fname_save)
-            df.to_csv(filename, index=False, na_rep='')
-        elif format == 'html':
-            fname_save = 'trisbm_level_%s_metadata.html' % (l)
-            filename = os.path.join(path_save, fname_save)
-            df.to_html(filename, index=False, na_rep='')
-        elif format == 'tsv':
-            fname_save = 'trisbm_level_%s_metadata.tsv' % (l)
-            filename = os.path.join(path_save, fname_save)
-            df.to_csv(filename, index=False, na_rep='', sep='\t')
-        else:
-            pass
+            for t in list_metadata:
+                list_w = [h[0] for h in dict_metadata[t]]
+                V_t = len(list_w)
+                df.iloc[:V_t, t] = list_w
+            df = df.dropna(how='all', axis=0)
+            if format == 'csv':
+                fname_save = 'trisbm_level_%s_kind_%s_metadata.csv' % (l,ik)
+                filename = os.path.join(path_save, fname_save)
+                df.to_csv(filename, index=False, na_rep='')
+            elif format == 'html':
+                fname_save = 'trisbm_level_%s_kind_%s_metadata.html' % (l,ik)
+                filename = os.path.join(path_save, fname_save)
+                df.to_html(filename, index=False, na_rep='')
+            elif format == 'tsv':
+                fname_save = 'trisbm_level_%s_kind_%s_metadata.tsv' % (l,ik)
+                filename = os.path.join(path_save, fname_save)
+                df.to_csv(filename, index=False, na_rep='', sep='\t')
+            else:
+                pass
 
-        ## metadata distributions
-        list_columns = ['i_doc', 'doc'] + ['Metadatum %s' % (t + 1) for t in list_metadata]
-        df = pd.DataFrame(columns=list_columns, index=range(D))
-        for i_doc in range(D):
-            list_topicdist = self.metadatumdist(i_doc, l=l)
-            df.iloc[i_doc, 0] = i_doc
-            df.iloc[i_doc, 1] = self.documents[i_doc]
-            df.iloc[i_doc, 2:] = [h[1] for h in list_topicdist]
-        df = df.dropna(how='all', axis=1)
-        if format == 'csv':
-            fname_save = 'trisbm_level_%s_metadatum-dist.csv' % (l)
-            filename = os.path.join(path_save, fname_save)
-            df.to_csv(filename, index=False, na_rep='')
-        elif format == 'html':
-            fname_save = 'trisbm_level_%s_metadatum-dist.html' % (l)
-            filename = os.path.join(path_save, fname_save)
-            df.to_html(filename, index=False, na_rep='')
-        else:
-            pass
+            ## metadata distributions
+            list_columns = ['i_doc', 'doc'] + ['Metadatum %s' % (t + 1) for t in list_metadata]
+            df = pd.DataFrame(columns=list_columns, index=range(D))
+            for i_doc in range(D):
+                list_topicdist = self.metadatumdist(i_doc, l=l, kind=ik)
+                df.iloc[i_doc, 0] = i_doc
+                df.iloc[i_doc, 1] = self.documents[i_doc]
+                df.iloc[i_doc, 2:] = [h[1] for h in list_topicdist]
+            df = df.dropna(how='all', axis=1)
+            if format == 'csv':
+                fname_save = 'trisbm_level_%s_kind_%s_metadatum-dist.csv' % (l,ik)
+                filename = os.path.join(path_save, fname_save)
+                df.to_csv(filename, index=False, na_rep='')
+            elif format == 'html':
+                fname_save = 'trisbm_level_%s_kind_%s_metadatum-dist.html' % (
+                    l,ik)
+                filename = os.path.join(path_save, fname_save)
+                df.to_html(filename, index=False, na_rep='')
+            else:
+                pass
 
         ## doc-groups
 
