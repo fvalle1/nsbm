@@ -62,7 +62,7 @@ class trisbm():
             return 1 if word in df.index else df_all.at[word,"kind"]
 
         self.nbranches = len(df_keyword_list)
-
+       
         return self.make_graph(df_all.drop("kind", axis=1), get_kind)
         
     def make_graph(self, df: pd.DataFrame, get_kind)->None:
@@ -86,7 +86,7 @@ class trisbm():
             w = self.g.add_vertex()
             name[w] = word
             kind[w] = get_kind(word)
-            
+
         D = df.shape[1]
         
         for i_doc, doc in enumerate(df.columns):
@@ -279,7 +279,7 @@ class trisbm():
         result['Bw'] = Bw
         result['Bk'] = Bk
         result['p_tw_w'] = p_tw_w
-        result["p_tk_w_key"]=p_tk_w_key
+        result["p_tk_w_key"] = p_tk_w_key
         result['p_td_d'] = p_td_d
         result['p_w_tw'] = p_w_tw
         result['p_w_key_tk'] = p_w_key_tk
@@ -539,23 +539,24 @@ class trisbm():
         
         
         ## keyword-distr
-        list_topics = np.arange(len(self.groups[l]['p_w_key_tk'].T))
-        list_columns = ["Metadatum %d" % (t + 1) for t in list_topics]
+        for ik in range(2, 2+self.nbranches):
+            list_topics = np.arange(len(self.groups[l]['p_w_key_tk'][ik-2].T))
+            list_columns = ["Metadatum %d" % (t + 1) for t in list_topics]
 
-        pw_key_tk_df = pd.DataFrame(data=self.groups[l]['p_w_key_tk'], index=self.keywords, columns=list_columns)
-        pw_key_tk_df.replace(0, np.nan)
-        pw_key_tk_df = pw_key_tk_df.dropna(how='all', axis=0)
-        pw_key_tk_df.replace(np.nan, 0)
-        if format == 'csv':
-            fname_save = "trisbm_level_%d_keyword-dist.csv" % l
-            filename = os.path.join(path_save, fname_save)
-            pw_key_tk_df.to_csv(filename, index=True, header=True, na_rep='')
-        elif format == 'html':
-            fname_save = "trisbm_level_%d_keyword-dist.html" % l
-            filename = os.path.join(path_save, fname_save)
-            pw_key_tk_df.to_html(filename, index=True, na_rep='')
-        else:
-            pass
+            pw_key_tk_df = pd.DataFrame(data=self.groups[l]['p_w_key_tk'][ik-2], index=self.keywords[ik-2], columns=list_columns)
+            pw_key_tk_df.replace(0, np.nan)
+            pw_key_tk_df = pw_key_tk_df.dropna(how='all', axis=0)
+            pw_key_tk_df.replace(np.nan, 0)
+            if format == 'csv':
+                fname_save = "trisbm_level_%d_kind_%s_keyword-dist.csv" % (l,ik)
+                filename = os.path.join(path_save, fname_save)
+                pw_key_tk_df.to_csv(filename, index=True, header=True, na_rep='')
+            elif format == 'html':
+                fname_save = "trisbm_level_%d_kind_%s_keyword-dist.html" % (l,ik)
+                filename = os.path.join(path_save, fname_save)
+                pw_key_tk_df.to_html(filename, index=True, na_rep='')
+            else:
+                pass
 
     def draw(self, **kwargs) -> None:
         self.state.draw(subsample_edges = 5000, edge_pen_width = self.g.ep["count"], **kwargs)
