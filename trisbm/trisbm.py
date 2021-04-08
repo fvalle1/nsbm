@@ -59,10 +59,10 @@ class trisbm():
             df_all = df_all.append(df_keyword)
 
         def get_kind(word):
-            return 1 if word in df.index else df_all.at[word,"kind"]
+            return 1 if word in df.index else int(df_all.at[word,"kind"].values[0])
 
         self.nbranches = len(df_keyword_list)
-
+       
         return self.make_graph(df_all.drop("kind", axis=1), get_kind)
         
     def make_graph(self, df: pd.DataFrame, get_kind)->None:
@@ -86,7 +86,7 @@ class trisbm():
             w = self.g.add_vertex()
             name[w] = word
             kind[w] = get_kind(word)
-            
+
         D = df.shape[1]
         
         for i_doc, doc in enumerate(df.columns):
