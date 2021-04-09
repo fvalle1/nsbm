@@ -17,7 +17,7 @@ class trisbm():
         self.words = None
         self.keywords = []
         self.groups = []
-        self.nbranches = 2
+        self.nbranches = 1
         
     def save_graph(self, filename="graph.xml.gz")->None:
         """
@@ -40,8 +40,8 @@ class trisbm():
         metadata_indexes = metadata_indexes[metadata_indexes > 1] #no doc or words
         self.nbranches = len(metadata_indexes)-2
         for i_keyword in metadata_indexes:
-            self.keywords[i_keyword] = [self.g.vp['name'][v]
-                                        for v in self.g.vertices() if self.g.vp['kind'][v] == i_keyword]
+            self.keywords.append([self.g.vp['name'][v]
+                                        for v in self.g.vertices() if self.g.vp['kind'][v] == i_keyword])
 
 
     def make_graph_multiple_df(self, df: pd.DataFrame, df_keyword_list: list)->None:
