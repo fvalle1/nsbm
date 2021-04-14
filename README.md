@@ -4,7 +4,7 @@
 
 # tripartite Stochastic Block Modeling
 
-Similar to [https://github.com/martingerlach/hSBM_Topicmodel](https://github.com/martingerlach/hSBM_Topicmodel) but with tripartite networks
+Inheriting hSBM from [https://github.com/martingerlach/hSBM_Topicmodel](https://github.com/martingerlach/hSBM_Topicmodel) extends it to tripartite networks (aka supervised topic models)
 
 The idea is to run SBM-based topic modeling on networks given keywords on documents
 
