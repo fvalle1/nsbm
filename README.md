@@ -10,6 +10,12 @@ The idea is to run SBM-based topic modeling on networks given keywords on docume
 
 ![network](network.png)
 
+# Install
+
+```
+conda install -c conda-forge trisbm
+```
+
 # Run
 
 ```bash
