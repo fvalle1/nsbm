@@ -1,7 +1,7 @@
 """
 triSBM
 
-Copyright(C) 2021 fvalle1 martingerlach count0
+Copyright(C) 2021 fvalle1
 
 This program is free software: you can redistribute it and / or modify
 it under the terms of the GNU General Public License as published by
@@ -23,20 +23,20 @@ import numpy as np
 import pandas as pd
 import cloudpickle as pickle
 import os, sys
-import matplotlib.pyplot as plt
 
-class trisbm():
+"""
+Inherit hSBM code from https://github.com/martingerlach/hSBM_Topicmodel
+"""
+sys.path.append("/".join(__file__.split("/")[:-1])+"/../hSBM_Topicmodel/")
+from sbmtm import sbmtm
+
+class trisbm(sbmtm):
     """
     Class to run trisbm
     """
     def __init__(self):
-        self.g = gt.Graph(directed=False)
-        self.state = None
-        self.mdl = np.inf
-        self.documents = None
-        self.words = None
+        super().__init__()
         self.keywords = []
-        self.groups = []
         self.nbranches = 1
         
     def save_graph(self, filename="graph.xml.gz")->None:
@@ -202,7 +202,7 @@ class trisbm():
         """
         Get minimum description length
         """
-        return self.mdl
+        return super.get_mdl()
             
     def _get_shape(self):
         """
@@ -215,7 +215,16 @@ class trisbm():
 
     # Helper functions      
     def get_groups(self, l=0):
-        ""
+        """
+        return groups
+
+        :param l: hierarchy level
+        """
+
+        #sort of cache if groups are already estimated avoid re running
+        if l in self.groups.keys():
+            return self.groups[l]
+
         state_l = self.state.project_level(l).copy(overlap=True)
         state_l_edges = state_l.get_edge_blocks()
         B = state_l.B
@@ -306,67 +315,9 @@ class trisbm():
         result['p_tw_d'] = p_tw_d
         result['p_tk_d'] = p_tk_d
 
+        self.groups[l] = result
+
         return result
-    
-    def clusters(self, l=0, n=10):
-        '''
-        Get n 'most common' documents from each document cluster.
-        most common refers to largest contribution in group membership vector.
-        For the non-overlapping case, each document belongs to one and only one group with prob 1.
-
-        '''
-        dict_groups = self.groups[l]
-        Bd = dict_groups['Bd']
-        p_td_d = dict_groups['p_td_d']
-
-        docs = self.documents
-        ## loop over all word-groups
-        dict_group_docs = {}
-        for td in range(Bd):
-            p_d_ = p_td_d[td, :]
-            ind_d_ = np.argsort(p_d_)[::-1]
-            list_docs_td = []
-            for i in ind_d_[:n]:
-                if p_d_[i] > 0:
-                    list_docs_td += [(docs[i], p_d_[i])]
-                else:
-                    break
-            dict_group_docs[td] = list_docs_td
-        return dict_group_docs
-    
-    def topics(self, l=0, n=10):
-        '''
-        get the n most common words for each word-group in level l.
-        
-        :return: tuples (word,P(w|tw))
-        '''
-        dict_groups = self.groups[l]
-        Bw = dict_groups['Bw']
-        p_w_tw = dict_groups['p_w_tw']
-
-        words = self.words
-
-        ## loop over all word-groups
-        dict_group_words = {}
-        for tw in range(Bw):
-            p_w_ = p_w_tw[:, tw]
-            ind_w_ = np.argsort(p_w_)[::-1]
-            list_words_tw = []
-            for i in ind_w_[:n]:
-                if p_w_[i] > 0:
-                    list_words_tw += [(words[i], p_w_[i])]
-                else:
-                    break
-            dict_group_words[tw] = list_words_tw
-        return dict_group_words
-
-    def topicdist(self, doc_index, l=0):
-        dict_groups = self.groups[l]
-        p_tw_d = dict_groups['p_tw_d']
-        list_topics_tw = []
-        for tw, p_tw in enumerate(p_tw_d[:, doc_index]):
-            list_topics_tw += [(tw, p_tw)]
-        return list_topics_tw
     
     def metadata(self, l=0, n=10, kind=2):
         '''
@@ -374,7 +325,8 @@ class trisbm():
         
         :return: tuples (keyword,P(kw|tk))
         '''
-        dict_groups = self.groups[l]
+
+        dict_groups = self.get_groups(l)
         Bw = dict_groups['Bk'][kind-2]
         p_w_tw = dict_groups['p_w_key_tk'][kind-2]
 
@@ -395,7 +347,7 @@ class trisbm():
         return dict_group_keywords
 
     def metadatumdist(self, doc_index, l=0, kind=2):
-        dict_groups = self.groups[l]
+        dict_groups = self.get_groups(l)
         p_tk_d = dict_groups['p_tk_d'][kind-2]
         list_topics_tk = []
         for tk, p_tk in enumerate(p_tk_d[:, doc_index]):
@@ -539,10 +491,10 @@ class trisbm():
             pass
 
         ## word-distr
-        list_topics = np.arange(len(self.groups[l]['p_w_tw'].T))
+        list_topics = np.arange(len(self.get_groups(l)['p_w_tw'].T))
         list_columns = ["Topic %d" % (t + 1) for t in list_topics]
 
-        pwtw_df = pd.DataFrame(data=self.groups[l]['p_w_tw'], index=self.words, columns=list_columns)
+        pwtw_df = pd.DataFrame(data=self.get_groups(l)['p_w_tw'], index=self.words, columns=list_columns)
         pwtw_df.replace(0, np.nan)
         pwtw_df = pwtw_df.dropna(how='all', axis=0)
         pwtw_df.replace(np.nan, 0)
@@ -560,10 +512,10 @@ class trisbm():
         
         ## keyword-distr
         for ik in range(2, 2+self.nbranches):
-            list_topics = np.arange(len(self.groups[l]['p_w_key_tk'][ik-2].T))
+            list_topics = np.arange(len(self.get_groups(l)['p_w_key_tk'][ik-2].T))
             list_columns = ["Metadatum %d" % (t + 1) for t in list_topics]
 
-            pw_key_tk_df = pd.DataFrame(data=self.groups[l]['p_w_key_tk'][ik-2], index=self.keywords[ik-2], columns=list_columns)
+            pw_key_tk_df = pd.DataFrame(data=self.get_groups(l)['p_w_key_tk'][ik-2], index=self.keywords[ik-2], columns=list_columns)
             pw_key_tk_df.replace(0, np.nan)
             pw_key_tk_df = pw_key_tk_df.dropna(how='all', axis=0)
             pw_key_tk_df.replace(np.nan, 0)
@@ -580,28 +532,3 @@ class trisbm():
 
     def draw(self, **kwargs) -> None:
         self.state.draw(subsample_edges = 5000, edge_pen_width = self.g.ep["count"], **kwargs)
-            
-            
-    def print_summary(self, tofile=True):
-        '''
-        Print hierarchy summary
-        '''
-        if tofile:
-            orig_stdout = sys.stdout
-            f = open('summary.txt', 'w')
-            sys.stdout = f
-            self.state.print_summary()
-            sys.stdout = orig_stdout
-            f.close()
-        else:
-            self.state.print_summary()
-            
-    def save_data(self):
-        for i in range(len(self.state.get_levels()) - 2)[::-1]:
-            print("Saving level %d" % i)
-            self.print_topics(l=i)
-            self.print_topics(l=i, format='tsv')
-            e = self.state.get_levels()[i].get_matrix()
-            plt.matshow(e.todense())
-            plt.savefig("mat_%d.png" % i)
-        self.print_summary()

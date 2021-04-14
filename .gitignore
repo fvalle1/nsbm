@@ -3,6 +3,7 @@
 *.pdf
 
 __pycache__/
+hSBM_Topicmodel/__pycache__/
 .ipynb_checkpoints
 *.csv
 *.tsv
