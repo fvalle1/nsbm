@@ -24,7 +24,10 @@ docker run -it -u jovyan -v $PWD:/home/jovyan/work -p 8899:8888 docker.pkg.githu
 
 # License
 
-See [LICENSE](LICENSE)
+See [LICENSE](LICENSE).
+
+This work [is in part based on](https://www.gnu.org/licenses/gpl-faq.en.html#WhyDoesTheGPLPermitUsersToPublishTheirModifiedVersions) [sbmtm](https://github.com/martingerlach/hSBM_Topicmodel)
 
 ## Third party libraries
+
 This package depends on [graph-tool](https://graph-tool.skewed.de)
