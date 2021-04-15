@@ -8,7 +8,7 @@ setuptools.setup(
     version="0.3.1",
     author="Filippo Valle",
     author_email="filippo.valle@unito.it",
-    description="Package to run triSBM model.",
+    description="Package to run nSBM model.",
     license="GPL",
     long_description=long_description,
     long_description_content_type="text/markdown",

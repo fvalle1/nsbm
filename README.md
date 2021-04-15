@@ -2,7 +2,7 @@
 [![Documentation Status](https://readthedocs.org/projects/trisbm/badge/?version=latest)](https://trisbm.readthedocs.io/en/latest/?badge=latest)
 
 
-# tripartite Stochastic Block Modeling
+# multipartite Stochastic Block Modeling
 
 Inheriting hSBM from [https://github.com/martingerlach/hSBM_Topicmodel](https://github.com/martingerlach/hSBM_Topicmodel) extends it to tripartite networks (aka supervised topic models)
 
@@ -20,7 +20,7 @@ python3 -m pip install . -vv
 ## With conda/mamba
 
 ```bash
-conda install -c conda-forge trisbm
+conda install -c conda-forge nsbm
 ```
 
 # Run
