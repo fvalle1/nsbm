@@ -533,17 +533,21 @@ class trisbm(sbmtm):
     def draw(self, **kwargs) -> None:
         colmap = self.g.vertex_properties["color"] = self.g.new_vertex_property(
             "vector<double>")
-
+        #https://medialab.github.io/iwanthue/
+        colors = [[207,170,60],
+                    [174,80,209],
+                    [108,192,70],
+                    [131,120,197],
+                    [126,138,65],
+                    [201,90,138],
+                    [87,172,125],
+                    [213,73,57],
+                    [85,175,209],
+                    [193,120,81]]
         for v in self.g.vertices():
             k = self.g.vertex_properties['kind'][v]
-            if k < 1:
-                color = np.array([137, 128, 193])/255.
-            elif k < 2:
-                color = np.array([130, 200, 93])/255.
-            elif k < 3:
-                color = np.array([210, 82, 58])/255.
-            elif k < 4:
-                color = np.array([196, 125, 50])/255.
+            if k < 10:
+                color = np.array(colors[k])/255.
             else:
                 color = np.array([187, 129, 164])/255.
             colmap[v] = color
