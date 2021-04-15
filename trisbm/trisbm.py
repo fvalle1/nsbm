@@ -202,7 +202,7 @@ class trisbm(sbmtm):
         """
         Get minimum description length
         """
-        return super.get_mdl()
+        return super().get_mdl()
             
     def _get_shape(self):
         """
