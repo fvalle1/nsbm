@@ -111,7 +111,7 @@ class trisbm(sbmtm):
         
         for i_doc, doc in enumerate(df.columns):
             text = df[doc]
-            self.g.add_edge_list([(i_doc,D + x[0][0],np.log2(1+x[1])) for x in zip(enumerate(df.index),text)], eprops=[weight])
+            self.g.add_edge_list([(i_doc,D + x[0][0],x[1]) for x in zip(enumerate(df.index),text)], eprops=[weight])
 
         filter_edges = self.g.new_edge_property("bool")
         for e in self.g.edges():
