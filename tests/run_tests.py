@@ -1,3 +1,5 @@
+import sys
+sys.path.append("/".join(__file__.split("/")[:-2]))
 from trisbm import trisbm
 import unittest
 
