@@ -74,7 +74,7 @@ class trisbm(sbmtm):
         df_all = df.copy(deep =True)
         for ikey,df_keyword in enumerate(df_keyword_list):
             df_keyword = df_keyword.reindex(columns=df.columns)
-            df_keyword.index = ["".join(["#" for _ in range(ikey+1)])+keyword for keyword in df_keyword.index]
+            df_keyword.index = ["".join(["#" for _ in range(ikey+1)])+str(keyword) for keyword in df_keyword.index]
             df_keyword["kind"] = ikey+2
             df_all = df_all.append(df_keyword)
 
