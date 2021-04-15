@@ -534,9 +534,9 @@ class trisbm(sbmtm):
         colmap = self.g.vertex_properties["color"] = self.g.new_vertex_property(
             "vector<double>")
         #https://medialab.github.io/iwanthue/
-        colors = [[207,170,60],
-                    [174,80,209],
+        colors = [  [174,80,209],
                     [108,192,70],
+                    [207, 170, 60],
                     [131,120,197],
                     [126,138,65],
                     [201,90,138],
