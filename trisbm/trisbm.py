@@ -531,4 +531,24 @@ class trisbm(sbmtm):
                 pass
 
     def draw(self, **kwargs) -> None:
-        self.state.draw(subsample_edges = 5000, edge_pen_width = self.g.ep["count"], **kwargs)
+        colmap = self.g.vertex_properties["color"] = self.g.new_vertex_property(
+            "vector<double>")
+
+        for v in self.g.vertices():
+            k = self.g.vertex_properties['kind'][v]
+            if k < 1:
+                color = np.array([137, 128, 193])/255.
+            elif k < 2:
+                color = np.array([130, 200, 93])/255.
+            elif k < 3:
+                color = np.array([210, 82, 58])/255.
+            elif k < 4:
+                color = np.array([196, 125, 50])/255.
+            else:
+                color = np.array([187, 129, 164])/255.
+            colmap[v] = color
+        self.state.draw(
+            subsample_edges = 5000, 
+            edge_pen_width = self.g.ep["count"],
+            vertex_color=colmap,
+            vertex_fill_color=colmap, **kwargs)
