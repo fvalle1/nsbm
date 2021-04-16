@@ -58,7 +58,7 @@ class trisbm(sbmtm):
         self.words = [self.g.vp['name'][v] for v in self.g.vertices() if self.g.vp['kind'][v] == 1]
         metadata_indexes = np.unique(self.g.vp["kind"].a)
         metadata_indexes = metadata_indexes[metadata_indexes > 1] #no doc or words
-        self.nbranches = len(metadata_indexes)-2
+        self.nbranches = len(metadata_indexes)
         for i_keyword in metadata_indexes:
             self.keywords.append([self.g.vp['name'][v]
                                         for v in self.g.vertices() if self.g.vp['kind'][v] == i_keyword])

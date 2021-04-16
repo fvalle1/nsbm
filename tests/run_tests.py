@@ -23,16 +23,40 @@ class TriTest(unittest.TestCase):
         model = trisbm()
         model.make_graph(df, lambda w: 1 if int(w.split("_")[1]) < 90 else 2)
 
-    def test_make_graph_multiple(self):
+    def test_save_read_graph(self):
         import pandas as pd
         import numpy as np
 
         df = pd.DataFrame(
             index=["w_{}".format(w) for w in range(100)],
             columns=["doc_{}".format(doc) for doc in range(25)],
-            data=np.random.randint(0, 10, size=2500).reshape((100, 25
-                                                              ))
+            data=np.random.randint(0, 10, size=2500).reshape((100, 25))
         )
+
+        model = trisbm()
+        model.make_graph(df, lambda w: 1 if int(w.split("_")[1]) < 90 else 2)
+        model.save_graph()
+        saved_shape = model._get_shape()
+        nb = model.nbranches
+        words = model.words
+        docs = model.documents
+        keywords = model.keywords
+        del model
+        model = trisbm()
+        model.load_graph()
+        self.assertEqual(nb, model.nbranches)
+        self.assertEqual(list(saved_shape), list(model._get_shape()))
+        self.assertListEqual(list(words), list(model.words))
+        self.assertListEqual(list(docs), list(model.documents))
+        for i in range(nb):
+            self.assertListEqual(list(keywords[i]), list(model.keywords[i]))
+        
+        import os
+        os.system("rm -rf graph.xml.gz")
+
+    def test_make_graph_multiple(self):
+        import pandas as pd
+        import numpy as np
 
         df = pd.DataFrame(
             index=["w{}".format(w) for w in range(1000)],
