@@ -27,8 +27,7 @@ import os, sys
 """
 Inherit hSBM code from https://github.com/martingerlach/hSBM_Topicmodel
 """
-sys.path.append("/".join(__file__.split("/")[:-1])+"/../hSBM_Topicmodel/")
-from sbmtm import sbmtm
+from trisbm.sbmtm import sbmtm
 
 class trisbm(sbmtm):
     """

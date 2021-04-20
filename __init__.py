@@ -1,2 +1,2 @@
 from trisbm import *
-from hSBM_Topicmodel.sbmtm import *
+from trisbm.sbmtm import *

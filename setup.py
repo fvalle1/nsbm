@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="trisbm",
-    version="0.3.3",
+    version="0.3.4",
     author="Filippo Valle",
     author_email="filippo.valle@unito.it",
     description="Package to run nSBM model.",
@@ -14,7 +14,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/fvalle1/trisbm",
     packages=setuptools.find_packages(),
-    py_modules=["hSBM_Topicmodel/sbmtm"],
+    py_modules=["trisbm/sbmtm"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: GPL License",
