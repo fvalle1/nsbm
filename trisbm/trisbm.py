@@ -66,10 +66,10 @@ class trisbm(sbmtm):
 
     def make_graph_multiple_df(self, df: pd.DataFrame, df_keyword_list: list)->None:
         """
-        Create a graph from two dataframes one with words, one with keywords
+        Create a graph from two dataframes one with words, others with keywords or other layers of information
 
         :param df: DataFrame with words on index and texts on columns
-        :param df_keyword: DataFrame with keywords on index and texts on columns
+        :param df_keyword_list: list of DataFrames with keywords on index and texts on columns
         """
         df_all = df.copy(deep =True)
         for ikey,df_keyword in enumerate(df_keyword_list):
@@ -87,9 +87,9 @@ class trisbm(sbmtm):
         
     def make_graph(self, df: pd.DataFrame, get_kind)->None:
         """
-        Create a graph from a pandas dataframe
+        Create a graph from a pandas DataFrame
 
-        :param df: DataFrame with words on index and texts on columns
+        :param df: DataFrame with words on index and texts on columns. Actually this is a BoW.
         :param get_kind: function that returns 1 or 2 given an element of df.index. [1 for words 2 for keywords]
         """
         self.g = gt.Graph(directed=False)
@@ -194,6 +194,14 @@ class trisbm(sbmtm):
     def dump_model(self, filename="trisbm.pkl"):
         """
         Dump model using pickle
+
+        To restore the model:
+
+        import cloudpickle as pickle
+        file=open(\"trisbm.pkl\" ,\"rb\")
+        model = pickle.load(file)
+
+        file.close()
         """
         with open(filename, 'wb') as f:
             pickle.dump(self, f)
@@ -201,6 +209,8 @@ class trisbm(sbmtm):
     def get_mdl(self):
         """
         Get minimum description length
+
+        Proxy to self.state.entropy()
         """
         return super().get_mdl()
             
@@ -530,7 +540,13 @@ class trisbm(sbmtm):
             else:
                 pass
 
-    def draw(self, **kwargs) -> None:
+    def draw(self, *args, **kwargs) -> None:
+        """
+        Draw the network
+
+        :param \*args: positional arguments to pass to self.state.draw
+        :param \*\*kwargs: keyword argument to pass to self.state.draw
+        """
         colmap = self.g.vertex_properties["color"] = self.g.new_vertex_property(
             "vector<double>")
         #https://medialab.github.io/iwanthue/
@@ -555,4 +571,4 @@ class trisbm(sbmtm):
             subsample_edges = 5000, 
             edge_pen_width = self.g.ep["count"],
             vertex_color=colmap,
-            vertex_fill_color=colmap, **kwargs)
+            vertex_fill_color=colmap, *args, **kwargs)

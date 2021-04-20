@@ -10,13 +10,8 @@ Welcome to trisbm's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+This module inherits from `sbmtm <https://github.com/martingerlach/hSBM_Topicmodel>`_ and extends network based topic models
+with **multiple layers** of information.
 
 .. image:: ../../network.png
    :width: 500px
