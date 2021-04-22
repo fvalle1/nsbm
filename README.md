@@ -1,6 +1,7 @@
 [![DOI](https://zenodo.org/badge/DOI/10.TBA/TBA.svg)](https://doi.org/TBA)
 [![Documentation Status](https://readthedocs.org/projects/trisbm/badge/?version=latest)](https://trisbm.readthedocs.io/en/latest/?badge=latest)
-
+[![Python package](https://github.com/fvalle1/trisbm/actions/workflows/python-package.yml/badge.svg)](https://github.com/fvalle1/trisbm/actions/workflows/python-package.yml)
+[![Conda](https://github.com/fvalle1/trisbm/actions/workflows/conda.yml/badge.svg)](https://github.com/fvalle1/trisbm/actions/workflows/conda.yml)
 
 # multipartite Stochastic Block Modeling
 
