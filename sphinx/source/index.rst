@@ -10,20 +10,15 @@ Welcome to trisbm's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+This module inherits from `sbmtm <https://github.com/martingerlach/hSBM_Topicmodel>`_ and extends network based topic models
+with **multiple layers** of information.
 
 .. image:: ../../network.png
-   :width: 200px
-   :height: 100px
+   :width: 500px
+   :height: 500px
    :scale: 50 %
    :alt: tripartite network
-   :align: centera
+   :align: center
 
 trisbm module
 ==================
@@ -35,3 +30,9 @@ install:
   :maxdepth: 2
 
   trisbm
+
+Licence
+=================
+This work `is in part based on <https://www.gnu.org/licenses/gpl-faq.en.html#WhyDoesTheGPLPermitUsersToPublishTheirModifiedVersions>`_ 
+`sbmtm <https://github.com/martingerlach/hSBM_Topicmodel>`_ and it is released under the terms of the GNU General Public License
+available along with this program or at <https://www.gnu.org/licenses/>

@@ -1,23 +1,42 @@
+"""
+triSBM
+
+Copyright(C) 2021 fvalle1
+
+This program is free software: you can redistribute it and / or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY
+without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see < http: // www.gnu.org/licenses/>.
+"""
+
 import graph_tool.all as gt
 import numpy as np
 import pandas as pd
 import cloudpickle as pickle
 import os, sys
-import matplotlib.pyplot as plt
 
-class trisbm():
+"""
+Inherit hSBM code from https://github.com/martingerlach/hSBM_Topicmodel
+"""
+from trisbm.sbmtm import sbmtm
+
+class trisbm(sbmtm):
     """
     Class to run trisbm
     """
     def __init__(self):
-        self.g = gt.Graph(directed=False)
-        self.state = None
-        self.mdl = np.inf
-        self.documents = None
-        self.words = None
+        super().__init__()
         self.keywords = []
-        self.groups = []
-        self.nbranches = 2
+        self.nbranches = 1
         
     def save_graph(self, filename="graph.xml.gz")->None:
         """
@@ -38,23 +57,23 @@ class trisbm():
         self.words = [self.g.vp['name'][v] for v in self.g.vertices() if self.g.vp['kind'][v] == 1]
         metadata_indexes = np.unique(self.g.vp["kind"].a)
         metadata_indexes = metadata_indexes[metadata_indexes > 1] #no doc or words
-        self.nbranches = len(metadata_indexes)-2
+        self.nbranches = len(metadata_indexes)
         for i_keyword in metadata_indexes:
-            self.keywords[i_keyword] = [self.g.vp['name'][v]
-                                        for v in self.g.vertices() if self.g.vp['kind'][v] == i_keyword]
+            self.keywords.append([self.g.vp['name'][v]
+                                        for v in self.g.vertices() if self.g.vp['kind'][v] == i_keyword])
 
 
     def make_graph_multiple_df(self, df: pd.DataFrame, df_keyword_list: list)->None:
         """
-        Create a graph from two dataframes one with words, one with keywords
+        Create a graph from two dataframes one with words, others with keywords or other layers of information
 
         :param df: DataFrame with words on index and texts on columns
-        :param df_keyword: DataFrame with keywords on index and texts on columns
+        :param df_keyword_list: list of DataFrames with keywords on index and texts on columns
         """
         df_all = df.copy(deep =True)
         for ikey,df_keyword in enumerate(df_keyword_list):
             df_keyword = df_keyword.reindex(columns=df.columns)
-            df_keyword.index = ["".join(["#" for _ in range(ikey+1)])+keyword for keyword in df_keyword.index]
+            df_keyword.index = ["".join(["#" for _ in range(ikey+1)])+str(keyword) for keyword in df_keyword.index]
             df_keyword["kind"] = ikey+2
             df_all = df_all.append(df_keyword)
 
@@ -67,9 +86,9 @@ class trisbm():
         
     def make_graph(self, df: pd.DataFrame, get_kind)->None:
         """
-        Create a graph from a pandas dataframe
+        Create a graph from a pandas DataFrame
 
-        :param df: DataFrame with words on index and texts on columns
+        :param df: DataFrame with words on index and texts on columns. Actually this is a BoW.
         :param get_kind: function that returns 1 or 2 given an element of df.index. [1 for words 2 for keywords]
         """
         self.g = gt.Graph(directed=False)
@@ -91,7 +110,7 @@ class trisbm():
         
         for i_doc, doc in enumerate(df.columns):
             text = df[doc]
-            self.g.add_edge_list([(i_doc,D + x[0][0],np.log2(1+x[1])) for x in zip(enumerate(df.index),text)], eprops=[weight])
+            self.g.add_edge_list([(i_doc,D + x[0][0],x[1]) for x in zip(enumerate(df.index),text)], eprops=[weight])
 
         filter_edges = self.g.new_edge_property("bool")
         for e in self.g.edges():
@@ -174,6 +193,14 @@ class trisbm():
     def dump_model(self, filename="trisbm.pkl"):
         """
         Dump model using pickle
+
+        To restore the model:
+
+        import cloudpickle as pickle
+        file=open(\"trisbm.pkl\" ,\"rb\")
+        model = pickle.load(file)
+
+        file.close()
         """
         with open(filename, 'wb') as f:
             pickle.dump(self, f)
@@ -181,8 +208,10 @@ class trisbm():
     def get_mdl(self):
         """
         Get minimum description length
+
+        Proxy to self.state.entropy()
         """
-        return self.mdl
+        return super().get_mdl()
             
     def _get_shape(self):
         """
@@ -195,7 +224,16 @@ class trisbm():
 
     # Helper functions      
     def get_groups(self, l=0):
-        ""
+        """
+        return groups
+
+        :param l: hierarchy level
+        """
+
+        #sort of cache if groups are already estimated avoid re running
+        if l in self.groups.keys():
+            return self.groups[l]
+
         state_l = self.state.project_level(l).copy(overlap=True)
         state_l_edges = state_l.get_edge_blocks()
         B = state_l.B
@@ -286,67 +324,9 @@ class trisbm():
         result['p_tw_d'] = p_tw_d
         result['p_tk_d'] = p_tk_d
 
+        self.groups[l] = result
+
         return result
-    
-    def clusters(self, l=0, n=10):
-        '''
-        Get n 'most common' documents from each document cluster.
-        most common refers to largest contribution in group membership vector.
-        For the non-overlapping case, each document belongs to one and only one group with prob 1.
-
-        '''
-        dict_groups = self.groups[l]
-        Bd = dict_groups['Bd']
-        p_td_d = dict_groups['p_td_d']
-
-        docs = self.documents
-        ## loop over all word-groups
-        dict_group_docs = {}
-        for td in range(Bd):
-            p_d_ = p_td_d[td, :]
-            ind_d_ = np.argsort(p_d_)[::-1]
-            list_docs_td = []
-            for i in ind_d_[:n]:
-                if p_d_[i] > 0:
-                    list_docs_td += [(docs[i], p_d_[i])]
-                else:
-                    break
-            dict_group_docs[td] = list_docs_td
-        return dict_group_docs
-    
-    def topics(self, l=0, n=10):
-        '''
-        get the n most common words for each word-group in level l.
-        
-        :return: tuples (word,P(w|tw))
-        '''
-        dict_groups = self.groups[l]
-        Bw = dict_groups['Bw']
-        p_w_tw = dict_groups['p_w_tw']
-
-        words = self.words
-
-        ## loop over all word-groups
-        dict_group_words = {}
-        for tw in range(Bw):
-            p_w_ = p_w_tw[:, tw]
-            ind_w_ = np.argsort(p_w_)[::-1]
-            list_words_tw = []
-            for i in ind_w_[:n]:
-                if p_w_[i] > 0:
-                    list_words_tw += [(words[i], p_w_[i])]
-                else:
-                    break
-            dict_group_words[tw] = list_words_tw
-        return dict_group_words
-
-    def topicdist(self, doc_index, l=0):
-        dict_groups = self.groups[l]
-        p_tw_d = dict_groups['p_tw_d']
-        list_topics_tw = []
-        for tw, p_tw in enumerate(p_tw_d[:, doc_index]):
-            list_topics_tw += [(tw, p_tw)]
-        return list_topics_tw
     
     def metadata(self, l=0, n=10, kind=2):
         '''
@@ -354,7 +334,8 @@ class trisbm():
         
         :return: tuples (keyword,P(kw|tk))
         '''
-        dict_groups = self.groups[l]
+
+        dict_groups = self.get_groups(l)
         Bw = dict_groups['Bk'][kind-2]
         p_w_tw = dict_groups['p_w_key_tk'][kind-2]
 
@@ -375,7 +356,7 @@ class trisbm():
         return dict_group_keywords
 
     def metadatumdist(self, doc_index, l=0, kind=2):
-        dict_groups = self.groups[l]
+        dict_groups = self.get_groups(l)
         p_tk_d = dict_groups['p_tk_d'][kind-2]
         list_topics_tk = []
         for tk, p_tk in enumerate(p_tk_d[:, doc_index]):
@@ -519,10 +500,10 @@ class trisbm():
             pass
 
         ## word-distr
-        list_topics = np.arange(len(self.groups[l]['p_w_tw'].T))
+        list_topics = np.arange(len(self.get_groups(l)['p_w_tw'].T))
         list_columns = ["Topic %d" % (t + 1) for t in list_topics]
 
-        pwtw_df = pd.DataFrame(data=self.groups[l]['p_w_tw'], index=self.words, columns=list_columns)
+        pwtw_df = pd.DataFrame(data=self.get_groups(l)['p_w_tw'], index=self.words, columns=list_columns)
         pwtw_df.replace(0, np.nan)
         pwtw_df = pwtw_df.dropna(how='all', axis=0)
         pwtw_df.replace(np.nan, 0)
@@ -540,10 +521,10 @@ class trisbm():
         
         ## keyword-distr
         for ik in range(2, 2+self.nbranches):
-            list_topics = np.arange(len(self.groups[l]['p_w_key_tk'][ik-2].T))
+            list_topics = np.arange(len(self.get_groups(l)['p_w_key_tk'][ik-2].T))
             list_columns = ["Metadatum %d" % (t + 1) for t in list_topics]
 
-            pw_key_tk_df = pd.DataFrame(data=self.groups[l]['p_w_key_tk'][ik-2], index=self.keywords[ik-2], columns=list_columns)
+            pw_key_tk_df = pd.DataFrame(data=self.get_groups(l)['p_w_key_tk'][ik-2], index=self.keywords[ik-2], columns=list_columns)
             pw_key_tk_df.replace(0, np.nan)
             pw_key_tk_df = pw_key_tk_df.dropna(how='all', axis=0)
             pw_key_tk_df.replace(np.nan, 0)
@@ -558,30 +539,35 @@ class trisbm():
             else:
                 pass
 
-    def draw(self, **kwargs) -> None:
-        self.state.draw(subsample_edges = 5000, edge_pen_width = self.g.ep["count"], **kwargs)
-            
-            
-    def print_summary(self, tofile=True):
-        '''
-        Print hierarchy summary
-        '''
-        if tofile:
-            orig_stdout = sys.stdout
-            f = open('summary.txt', 'w')
-            sys.stdout = f
-            self.state.print_summary()
-            sys.stdout = orig_stdout
-            f.close()
-        else:
-            self.state.print_summary()
-            
-    def save_data(self):
-        for i in range(len(self.state.get_levels()) - 2)[::-1]:
-            print("Saving level %d" % i)
-            self.print_topics(l=i)
-            self.print_topics(l=i, format='tsv')
-            e = self.state.get_levels()[i].get_matrix()
-            plt.matshow(e.todense())
-            plt.savefig("mat_%d.png" % i)
-        self.print_summary()
+    def draw(self, *args, **kwargs) -> None:
+        """
+        Draw the network
+
+        :param \*args: positional arguments to pass to self.state.draw
+        :param \*\*kwargs: keyword argument to pass to self.state.draw
+        """
+        colmap = self.g.vertex_properties["color"] = self.g.new_vertex_property(
+            "vector<double>")
+        #https://medialab.github.io/iwanthue/
+        colors = [  [174,80,209],
+                    [108,192,70],
+                    [207, 170, 60],
+                    [131,120,197],
+                    [126,138,65],
+                    [201,90,138],
+                    [87,172,125],
+                    [213,73,57],
+                    [85,175,209],
+                    [193,120,81]]
+        for v in self.g.vertices():
+            k = self.g.vertex_properties['kind'][v]
+            if k < 10:
+                color = np.array(colors[k])/255.
+            else:
+                color = np.array([187, 129, 164])/255.
+            colmap[v] = color
+        self.state.draw(
+            subsample_edges = 5000, 
+            edge_pen_width = self.g.ep["count"],
+            vertex_color=colmap,
+            vertex_fill_color=colmap, *args, **kwargs)

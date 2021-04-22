@@ -6,17 +6,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>trisbm 0.0.1 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
+    <script src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 
@@ -26,23 +26,15 @@
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          
-
           <div class="body" role="main">
             
   <div class="section" id="welcome-to-trisbm-s-documentation">
 <h1>Welcome to trisbm’s documentation!<a class="headerlink" href="#welcome-to-trisbm-s-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
-<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
-<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
-</ul>
-<a class="reference internal image-reference" href="_images/network.png"><img alt="tripartite network" class="align-center" src="_images/network.png" style="width: 100.0px; height: 50.0px;" /></a>
+<p>This module inherits from <a class="reference external" href="https://github.com/martingerlach/hSBM_Topicmodel">sbmtm</a> and extends network based topic models
+with <strong>multiple layers</strong> of information.</p>
+<a class="reference internal image-reference" href="_images/network.png"><img alt="tripartite network" class="align-center" src="_images/network.png" style="width: 250.0px; height: 250.0px;" /></a>
 </div>
 <div class="section" id="trisbm-module">
 <h1>trisbm module<a class="headerlink" href="#trisbm-module" title="Permalink to this headline">¶</a></h1>
@@ -51,42 +43,77 @@
 <div class="toctree-wrapper compound">
 <span id="document-trisbm"></span><div class="section" id="module-trisbm.trisbm">
 <span id="trisbm"></span><h2>triSBM<a class="headerlink" href="#module-trisbm.trisbm" title="Permalink to this headline">¶</a></h2>
+<p>triSBM</p>
+<p>Copyright(C) 2021 fvalle1</p>
+<p>This program is free software: you can redistribute it and / or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY
+without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see &lt; http: // www.gnu.org/licenses/&gt;.</p>
 <dl class="py class">
 <dt id="trisbm.trisbm.trisbm">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">trisbm.trisbm.</span></code><code class="sig-name descname"><span class="pre">trisbm</span></code><a class="headerlink" href="#trisbm.trisbm.trisbm" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">trisbm.trisbm.</code><code class="sig-name descname">trisbm</code><a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisbm.trisbm.trisbm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class to run trisbm</p>
 <dl class="py method">
 <dt id="trisbm.trisbm.trisbm._get_shape">
-<code class="sig-name descname"><span class="pre">_get_shape</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm._get_shape" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">_get_shape</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm._get_shape"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisbm.trisbm.trisbm._get_shape" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>tuple (number of documents, number of words, number of keywords)</p>
+<dd class="field-odd"><p>list of tuples (number of documents, number of words, (number of keywords,…))</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
 <dt id="trisbm.trisbm.trisbm.clusters">
-<code class="sig-name descname"><span class="pre">clusters</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.clusters" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">clusters</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">n</span><span class="o">=</span><span class="default_value">10</span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.clusters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get n ‘most common’ documents from each document cluster.
 most common refers to largest contribution in group membership vector.
 For the non-overlapping case, each document belongs to one and only one group with prob 1.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="trisbm.trisbm.trisbm.clusters_query">
+<code class="sig-name descname">clusters_query</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">doc_index</span></em>, <em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.clusters_query" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all documents in the same group as the query-document.
+Note: Works only for non-overlapping model.
+For overlapping case, we need something else.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt id="trisbm.trisbm.trisbm.draw">
-<code class="sig-name descname"><span class="pre">draw</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#trisbm.trisbm.trisbm.draw" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="sig-name descname">draw</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm.draw"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisbm.trisbm.trisbm.draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw the network</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>*args</strong> – positional arguments to pass to self.state.draw</p></li>
+<li><p><strong>**kwargs</strong> – keyword argument to pass to self.state.draw</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt id="trisbm.trisbm.trisbm.dump_model">
-<code class="sig-name descname"><span class="pre">dump_model</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'trisbm.pkl'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.dump_model" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">dump_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">'trisbm.pkl'</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm.dump_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisbm.trisbm.trisbm.dump_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>Dump model using pickle</p>
+<p>To restore the model:</p>
+<p>import cloudpickle as pickle
+file=open(“trisbm.pkl” ,”rb”)
+model = pickle.load(file)</p>
+<p>file.close()</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="trisbm.trisbm.trisbm.fit">
-<code class="sig-name descname"><span class="pre">fit</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">deg_corr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#trisbm.trisbm.trisbm.fit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_init</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">deg_corr</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">overlap</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">parallel</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm.fit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisbm.trisbm.trisbm.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Fit using minimize_nested_blockmodel_dl</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -104,19 +131,62 @@ For the non-overlapping case, each document belongs to one and only one group wi
 </dd></dl>
 
 <dl class="py method">
-<dt id="trisbm.trisbm.trisbm.get_groups">
-<code class="sig-name descname"><span class="pre">get_groups</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.get_groups" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
-<dt id="trisbm.trisbm.trisbm.get_mdl">
-<code class="sig-name descname"><span class="pre">get_mdl</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.get_mdl" title="Permalink to this definition">¶</a></dt>
-<dd><p>Get minimum description length</p>
+<dt id="trisbm.trisbm.trisbm.get_D">
+<code class="sig-name descname">get_D</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.get_D" title="Permalink to this definition">¶</a></dt>
+<dd><p>return number of doc-nodes == number of documents</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="trisbm.trisbm.trisbm.get_N">
+<code class="sig-name descname">get_N</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.get_N" title="Permalink to this definition">¶</a></dt>
+<dd><p>return number of edges == tokens</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="trisbm.trisbm.trisbm.get_V">
+<code class="sig-name descname">get_V</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.get_V" title="Permalink to this definition">¶</a></dt>
+<dd><p>return number of word-nodes == types</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="trisbm.trisbm.trisbm.get_groups">
+<code class="sig-name descname">get_groups</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm.get_groups"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisbm.trisbm.trisbm.get_groups" title="Permalink to this definition">¶</a></dt>
+<dd><p>return groups</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>l</strong> – hierarchy level</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="trisbm.trisbm.trisbm.get_mdl">
+<code class="sig-name descname">get_mdl</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm.get_mdl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisbm.trisbm.trisbm.get_mdl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get minimum description length</p>
+<p>Proxy to self.state.entropy()</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="trisbm.trisbm.trisbm.group_membership">
+<code class="sig-name descname">group_membership</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.group_membership" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="simple">
+<dt>Return the group-membership vectors for</dt><dd><ul class="simple">
+<li><p>document-nodes, p_td_d, array with shape Bd x D</p></li>
+<li><p>word-nodes, p_tw_w, array with shape Bw x V</p></li>
+</ul>
+</dd>
+</dl>
+<p>It gives the probability of a nodes belonging to one of the groups.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="trisbm.trisbm.trisbm.group_to_group_mixture">
+<code class="sig-name descname">group_to_group_mixture</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">norm</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.group_to_group_mixture" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="trisbm.trisbm.trisbm.load_graph">
-<code class="sig-name descname"><span class="pre">load_graph</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'graph.xml.gz'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#trisbm.trisbm.trisbm.load_graph" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">load_graph</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">'graph.xml.gz'</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm.load_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisbm.trisbm.trisbm.load_graph" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load a presaved graph</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -126,13 +196,18 @@ For the non-overlapping case, each document belongs to one and only one group wi
 </dd></dl>
 
 <dl class="py method">
+<dt id="trisbm.trisbm.trisbm.load_model">
+<code class="sig-name descname">load_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">'topsbm.pkl'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.load_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="trisbm.trisbm.trisbm.make_graph">
-<code class="sig-name descname"><span class="pre">make_graph</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_kind</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#trisbm.trisbm.trisbm.make_graph" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a graph from a pandas dataframe</p>
+<code class="sig-name descname">make_graph</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">get_kind</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm.make_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisbm.trisbm.trisbm.make_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a graph from a pandas DataFrame</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>df</strong> – DataFrame with words on index and texts on columns</p></li>
+<li><p><strong>df</strong> – DataFrame with words on index and texts on columns. Actually this is a BoW.</p></li>
 <li><p><strong>get_kind</strong> – function that returns 1 or 2 given an element of df.index. [1 for words 2 for keywords]</p></li>
 </ul>
 </dd>
@@ -140,8 +215,41 @@ For the non-overlapping case, each document belongs to one and only one group wi
 </dd></dl>
 
 <dl class="py method">
+<dt id="trisbm.trisbm.trisbm.make_graph_from_BoW_df">
+<code class="sig-name descname">make_graph_from_BoW_df</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">counts</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">n_min</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.make_graph_from_BoW_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load a graph from a Bag of Words DataFrame</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>should be a DataFrame with where df.index is a list of words and df.columns a list of documents</strong> (<em>df</em>) – </p></li>
+<li><p><strong>arguments</strong> (<em>optional</em>) – </p></li>
+<li><p><strong>counts</strong> (<em>-</em>) – </p></li>
+<li><p><strong>n_min</strong> (<em>-</em>) – </p></li>
+<li><p><strong>int</strong> (<em>filter all word-nodes with less than n_min counts</em><em> (</em><em>default None</em><em>)</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<p>:param :
+:type : type df: DataFrame</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="trisbm.trisbm.trisbm.make_graph_multiple_df">
+<code class="sig-name descname">make_graph_multiple_df</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span><span class="p">:</span> <span class="n">pandas.core.frame.DataFrame</span></em>, <em class="sig-param"><span class="n">df_keyword_list</span><span class="p">:</span> <span class="n">list</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm.make_graph_multiple_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisbm.trisbm.trisbm.make_graph_multiple_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a graph from two dataframes one with words, others with keywords or other layers of information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – DataFrame with words on index and texts on columns</p></li>
+<li><p><strong>df_keyword_list</strong> – list of DataFrames with keywords on index and texts on columns</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="trisbm.trisbm.trisbm.metadata">
-<code class="sig-name descname"><span class="pre">metadata</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.metadata" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">metadata</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">n</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">kind</span><span class="o">=</span><span class="default_value">2</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm.metadata"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisbm.trisbm.trisbm.metadata" title="Permalink to this definition">¶</a></dt>
 <dd><p>get the n most common keywords for each keyword-group in level l.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -152,18 +260,53 @@ For the non-overlapping case, each document belongs to one and only one group wi
 
 <dl class="py method">
 <dt id="trisbm.trisbm.trisbm.metadatumdist">
-<code class="sig-name descname"><span class="pre">metadatumdist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doc_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.metadatumdist" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">metadatumdist</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">doc_index</span></em>, <em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">kind</span><span class="o">=</span><span class="default_value">2</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm.metadatumdist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisbm.trisbm.trisbm.metadatumdist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
+<dt id="trisbm.trisbm.trisbm.multiflip_mcmc_sweep">
+<code class="sig-name descname">multiflip_mcmc_sweep</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">n_steps</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">beta</span><span class="o">=</span><span class="default_value">inf</span></em>, <em class="sig-param"><span class="n">niter</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.multiflip_mcmc_sweep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fit the sbm to the word-document network. Use multtiplip_mcmc_sweep
+- n_steps, int (default:1): number of steps.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="trisbm.trisbm.trisbm.plot">
+<code class="sig-name descname">plot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">nedges</span><span class="o">=</span><span class="default_value">1000</span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot the graph and group structure.
+optional:
+- filename, str; where to save the plot. if None, will not be saved
+- nedges, int; subsample  to plot (faster, less memory)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="trisbm.trisbm.trisbm.plot_topic_dist">
+<code class="sig-name descname">plot_topic_dist</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">l</span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.plot_topic_dist" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="trisbm.trisbm.trisbm.pmi_td_tw">
+<code class="sig-name descname">pmi_td_tw</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.pmi_td_tw" title="Permalink to this definition">¶</a></dt>
+<dd><p>Point-wise mutual information between topic-groups and doc-groups, S(td,tw)
+This is an array of shape Bd x Bw.</p>
+<p>It corresponds to
+S(td,tw) = log P(tw | td) /     ilde{P}(tw | td) .</p>
+<p>This is the log-ratio between
+P(tw | td) == prb of topic tw in doc-group td;</p>
+<blockquote>
+<div><p>ilde{P}(tw | td) = P(tw) expected prob of topic tw in doc-group td under random null model.</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
 <dt id="trisbm.trisbm.trisbm.print_summary">
-<code class="sig-name descname"><span class="pre">print_summary</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tofile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.print_summary" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">print_summary</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">tofile</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.print_summary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print hierarchy summary</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="trisbm.trisbm.trisbm.print_topics">
-<code class="sig-name descname"><span class="pre">print_topics</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.print_topics" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">print_topics</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">format</span><span class="o">=</span><span class="default_value">'csv'</span></em>, <em class="sig-param"><span class="n">path_save</span><span class="o">=</span><span class="default_value">''</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm.print_topics"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisbm.trisbm.trisbm.print_topics" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print topics, topic-distributions, and document clusters for a given level in the hierarchy.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -178,12 +321,12 @@ For the non-overlapping case, each document belongs to one and only one group wi
 
 <dl class="py method">
 <dt id="trisbm.trisbm.trisbm.save_data">
-<code class="sig-name descname"><span class="pre">save_data</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.save_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">save_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.save_data" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="trisbm.trisbm.trisbm.save_graph">
-<code class="sig-name descname"><span class="pre">save_graph</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'graph.xml.gz'</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">None</span><a class="headerlink" href="#trisbm.trisbm.trisbm.save_graph" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">save_graph</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">'graph.xml.gz'</span></em><span class="sig-paren">)</span> &#x2192; None<a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm.save_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#trisbm.trisbm.trisbm.save_graph" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save the graph</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -194,29 +337,30 @@ For the non-overlapping case, each document belongs to one and only one group wi
 
 <dl class="py method">
 <dt id="trisbm.trisbm.trisbm.topicdist">
-<code class="sig-name descname"><span class="pre">topicdist</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doc_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.topicdist" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">topicdist</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">doc_index</span></em>, <em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.topicdist" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="trisbm.trisbm.trisbm.topics">
-<code class="sig-name descname"><span class="pre">topics</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.topics" title="Permalink to this definition">¶</a></dt>
-<dd><p>get the n most common words for each word-group in level l.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>tuples (word,P(w|tw))</p>
-</dd>
-</dl>
+<code class="sig-name descname">topics</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">l</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="n">n</span><span class="o">=</span><span class="default_value">10</span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.topics" title="Permalink to this definition">¶</a></dt>
+<dd><p>get the n most common words for each word-group in level l.
+return tuples (word,P(w|tw))</p>
 </dd></dl>
 
 </dd></dl>
 
 </div>
 </div>
+</div>
+<div class="section" id="licence">
+<h1>Licence<a class="headerlink" href="#licence" title="Permalink to this headline">¶</a></h1>
+<p>This work <a class="reference external" href="https://www.gnu.org/licenses/gpl-faq.en.html#WhyDoesTheGPLPermitUsersToPublishTheirModifiedVersions">is in part based on</a>
+<a class="reference external" href="https://github.com/martingerlach/hSBM_Topicmodel">sbmtm</a> and it is released under the terms of the GNU General Public License
+available along with this program or at &lt;<a class="reference external" href="https://www.gnu.org/licenses/">https://www.gnu.org/licenses/</a>&gt;</p>
 </div>
 
 
           </div>
-          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
@@ -242,14 +386,6 @@ For the non-overlapping case, each document belongs to one and only one group wi
   </ul></li>
 </ul>
 </div>
-
-
-
-
-
-
-
-
         </div>
       </div>
       <div class="clearer"></div>
@@ -258,8 +394,8 @@ For the non-overlapping case, each document belongs to one and only one group wi
       &copy;2021, Filippo Valle.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.3</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.8</a>
       
     </div>
 
