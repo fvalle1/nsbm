@@ -14,7 +14,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/fvalle1/trisbm",
     packages=setuptools.find_packages(),
-    py_modules=["trisbm/sbmtm"],
+    py_modules=["trisbm/sbmtm", "nsbm/nsbm"],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: GPL License",
