@@ -1,7 +1,10 @@
 [![DOI](https://zenodo.org/badge/DOI/10.TBA/TBA.svg)](https://doi.org/TBA)
 [![Documentation Status](https://readthedocs.org/projects/trisbm/badge/?version=latest)](https://trisbm.readthedocs.io/en/latest/?badge=latest)
 [![Python package](https://github.com/fvalle1/trisbm/actions/workflows/python-package.yml/badge.svg)](https://github.com/fvalle1/trisbm/actions/workflows/python-package.yml)
-[![Conda](https://github.com/fvalle1/trisbm/actions/workflows/conda.yml/badge.svg)](https://github.com/fvalle1/trisbm/actions/workflows/conda.yml)
+<!--[![Conda](https://github.com/fvalle1/trisbm/actions/workflows/conda.yml/badge.svg)](https://github.com/fvalle1/trisbm/actions/workflows/conda.yml)-->
+[![conda](https://anaconda.org/conda-forge/nsbm/badges/installer/conda.svg)](https://anaconda.org/conda-forge/nsbm)
+[![GPL](https://anaconda.org/conda-forge/nsbm/badges/license.svg
+)](LICENSE)
 
 # multipartite Stochastic Block Modeling
 
