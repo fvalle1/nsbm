@@ -24,7 +24,7 @@ trisbm module
 ==================
 
 install:
-`conda install trisbm -c conda-forge`
+`conda install nsbm -c conda-forge`
 
 .. toctree::
   :maxdepth: 2
