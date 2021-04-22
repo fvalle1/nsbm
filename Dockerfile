@@ -1,7 +1,7 @@
 FROM jupyter/datascience-notebook:latest
 
 WORKDIR /home/jovyan/work
-COPY environment.yml /home/jovyan/.
+COPY environment.yml /home/jovyan/work.
 
 RUN conda env create -f environment.yml
 RUN conda activate trisbm
