@@ -27,12 +27,15 @@ jobs:
 
       - name: create env
         uses: matthewrmshin/conda-action@v1.1
-        run: conda env create -f environment.yml
+        with:
+          args: conda env create -f environment.yml
         
       - name: activate env
         uses: matthewrmshin/conda-action@v1.1
-        run: conda activate trisbm
+        with:
+          args: conda activate trisbm
                 
       - name: run tests
         uses: matthewrmshin/conda-action@v1.1
-        run: python tests/run_test.py
+        with:
+          args: python tests/run_test.py
