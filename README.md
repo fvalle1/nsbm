@@ -27,11 +27,6 @@ python3 -m pip install . -vv
 conda install -c conda-forge nsbm
 ```
 
-# Run
-
-```bash
-docker run -it -u jovyan -v $PWD:/home/jovyan/work -p 8899:8888 docker.pkg.github.com/fvalle1/trisbm/trisbm:latest
-```
 
 # Example
 ```python
@@ -58,6 +53,15 @@ model.make_graph_multiple_df(df, df_key_list)
 
 model.fit(n_init=1, B_min=50, verbose=False)
 ```
+
+
+# Run with Docker
+
+```bash
+docker run -it -u jovyan -v $PWD:/home/jovyan/work -p 8899:8888 docker.pkg.github.com/fvalle1/trisbm/trisbm:latest
+```
+
+If a *graph.xml.gz* file is found in the current dir the analysis will be performed on it.
 
 # Tests
 
