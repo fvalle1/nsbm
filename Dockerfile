@@ -1,16 +1,11 @@
 FROM jupyter/datascience-notebook:latest
 
-RUN conda install -c conda-forge mamba -y
-RUN mamba install graph-tool -y
-RUN mamba install numpy matplotlib-base -y
-RUN python3 -m pip install pandas cloudpickle
-
 WORKDIR /home/jovyan/work
-COPY run.py /home/jovyan/.
-COPY trisbm.py /home/jovyan/.
-COPY requirements.txt /home/jovyan/.
+COPY environment.yml /home/jovyan/.
 
-RUN python3 -m pip install -r /home/jovyan/requirements.txt
+RUN conda env create -f environment.yml
+RUN conda activate trisbm
+COPY run.py /home/jovyan/.
 
 ENTRYPOINT ["python3", "/home/jovyan/run.py"]
 CMD [""]
