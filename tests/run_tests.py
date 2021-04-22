@@ -9,6 +9,10 @@ class TriTest(unittest.TestCase):
     def test_import(self):
         model = trisbm()
 
+    def test_import_nsbm(self):
+        from nsbm import nsbm
+        model = nsbm()
+
     def test_make_graph(self):
         import pandas as pd
         import numpy as np
