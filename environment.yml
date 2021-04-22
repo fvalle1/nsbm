@@ -2,6 +2,7 @@ name: trisbm
 channels:
   - conda-forge
 dependencies:
+  - pip
   - numpy
   - matplotlib
   - graph-tool
