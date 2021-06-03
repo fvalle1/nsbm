@@ -25,14 +25,13 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: conda-action
-        uses: matthewrmshin/conda-action@v1.1
-
       - name: create env
-        run: conda env create -f environment.yml
-        
-      - name: activate env
-        run: conda activate env
+        uses: matthewrmshin/conda-action@v1
+          with:
+            args: conda env update --file environment.yml --name base
                 
       - name: run tests
-        run: python tests/run_test.py
+        uses: matthewrmshin/conda-action@v1
+        with:
+          args:
+            python tests/run_test.py
