@@ -34,4 +34,4 @@ jobs:
         uses: matthewrmshin/conda-action@v1
         with:
           args:
-            python tests/run_test.py
+            python tests/run_tests.py
