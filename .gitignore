@@ -3,8 +3,15 @@
 *.pdf
 
 __pycache__/
+hSBM_Topicmodel/__pycache__/
 .ipynb_checkpoints
 *.csv
 *.tsv
 *.png
 *.txt
+mirna/
+sdist/
+trisbm.egg-info
+.DS_Store
+*.tar
+.vscode/

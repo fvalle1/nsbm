@@ -6,7 +6,7 @@ name: Docker package
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ main develop]
+    branches: [ main, develop]
   pull_request:
     branches: [ main ]
 
@@ -27,6 +27,6 @@ jobs:
       - name: login
         run: docker login -u fvalle1 -p ${{ secrets.GITHUB_TOKEN }} docker.pkg.github.com
       - name: Build the Docker image
-        run: docker build docker --file Dockerfile --tag docker.pkg.github.com/fvalle1/trisbm/trisbm:latest
+        run: docker build --file Dockerfile --tag docker.pkg.github.com/fvalle1/trisbm/trisbm:latest .
       - name: Push the Docker image
         run: docker push docker.pkg.github.com/fvalle1/trisbm/trisbm:latest
