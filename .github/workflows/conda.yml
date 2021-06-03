@@ -28,7 +28,7 @@ jobs:
       - name: create env
         uses: matthewrmshin/conda-action@v1
         with:
-          args: conda env update --file environment.yml --name base
+          args: conda env update --file environment.yml
                 
       - name: run tests
         uses: matthewrmshin/conda-action@v1
