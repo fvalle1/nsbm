@@ -19,11 +19,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see < http: // www.gnu.org/licenses/>.
 """
 
-
-
-
-
-
 from __future__ import print_function
 import pandas as pd
 import numpy as np
@@ -764,7 +759,7 @@ class sbmtm():
             self.state.print_summary()
 
     def plot_topic_dist(self, l):
-        groups = self.groups[l]
+        groups = self.get_groups(l)
         p_w_tw = groups['p_w_tw']
         fig=plt.figure(figsize=(12,10))
         plt.imshow(p_w_tw,origin='lower',aspect='auto',interpolation='none')
