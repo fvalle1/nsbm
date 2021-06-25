@@ -125,7 +125,7 @@ class trisbm(sbmtm):
         for ik in range(2,2+self.nbranches):# 2 is doc and words
             self.keywords.append(df.index[self.g.vp['kind'].a[D:] == ik])
         
-    def fit(self, n_init = 5, verbose=True, deg_corr=True, overlap=False, parallel=True, *args, **kwargs) -> None:
+    def fit(self, n_init = 5, verbose=True, deg_corr=True, overlap=False, parallel=True, B_min = 3, B_max=None, *args, **kwargs) -> None:
         """
         Fit using minimize_nested_blockmodel_dl
         
@@ -145,24 +145,19 @@ class trisbm(sbmtm):
         state_args["eweight"] = self.g.ep.count
         min_entropy = np.inf
         best_state = None
+        state_args["deg_corr"] = True
+        state_args["overlap"] = overlap
+
+        if B_max is None:
+            B_max = self.g.num_vertices()
         for _ in range(n_init):
-            state = gt.minimize_nested_blockmodel_dl(self.g, 
-                                    deg_corr = deg_corr,
-                                    overlap = overlap,
-                                    state_args=state_args,
-                                    mcmc_args={'sequential': sequential},
-                                    mcmc_equilibrate_args={'mcmc_args': {'sequential': sequential}},
-                                    mcmc_multilevel_args={
-                                          'mcmc_equilibrate_args': {
-                                              'mcmc_args': {'sequential': sequential}
-                                          },
-                                          'anneal_args': {
-                                              'mcmc_equilibrate_args': {
-                                                   'mcmc_args': {'sequential': sequential}
-                                              }
-                                          }
-                                      },
-                                    verbose=verbose,
+            state = gt.minimize_nested_blockmodel_dl(self.g,
+                                                    state_args=state_args,
+                                                    multilevel_mcmc_args={
+                                                        "B_min": B_min,
+                                                        "B_max": B_max,
+                                                        "verbose": verbose
+                                                    },
                                     *args, 
                                     **kwargs)
             
@@ -236,7 +231,7 @@ class trisbm(sbmtm):
 
         state_l = self.state.project_level(l).copy(overlap=True)
         state_l_edges = state_l.get_edge_blocks()
-        B = state_l.B
+        B = state_l.get_B()
         D, W, K = self._get_shape()
 
         n_wb = np.zeros((W, B))  ## number of half-edges incident on word-node w and labeled as word-group tw
