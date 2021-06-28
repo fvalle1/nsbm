@@ -11,8 +11,8 @@ model = trisbm()
 if "graph.xml.gz" in os.listdir():
     model.load_graph("graph.xml.gz")
 else:
-    D = 25
-    W = 100
+    D = 250
+    W = 1000
     df = pd.DataFrame(
     index = ["w{}".format(w) for w in range(W)],
     columns = ["doc{}".format(w) for w in range(D)],
