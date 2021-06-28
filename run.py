@@ -1,26 +1,28 @@
 import sys
-sys.path.append("/home/jovyan/")
+#sys.path.append("/home/jovyan/")
 from trisbm import trisbm
 import numpy as np
 import pandas as pd
 import os
 
-os.chdir("/home/jovyan/work/")
+#os.chdir("/home/jovyan/work/")
 
 model = trisbm()
 if "graph.xml.gz" in os.listdir():
     model.load_graph("graph.xml.gz")
 else:
+    D = 25
+    W = 100
     df = pd.DataFrame(
-    index = ["w{}".format(w) for w in range(1000)],
-    columns = ["doc{}".format(w) for w in range(250)],
-    data = np.random.randint(1, 100, 250000).reshape((1000, 250)))
+    index = ["w{}".format(w) for w in range(W)],
+    columns = ["doc{}".format(w) for w in range(D)],
+    data = np.random.randint(1, 100, D*W).reshape((W, D)))
 
     df_key_list = [
         pd.DataFrame(
     index = ["w{}".format(w) for w in range(100+ik)],
-    columns = ["doc{}".format(w) for w in range(250)],
-    data = np.random.randint(1, 5+ik, (100+ik)*250).reshape((100+ik, 250)))
+    columns = ["doc{}".format(w) for w in range(D)],
+    data = np.random.randint(1, 5+ik, (100+ik)*D).reshape((100+ik, D)))
         
         for ik in range(3)
     ]

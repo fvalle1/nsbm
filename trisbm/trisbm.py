@@ -146,7 +146,7 @@ class trisbm(sbmtm):
         min_entropy = np.inf
         best_state = None
         state_args["deg_corr"] = True
-        state_args["overlap"] = overlap
+        #state_args["overlap"] = overlap
 
         if B_max is None:
             B_max = self.g.num_vertices()

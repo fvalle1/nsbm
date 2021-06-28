@@ -5,7 +5,7 @@ dependencies:
   - pip
   - numpy
   - matplotlib-base
-  - graph-tool==2.37
+  - graph-tool==2.40
   - pip:
     - cloudpickle
     - pandas
