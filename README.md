@@ -72,7 +72,7 @@ python3 tests/run_tests.py
 
 # Documentation
 
-[Docs](https://fvalle1.github.io/trisbm/)
+[Docs](https://fvalle1.github.io/nsbm/)
 
 [Readthedocs](https://trisbm.readthedocs.io/en/latest/index.html)
 
