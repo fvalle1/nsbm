@@ -1,7 +1,7 @@
 [![DOI](https://zenodo.org/badge/333831359.svg)](https://zenodo.org/badge/latestdoi/333831359)
 [![Documentation Status](https://readthedocs.org/projects/trisbm/badge/?version=latest)](https://trisbm.readthedocs.io/en/latest/?badge=latest)
 [![Python package](https://github.com/fvalle1/trisbm/actions/workflows/python-package.yml/badge.svg)](https://github.com/fvalle1/trisbm/actions/workflows/python-package.yml)
-<!--[![Conda](https://github.com/fvalle1/trisbm/actions/workflows/conda.yml/badge.svg)](https://github.com/fvalle1/trisbm/actions/workflows/conda.yml)-->
+[![Conda test](https://github.com/fvalle1/nsbm/actions/workflows/miniconda.yml/badge.svg)](https://github.com/fvalle1/nsbm/actions/workflows/miniconda.yml)
 [![Docker](https://github.com/fvalle1/trisbm/actions/workflows/docker.yml/badge.svg)](https://github.com/fvalle1/trisbm/actions/workflows/docker.yml)
 [![conda](https://anaconda.org/conda-forge/nsbm/badges/installer/conda.svg)](https://anaconda.org/conda-forge/nsbm)
 [![GPL](https://anaconda.org/conda-forge/nsbm/badges/license.svg
