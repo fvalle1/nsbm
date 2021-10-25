@@ -36,7 +36,7 @@ class trisbm(sbmtm):
     def __init__(self):
         super().__init__()
         self.keywords = []
-        self.nbranches = 1
+        self.nbranches = 0
         
     def save_graph(self, filename="graph.xml.gz")->None:
         """
