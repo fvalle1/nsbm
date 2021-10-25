@@ -136,13 +136,11 @@ class sbmtm():
 
         arguments
         -----------
-        df should be a DataFrame with where df.index is a list of words and df.columns a list of documents
-
+        :type df: DataFrame should be a DataFrame with where df.index is a list of words and df.columns a list of documents
         optional arguments:
         - counts: save edge-multiplicity as counts (default: True)
         - n_min, int: filter all word-nodes with less than n_min counts (default None)
 
-        :type df: DataFrame
         """
         # make a graph
         g = gt.Graph(directed=False)
@@ -334,7 +332,7 @@ class sbmtm():
         '''
         Fit the sbm to the word-document network.
         - hierarchical, bool (default: True). Hierarchical SBM or Flat SBM.
-            Flat SBM not implemented yet.
+        Flat SBM not implemented yet.
         - Bmin, int (default:20): pass an option to the graph-tool inference specifying the minimum number of blocks.
         '''
         sequential = not parallel
@@ -590,6 +588,7 @@ class sbmtm():
         Return the group-membership vectors for
             - document-nodes, p_td_d, array with shape Bd x D
             - word-nodes, p_tw_w, array with shape Bw x V
+
         It gives the probability of a nodes belonging to one of the groups.
         '''
         dict_groups = self.get_groups(l)
