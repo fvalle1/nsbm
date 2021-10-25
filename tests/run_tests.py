@@ -26,6 +26,21 @@ class TriTest(unittest.TestCase):
 
         model = trisbm()
         model.make_graph(df, lambda w: 1 if int(w.split("_")[1]) < 90 else 2)
+    
+    def test_make_bigraph(self):
+        import pandas as pd
+        import numpy as np
+
+        df = pd.DataFrame(
+            index=["w_{}".format(w) for w in range(100)],
+            columns=["doc_{}".format(doc) for doc in range(25)],
+            data=np.random.randint(0, 10, size=2500).reshape((100, 25
+                                                              ))
+        )
+
+        model = trisbm()
+        model.make_graph_from_BoW_df(df)
+        model.fit(verbose=False)
 
     def test_save_read_graph(self):
         import pandas as pd
