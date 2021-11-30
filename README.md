@@ -31,7 +31,7 @@ conda install -c conda-forge nsbm
 
 # Example
 ```python
-from trisbm import trisbm
+from nsbm import nsbm
 import pandas as pd
 import numpy as np
 
@@ -49,10 +49,11 @@ data = np.random.randint(1, 5+ik, (100+ik)*250).reshape((100+ik, 250)))
     for ik in range(3)
 ]
 
-model = trisbm()
+model = nsbm()
 model.make_graph_multiple_df(df, df_key_list)
 
 model.fit(n_init=1, B_min=50, verbose=False)
+model.save_data()
 ```
 
 
