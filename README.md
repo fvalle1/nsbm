@@ -37,13 +37,13 @@ import numpy as np
 
 df = pd.DataFrame(
 index = ["w{}".format(w) for w in range(1000)],
-columns = ["doc{}".format(w) for w in range(250)],
+columns = ["doc{}".format(d) for d in range(250)],
 data = np.random.randint(1, 100, 250000).reshape((1000, 250)))
 
 df_key_list = [
     pd.DataFrame(
 index = ["w{}".format(w) for w in range(100+ik)],
-columns = ["doc{}".format(w) for w in range(250)],
+columns = ["doc{}".format(d) for d in range(250)],
 data = np.random.randint(1, 5+ik, (100+ik)*250).reshape((100+ik, 250)))
     
     for ik in range(3)
