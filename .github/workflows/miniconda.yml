@@ -32,4 +32,4 @@ jobs:
       - name: Run tests
         shell: bash -l {0}
         run: |
-            python3 tests/run_tests.py
+            python3 -c "from nsbm import nsbm"
