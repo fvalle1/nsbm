@@ -29,7 +29,11 @@ jobs:
         run: |
           conda info
           conda list
-      - name: Run tests
+      - name: Run fancy test
         shell: bash -l {0}
         run: |
             python3 -c "from nsbm import nsbm"
+      - name: Run tests
+        shell: bash -l {0}
+        run: |
+            python3 tests/run_tests.py
