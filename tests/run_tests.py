@@ -40,7 +40,7 @@ class TriTest(unittest.TestCase):
 
         model = trisbm()
         model.make_graph_from_BoW_df(df)
-        model.fit(verbose=False)
+        model.fit(B_min = 2, verbose=False)
 
     def test_save_read_graph(self):
         import pandas as pd

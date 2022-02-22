@@ -137,8 +137,6 @@ class trisbm(sbmtm):
         :param  \*args: positional arguments to pass to gt.minimize_nested_blockmodel_dl
         :param  \*\*kwargs: keywords arguments to pass to gt.minimize_nested_blockmodel_dl
         """
-        
-        sequential = not parallel
 
         clabel = self.g.vp['kind']
         state_args = {'clabel': clabel, 'pclabel': clabel}
