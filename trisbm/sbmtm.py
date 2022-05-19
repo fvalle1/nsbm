@@ -61,19 +61,19 @@ class sbmtm():
         '''
         D = len(list_texts)
 
-        ## if there are no document titles, we assign integers 0,...,D-1
-        ## otherwise we use supplied titles
-        if documents == None:
+        # if there are no document titles, we assign integers 0,...,D-1
+        # otherwise we use supplied titles
+        if documents is None:
             list_titles = [str(h) for h in range(D)]
         else:
             list_titles = documents
 
-        ## make a graph
-        ## create a graph
+        # make a graph
+        # create a graph
         g = gt.Graph(directed=False)
-        ## define node properties
-        ## name: docs - title, words - 'word'
-        ## kind: docs - 0, words - 1
+        # define node properties
+        # name: docs - title, words - 'word'
+        # kind: docs - 0, words - 1
         name = g.vp["name"] = g.new_vp("string")
         kind = g.vp["kind"] = g.new_vp("int")
         if counts:
@@ -82,13 +82,13 @@ class sbmtm():
         docs_add = defaultdict(lambda: g.add_vertex())
         words_add = defaultdict(lambda: g.add_vertex())
 
-        ## add all documents first
+        # add all documents first
         for i_d in range(D):
             title = list_titles[i_d]
             d = docs_add[title]
 
-        ## add all documents and words as nodes
-        ## add all tokens as links
+        # add all documents and words as nodes
+        # add all tokens as links
         for i_d in range(D):
             title = list_titles[i_d]
             text = list_texts[i_d]
@@ -108,7 +108,7 @@ class sbmtm():
                     for n in range(count):
                         g.add_edge(d, w)
 
-        ## filter word-types with less than n_min counts
+        # filter word-types with less than n_min counts
         if n_min is not None:
             v_n = g.new_vertex_property("int")
             for v in g.vertices():
@@ -134,19 +134,16 @@ class sbmtm():
         """
         Load a graph from a Bag of Words DataFrame
 
-        arguments
-        -----------
-        :type df: DataFrame should be a DataFrame with where df.index is a list of words and df.columns a list of documents
-        optional arguments:
-        - counts: save edge-multiplicity as counts (default: True)
-        - n_min, int: filter all word-nodes with less than n_min counts (default None)
+        :param df: DataFrame should be a DataFrame with where df.index is a list of words and df.columns a list of documents
+        :param counts: save edge-multiplicity as counts (default: True)
+        :param n_min: filter all word-nodes with less than n_min counts (default None)
 
         """
         # make a graph
         g = gt.Graph(directed=False)
-        ## define node properties
-        ## name: docs - title, words - 'word'
-        ## kind: docs - 0, words - 1
+        # define node properties
+        # name: docs - title, words - 'word'
+        # kind: docs - 0, words - 1
         name = g.vp["name"] = g.new_vp("string")
         kind = g.vp["kind"] = g.new_vp("int")
         if counts:
@@ -169,22 +166,22 @@ class sbmtm():
         words_add = defaultdict(lambda: g.add_vertex())
 
         D = len(df.columns)
-        ## add all documents first
+        # add all documents first
         for i_d in range(D):
             title = df.columns[i_d]
             d = docs_add[title]
             name[d] = title
             kind[d] = 0
 
-        ## add all words
+        # add all words
         for i_d in range(len(df.index)):
             word = df.index[i_d]
             w = words_add[word]
             name[w] = word
             kind[w] = 1
 
-        ## add all documents and words as nodes
-        ## add all tokens as links
+        # add all documents and words as nodes
+        # add all tokens as links
         for i_d in range(D):
             title = df.columns[i_d]
             text = df[title]
@@ -198,7 +195,7 @@ class sbmtm():
                     for n in range(count):
                         g.add_edge(i_d, D + i_w, add_missing=False)
 
-        ## filter word-types with less than n_min counts
+        # filter word-types with less than n_min counts
         if n_min is not None:
             v_n = g.new_vertex_property("int")
             for v in g.vertices():
@@ -255,7 +252,15 @@ class sbmtm():
         with open(filename, 'rb') as f:
             self = pickle.load(f)
 
-    def fit(self, overlap=False, hierarchical=True, B_min=2, B_max=None, n_init=1, parallel=False, verbose=False):
+    def fit(
+            self,
+            overlap=False,
+            hierarchical=True,
+            B_min=2,
+            B_max=None,
+            n_init=1,
+            parallel=False,
+            verbose=False):
         '''
         Fit the sbm to the word-document network.
         - overlap, bool (default: False). Overlapping or Non-overlapping groups.
@@ -264,7 +269,7 @@ class sbmtm():
             Flat SBM not implemented yet.
         - Bmin, int (default:None): pass an option to the graph-tool inference specifying the minimum number of blocks.
         - n_init, int (default:1): number of different initial conditions to run in order to avoid local minimum of MDL.
-        - parallel: passed to mcmc_sweep 
+        - parallel: passed to mcmc_sweep
         If parallel == False each vertex move attempt is made sequentially, where vertices are visited in random order. Otherwise the moves are attempted by sampling vertices randomly, so that the same vertex can be moved more than once, before other vertices had the chance to move.
         '''
 
@@ -289,17 +294,12 @@ class sbmtm():
             if B_max is None:
                 B_max = self.g.num_vertices()
 
-            ## the inference
+            # the inference
             mdl = np.inf
             for i_n_init in range(n_init):
-                state_tmp = gt.minimize_nested_blockmodel_dl(g,
-                                                             state_args=state_args,
-                                                             multilevel_mcmc_args={
-                                                                 "B_min": B_min,
-                                                                 "B_max": B_max,
-                                                                 "verbose": verbose
-                                                             },
-                                                             )
+                state_tmp = gt.minimize_nested_blockmodel_dl(
+                    g, state_args=state_args, multilevel_mcmc_args={
+                        "B_min": B_min, "B_max": B_max, "verbose": verbose}, )
 
                 mdl_tmp = state_tmp.entropy()
                 if mdl_tmp < mdl:
@@ -308,19 +308,19 @@ class sbmtm():
 
             self.mdl = mdl
             self.state = state
-            ## minimum description length
+            # minimum description length
             self.mdl = self.state.entropy()
-            ## collect group membership for each level in the hierarchy
+            # collect group membership for each level in the hierarchy
             L = len(state.levels)
             dict_groups_L = {}
 
-            ## only trivial bipartite structure
+            # only trivial bipartite structure
             if L == 2:
                 self.L = 1
                 for l in range(L - 1):
                     dict_groups_l = self.get_groups(l=l)
                     dict_groups_L[l] = dict_groups_l
-            ## omit trivial levels: l=L-1 (single group), l=L-2 (bipartite)
+            # omit trivial levels: l=L-1 (single group), l=L-2 (bipartite)
             else:
                 self.L = L - 2
                 for l in range(L - 2):
@@ -328,7 +328,14 @@ class sbmtm():
                     dict_groups_L[l] = dict_groups_l
             self.groups = dict_groups_L
 
-    def fit_overlap(self, n_init=1, hierarchical=True, B_min=20, B_max=160, parallel=True, verbose=True):
+    def fit_overlap(
+            self,
+            n_init=1,
+            hierarchical=True,
+            B_min=20,
+            B_max=160,
+            parallel=True,
+            verbose=True):
         '''
         Fit the sbm to the word-document network.
         - hierarchical, bool (default: True). Hierarchical SBM or Flat SBM.
@@ -371,7 +378,7 @@ class sbmtm():
             for l in range(L - 1):
                 dict_groups_l = self.get_groups(l=l)
                 dict_groups_L[l] = dict_groups_l
-                ## omit trivial levels: l=L-1 (single group), l=L-2 (bipartite)
+                # omit trivial levels: l=L-1 (single group), l=L-2 (bipartite)
         else:
             self.L = L - 2
             for l in range(L - 2):
@@ -379,55 +386,12 @@ class sbmtm():
                 dict_groups_L[l] = dict_groups_l
         self.groups = dict_groups_L
 
-    def multiflip_mcmc_sweep(self, n_steps=1000, beta=np.inf, niter=10, verbose=True):
-        '''
-        Fit the sbm to the word-document network. Use multtiplip_mcmc_sweep
-        - n_steps, int (default:1): number of steps.
-        '''
-        g = self.g
-        if g is None:
-            print('No data to fit the SBM. Load some data first (make_graph)')
-        else:
-            clabel = g.vp['kind']
-
-            state_args = {'clabel': clabel, 'pclabel': clabel}
-            if "count" in g.ep:
-                state_args["eweight"] = g.ep.count
-
-        state = self.state
-        if state is not None:
-            state = state.copy(bs=state.get_bs() +
-                               [np.zeros(1)] * 4, sampling=True)
-        else:
-            state = gt.NestedBlockState(g)
-
-        for step in range(n_steps):  # this should be sufficiently large
-          if verbose:
-              print(f"step: {step}")
-          state.multiflip_mcmc_sweep(beta=beta, niter=niter)
-
-        self.state = state
-        ## minimum description length
-        self.mdl = self.state.entropy()
-        ## collect group membership for each level in the hierarchy
-        L = len(state.levels)
-        dict_groups_L = {}
-
-        ## only trivial bipartite structure
-        if L == 2:
-            self.L = 1
-            for l in range(L-1):
-                dict_groups_l = self.get_groups(l=l)
-                dict_groups_L[l] = dict_groups_l
-        ## omit trivial levels: l=L-1 (single group), l=L-2 (bipartite)
-        else:
-            self.L = L-2
-            for l in range(L-2):
-                dict_groups_l = self.get_groups(l=l)
-                dict_groups_L[l] = dict_groups_l
-        self.groups = dict_groups_L
-
-    def multiflip_mcmc_sweep(self, n_steps=1000, beta=np.inf, niter=10, verbose=True):
+    def multiflip_mcmc_sweep(
+            self,
+            n_steps=1000,
+            beta=np.inf,
+            niter=10,
+            verbose=True):
         '''
         Fit the sbm to the word-document network. Use multtiplip_mcmc_sweep
         - n_steps, int (default:1): number of steps.
@@ -455,22 +419,75 @@ class sbmtm():
             state.multiflip_mcmc_sweep(beta=beta, niter=niter)
 
         self.state = state
-        ## minimum description length
+        # minimum description length
         self.mdl = self.state.entropy()
-        ## collect group membership for each level in the hierarchy
+        # collect group membership for each level in the hierarchy
         L = len(state.levels)
         dict_groups_L = {}
 
-        ## only trivial bipartite structure
+        # only trivial bipartite structure
         if L == 2:
             self.L = 1
-            for l in range(L-1):
+            for l in range(L - 1):
                 dict_groups_l = self.get_groups(l=l)
                 dict_groups_L[l] = dict_groups_l
-        ## omit trivial levels: l=L-1 (single group), l=L-2 (bipartite)
+        # omit trivial levels: l=L-1 (single group), l=L-2 (bipartite)
         else:
-            self.L = L-2
-            for l in range(L-2):
+            self.L = L - 2
+            for l in range(L - 2):
+                dict_groups_l = self.get_groups(l=l)
+                dict_groups_L[l] = dict_groups_l
+        self.groups = dict_groups_L
+
+    def multiflip_mcmc_sweep(
+            self,
+            n_steps=1000,
+            beta=np.inf,
+            niter=10,
+            verbose=True):
+        '''
+        Fit the sbm to the word-document network. Use multtiplip_mcmc_sweep
+        - n_steps, int (default:1): number of steps.
+        '''
+        g = self.g
+        if g is None:
+            print('No data to fit the SBM. Load some data first (make_graph)')
+        else:
+            clabel = g.vp['kind']
+
+            state_args = {'clabel': clabel, 'pclabel': clabel}
+            if "count" in g.ep:
+                state_args["eweight"] = g.ep.count
+
+        state = self.state
+        if state is not None:
+            state = state.copy(bs=state.get_bs() +
+                               [np.zeros(1)] * 4, sampling=True)
+        else:
+            state = gt.NestedBlockState(g)
+
+        for step in range(n_steps):  # this should be sufficiently large
+            if verbose:
+                print(f"step: {step}")
+            state.multiflip_mcmc_sweep(beta=beta, niter=niter)
+
+        self.state = state
+        # minimum description length
+        self.mdl = self.state.entropy()
+        # collect group membership for each level in the hierarchy
+        L = len(state.levels)
+        dict_groups_L = {}
+
+        # only trivial bipartite structure
+        if L == 2:
+            self.L = 1
+            for l in range(L - 1):
+                dict_groups_l = self.get_groups(l=l)
+                dict_groups_L[l] = dict_groups_l
+        # omit trivial levels: l=L-1 (single group), l=L-2 (bipartite)
+        else:
+            self.L = L - 2
+            for l in range(L - 2):
                 dict_groups_l = self.get_groups(l=l)
                 dict_groups_L[l] = dict_groups_l
         self.groups = dict_groups_L
@@ -510,7 +527,7 @@ class sbmtm():
 
         words = self.words
 
-        ## loop over all word-groups
+        # loop over all word-groups
         dict_group_words = {}
         for tw in range(Bw):
             p_w_ = p_w_tw[:, tw]
@@ -544,7 +561,7 @@ class sbmtm():
         p_td_d = dict_groups['p_td_d']
 
         docs = self.documents
-        ## loop over all word-groups
+        # loop over all word-groups
         dict_group_docs = {}
         for td in range(Bd):
             p_d_ = p_td_d[td, :]
@@ -569,7 +586,7 @@ class sbmtm():
         p_td_d = dict_groups['p_td_d']
 
         documents = self.documents
-        ## loop over all word-groups
+        # loop over all word-groups
         dict_group_docs = {}
         td = np.argmax(p_td_d[:, doc_index])
 
@@ -604,7 +621,7 @@ class sbmtm():
         V = self.get_V()
         D = self.get_D()
 
-        ## topics
+        # topics
         dict_topics = self.topics(l=l, n=-1)
 
         list_topics = sorted(list(dict_topics.keys()))
@@ -633,7 +650,7 @@ class sbmtm():
         else:
             pass
 
-        ## topic distributions
+        # topic distributions
         list_columns = ['i_doc', 'doc'] + \
             ['Topic %s' % (t + 1) for t in list_topics]
         df = pd.DataFrame(columns=list_columns, index=range(D))
@@ -654,7 +671,7 @@ class sbmtm():
         else:
             pass
 
-        ## doc-groups
+        # doc-groups
 
         dict_clusters = self.clusters(l=l, n=-1)
 
@@ -680,7 +697,7 @@ class sbmtm():
         else:
             pass
 
-        ## word-distr
+        # word-distr
         list_topics = np.arange(len(self.get_groups(l)['p_w_tw'].T))
         list_columns = ["Topic %d" % (t + 1) for t in list_topics]
 
@@ -701,16 +718,15 @@ class sbmtm():
             pass
 
     ###########
-    ########### HELPER FUNCTIONS
+    # HELPER FUNCTIONS
     ###########
     def get_mdl(self):
         return self.mdl
 
-    ## get group-topic statistics
+    # get group-topic statistics
     def get_groups(self, l=0):
         '''
         extract statistics on group membership of nodes form the inferred state.
-        return dictionary
         - B_d, int, number of doc-groups
         - B_w, int, number of word-groups
         - p_tw_w, array B_w x V; word-group-membership:
@@ -721,6 +737,9 @@ class sbmtm():
              prob of word w given topic tw P(w | tw)
         - p_tw_d, array B_w x d; doc-topic mixtures:
              prob of word-group tw in doc d P(tw | d)
+
+        :return: dictionary
+
         '''
         V = self.get_V()
         D = self.get_D()
@@ -736,13 +755,16 @@ class sbmtm():
 
         counts = 'count' in self.g.ep.keys()
 
-        ## count labeled half-edges, group-memberships
+        # count labeled half-edges, group-memberships
         B = state_l.get_B()
-        # number of half-edges incident on word-node w and labeled as word-group tw
+        # number of half-edges incident on word-node w and labeled as
+        # word-group tw
         n_wb = np.zeros((V, B))
-        # number of half-edges incident on document-node d and labeled as document-group td
+        # number of half-edges incident on document-node d and labeled as
+        # document-group td
         n_db = np.zeros((D, B))
-        # number of half-edges incident on document-node d and labeled as word-group td
+        # number of half-edges incident on document-node d and labeled as
+        # word-group td
         n_dbw = np.zeros((D, B))
 
         for e in g.edges():
@@ -770,17 +792,17 @@ class sbmtm():
         ind_w2 = np.where(np.sum(n_dbw, axis=0) > 0)[0]
         n_dbw = n_dbw[:, ind_w2]
 
-        ## group-membership distributions
+        # group-membership distributions
         # group membership of each word-node P(t_w | w)
         p_tw_w = (n_wb / np.sum(n_wb, axis=1)[:, np.newaxis]).T
 
         # group membership of each doc-node P(t_d | d)
         p_td_d = (n_db / np.sum(n_db, axis=1)[:, np.newaxis]).T
 
-        ## topic-distribution for words P(w | t_w)
+        # topic-distribution for words P(w | t_w)
         p_w_tw = n_wb / np.sum(n_wb, axis=0)[np.newaxis, :]
 
-        ## Mixture of word-groups into documetns P(t_w | d)
+        # Mixture of word-groups into documetns P(t_w | d)
         p_tw_d = (n_dbw / np.sum(n_dbw, axis=1)[:, np.newaxis]).T
 
         result = {}
@@ -803,8 +825,12 @@ class sbmtm():
             bs.append(s.get_bs())
 
         # Now we collect the marginals for exactly niter sweeps
-        gt.mcmc_equilibrate(self.state, force_niter=force_niter, mcmc_args=dict(niter=niter),
-                            callback=collect_partitions)
+        gt.mcmc_equilibrate(
+            self.state,
+            force_niter=force_niter,
+            mcmc_args=dict(
+                niter=niter),
+            callback=collect_partitions)
 
         # Disambiguate partitions and obtain marginals
         pmode = gt.PartitionModeState(bs, nested=True, converge=True)
@@ -816,23 +842,23 @@ class sbmtm():
 
         return pv
 
-    ### helper functions
+    # helper functions
 
     def get_V(self):
         '''
-        return number of word-nodes == types
+        :return: number of word-nodes == types
         '''
         return int(np.sum(self.g.vp['kind'].a == 1))  # no. of types
 
     def get_D(self):
         '''
-        return number of doc-nodes == number of documents
+        :return: number of doc-nodes == number of documents
         '''
         return int(np.sum(self.g.vp['kind'].a == 0))  # no. of types
 
     def get_N(self):
         '''
-        return number of edges == tokens
+        :return: number of edges == tokens
         '''
         return int(self.g.num_edges())  # no. of types
 
@@ -846,7 +872,7 @@ class sbmtm():
         state_l = state.project_level(l).copy(overlap=True)
         state_l_edges = state_l.get_edge_blocks()  # labeled half-edges
 
-        ## count labeled half-edges, group-memberships
+        # count labeled half-edges, group-memberships
         B = state_l.get_B()
         n_td_tw = np.zeros((B, B))
 
@@ -865,7 +891,7 @@ class sbmtm():
         Bw = len(ind_w)
 
         n_td_tw = n_td_tw[:Bd, Bd:]
-        if norm == True:
+        if norm:
             return n_td_tw / np.sum(n_td_tw)
         else:
             return n_td_tw
