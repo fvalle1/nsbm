@@ -1,4 +1,4 @@
-tutorial
+Tutorial
 ======================
 
 Create a fake dataset
@@ -68,9 +68,16 @@ Parameters:
 - parallel the model will be fitted with heavy parallelization
 - verbose if True, print the progress
 
+The fit is performed using :py:func:`graph_tool.inference.minimize_nested_blockmodel_dl`
+
 Save the results
 *****************
 
 .. code-block:: python
 
     model.save_data()
+
+Stochastic Block Models on graph_tool
+######################################
+
+For a complete tutorial on how to infer network structure using stochastic block models see: :std:doc:`demos/inference/inference`
