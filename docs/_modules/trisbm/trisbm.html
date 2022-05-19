@@ -1,0 +1,666 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>trisbm.trisbm &#8212; trisbm 0.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for trisbm.trisbm</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">triSBM</span>
+
+<span class="sd">Copyright(C) 2021 fvalle1</span>
+
+<span class="sd">This program is free software: you can redistribute it and / or modify</span>
+<span class="sd">it under the terms of the GNU General Public License as published by</span>
+<span class="sd">the Free Software Foundation, either version 3 of the License, or</span>
+<span class="sd">(at your option) any later version.</span>
+
+<span class="sd">This program is distributed in the hope that it will be useful,</span>
+<span class="sd">but WITHOUT ANY WARRANTY</span>
+<span class="sd">without even the implied warranty of</span>
+<span class="sd">MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span>
+<span class="sd">GNU General Public License for more details.</span>
+
+<span class="sd">You should have received a copy of the GNU General Public License</span>
+<span class="sd">along with this program.  If not, see &lt; http: // www.gnu.org/licenses/&gt;.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">graph_tool.all</span> <span class="k">as</span> <span class="nn">gt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">cloudpickle</span> <span class="k">as</span> <span class="nn">pickle</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Inherit hSBM code from https://github.com/martingerlach/hSBM_Topicmodel</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">from</span> <span class="nn">trisbm.sbmtm</span> <span class="kn">import</span> <span class="n">sbmtm</span>
+
+<div class="viewcode-block" id="trisbm"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm">[docs]</a><span class="k">class</span> <span class="nc">trisbm</span><span class="p">(</span><span class="n">sbmtm</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Class to run trisbm</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">keywords</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nbranches</span> <span class="o">=</span> <span class="mi">1</span>
+        
+<div class="viewcode-block" id="trisbm.save_graph"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.save_graph">[docs]</a>    <span class="k">def</span> <span class="nf">save_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;graph.xml.gz&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save the graph</span>
+
+<span class="sd">        :param filename: name of the graph stored</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="trisbm.load_graph"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.load_graph">[docs]</a>    <span class="k">def</span> <span class="nf">load_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;graph.xml.gz&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Load a presaved graph</span>
+
+<span class="sd">        :param filename: graph to load</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">gt</span><span class="o">.</span><span class="n">load_graph</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">documents</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">][</span><span class="n">v</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">][</span><span class="n">v</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">metadata_indexes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">a</span><span class="p">)</span>
+        <span class="n">metadata_indexes</span> <span class="o">=</span> <span class="n">metadata_indexes</span><span class="p">[</span><span class="n">metadata_indexes</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span> <span class="c1">#no doc or words</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nbranches</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">metadata_indexes</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i_keyword</span> <span class="ow">in</span> <span class="n">metadata_indexes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">v</span><span class="p">]</span>
+                                        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">][</span><span class="n">v</span><span class="p">]</span> <span class="o">==</span> <span class="n">i_keyword</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="trisbm.make_graph_multiple_df"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.make_graph_multiple_df">[docs]</a>    <span class="k">def</span> <span class="nf">make_graph_multiple_df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">df_keyword_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a graph from two dataframes one with words, others with keywords or other layers of information</span>
+
+<span class="sd">        :param df: DataFrame with words on index and texts on columns</span>
+<span class="sd">        :param df_keyword_list: list of DataFrames with keywords on index and texts on columns</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df_all</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span> <span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">ikey</span><span class="p">,</span><span class="n">df_keyword</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">df_keyword_list</span><span class="p">):</span>
+            <span class="n">df_keyword</span> <span class="o">=</span> <span class="n">df_keyword</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+            <span class="n">df_keyword</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s2">&quot;#&quot;</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ikey</span><span class="o">+</span><span class="mi">1</span><span class="p">)])</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">keyword</span><span class="p">)</span> <span class="k">for</span> <span class="n">keyword</span> <span class="ow">in</span> <span class="n">df_keyword</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+            <span class="n">df_keyword</span><span class="p">[</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ikey</span><span class="o">+</span><span class="mi">2</span>
+            <span class="n">df_all</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">df_all</span><span class="p">,</span><span class="n">df_keyword</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">get_kind</span><span class="p">(</span><span class="n">word</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="k">else</span> <span class="n">df_all</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">word</span><span class="p">,</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">nbranches</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">df_keyword_list</span><span class="p">)</span>
+       
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_graph</span><span class="p">(</span><span class="n">df_all</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;kind&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">get_kind</span><span class="p">)</span></div>
+        
+<div class="viewcode-block" id="trisbm.make_graph"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.make_graph">[docs]</a>    <span class="k">def</span> <span class="nf">make_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">get_kind</span><span class="p">)</span><span class="o">-&gt;</span><span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a graph from a pandas DataFrame</span>
+
+<span class="sd">        :param df: DataFrame with words on index and texts on columns. Actually this is a BoW.</span>
+<span class="sd">        :param get_kind: function that returns 1 or 2 given an element of df.index. [1 for words 2 for keywords]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">gt</span><span class="o">.</span><span class="n">Graph</span><span class="p">(</span><span class="n">directed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">new_vp</span><span class="p">(</span><span class="s2">&quot;string&quot;</span><span class="p">)</span>
+        <span class="n">kind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s2">&quot;kind&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">new_vp</span><span class="p">(</span><span class="s2">&quot;int&quot;</span><span class="p">)</span>
+        <span class="n">weight</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">ep</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">new_ep</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">)</span>
+        
+        <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">()</span>
+            <span class="n">name</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="n">doc</span>
+            <span class="n">kind</span><span class="p">[</span><span class="n">d</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            
+        <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">:</span>
+            <span class="n">w</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">add_vertex</span><span class="p">()</span>
+            <span class="n">name</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">=</span> <span class="n">word</span>
+            <span class="n">kind</span><span class="p">[</span><span class="n">w</span><span class="p">]</span> <span class="o">=</span> <span class="n">get_kind</span><span class="p">(</span><span class="n">word</span><span class="p">)</span>
+
+        <span class="n">D</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        
+        <span class="k">for</span> <span class="n">i_doc</span><span class="p">,</span> <span class="n">doc</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+            <span class="n">text</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">doc</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">add_edge_list</span><span class="p">([(</span><span class="n">i_doc</span><span class="p">,</span><span class="n">D</span> <span class="o">+</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">),</span><span class="n">text</span><span class="p">)],</span> <span class="n">eprops</span><span class="o">=</span><span class="p">[</span><span class="n">weight</span><span class="p">])</span>
+
+        <span class="n">filter_edges</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">new_edge_property</span><span class="p">(</span><span class="s2">&quot;bool&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">edges</span><span class="p">():</span>
+            <span class="n">filter_edges</span><span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="o">=</span> <span class="n">weight</span><span class="p">[</span><span class="n">e</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">0</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">set_edge_filter</span><span class="p">(</span><span class="n">filter_edges</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">purge_edges</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">clear_filters</span><span class="p">()</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">documents</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">words</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">a</span><span class="p">[</span><span class="n">D</span><span class="p">:]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">ik</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">nbranches</span><span class="p">):</span><span class="c1"># 2 is doc and words</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">a</span><span class="p">[</span><span class="n">D</span><span class="p">:]</span> <span class="o">==</span> <span class="n">ik</span><span class="p">])</span></div>
+        
+<div class="viewcode-block" id="trisbm.fit"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n_init</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">deg_corr</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">overlap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">B_min</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">B_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit using minimize_nested_blockmodel_dl</span>
+<span class="sd">        </span>
+<span class="sd">        :param n_init: number of initialisation. The best will be kept</span>
+<span class="sd">        :param verbose: Print output</span>
+<span class="sd">        :param deg_corr: use deg corrected model</span>
+<span class="sd">        :param overlap: use overlapping model</span>
+<span class="sd">        :param parallel: perform parallel moves</span>
+<span class="sd">        :param  \*args: positional arguments to pass to gt.minimize_nested_blockmodel_dl</span>
+<span class="sd">        :param  \*\*kwargs: keywords arguments to pass to gt.minimize_nested_blockmodel_dl</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">clabel</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span>
+        <span class="n">state_args</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;clabel&#39;</span><span class="p">:</span> <span class="n">clabel</span><span class="p">,</span> <span class="s1">&#39;pclabel&#39;</span><span class="p">:</span> <span class="n">clabel</span><span class="p">}</span>
+        <span class="n">state_args</span><span class="p">[</span><span class="s2">&quot;eweight&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">ep</span><span class="o">.</span><span class="n">count</span>
+        <span class="n">min_entropy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+        <span class="n">best_state</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">state_args</span><span class="p">[</span><span class="s2">&quot;deg_corr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="c1">#state_args[&quot;overlap&quot;] = overlap</span>
+
+        <span class="k">if</span> <span class="n">B_max</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">B_max</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">num_vertices</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_init</span><span class="p">):</span>
+            <span class="n">state</span> <span class="o">=</span> <span class="n">gt</span><span class="o">.</span><span class="n">minimize_nested_blockmodel_dl</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="p">,</span>
+                                                    <span class="n">state_args</span><span class="o">=</span><span class="n">state_args</span><span class="p">,</span>
+                                                    <span class="n">multilevel_mcmc_args</span><span class="o">=</span><span class="p">{</span>
+                                                        <span class="s2">&quot;B_min&quot;</span><span class="p">:</span> <span class="n">B_min</span><span class="p">,</span>
+                                                        <span class="s2">&quot;B_max&quot;</span><span class="p">:</span> <span class="n">B_max</span><span class="p">,</span>
+                                                        <span class="s2">&quot;verbose&quot;</span><span class="p">:</span> <span class="n">verbose</span>
+                                                    <span class="p">},</span>
+                                    <span class="o">*</span><span class="n">args</span><span class="p">,</span> 
+                                    <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            
+            <span class="n">entropy</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">entropy</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">entropy</span> <span class="o">&lt;</span> <span class="n">min_entropy</span><span class="p">:</span>
+                <span class="n">min_entropy</span> <span class="o">=</span> <span class="n">entropy</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="n">state</span>
+                
+        <span class="bp">self</span><span class="o">.</span><span class="n">mdl</span> <span class="o">=</span> <span class="n">min_entropy</span>
+        
+        <span class="n">L</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">levels</span><span class="p">)</span>
+        <span class="n">dict_groups_L</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1">## only trivial bipartite structure</span>
+        <span class="k">if</span> <span class="n">L</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="mi">1</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="n">dict_groups_l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_groups</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l</span><span class="p">)</span>
+                <span class="n">dict_groups_L</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">dict_groups_l</span>
+        <span class="c1">## omit trivial levels: l=L-1 (single group), l=L-2 (tripartite)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">L</span> <span class="o">-</span> <span class="mi">2</span>
+            <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">L</span> <span class="o">-</span> <span class="mi">2</span><span class="p">):</span>
+                <span class="n">dict_groups_l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_groups</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l</span><span class="p">)</span>
+                <span class="n">dict_groups_L</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">dict_groups_l</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="n">dict_groups_L</span></div>
+
+<div class="viewcode-block" id="trisbm.dump_model"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.dump_model">[docs]</a>    <span class="k">def</span> <span class="nf">dump_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;trisbm.pkl&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Dump model using pickle</span>
+
+<span class="sd">        To restore the model:</span>
+
+<span class="sd">        import cloudpickle as pickle</span>
+<span class="sd">        file=open(\&quot;trisbm.pkl\&quot; ,\&quot;rb\&quot;)</span>
+<span class="sd">        model = pickle.load(file)</span>
+
+<span class="sd">        file.close()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="trisbm.get_mdl"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.get_mdl">[docs]</a>    <span class="k">def</span> <span class="nf">get_mdl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Get minimum description length</span>
+
+<span class="sd">        Proxy to self.state.entropy()</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_mdl</span><span class="p">()</span></div>
+            
+<div class="viewcode-block" id="trisbm._get_shape"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm._get_shape">[docs]</a>    <span class="k">def</span> <span class="nf">_get_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: list of tuples (number of documents, number of words, (number of keywords,...))</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">D</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">a</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span> <span class="c1">#documents</span>
+        <span class="n">W</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">a</span> <span class="o">==</span> <span class="mi">1</span><span class="p">))</span> <span class="c1">#words</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">a</span> <span class="o">==</span> <span class="p">(</span><span class="n">k</span><span class="o">+</span><span class="mi">2</span><span class="p">)))</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbranches</span><span class="p">)]</span> <span class="c1">#keywords</span>
+        <span class="k">return</span> <span class="n">D</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">K</span></div>
+
+    <span class="c1"># Helper functions      </span>
+<div class="viewcode-block" id="trisbm.get_groups"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.get_groups">[docs]</a>    <span class="k">def</span> <span class="nf">get_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        return groups</span>
+
+<span class="sd">        :param l: hierarchy level</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1">#sort of cache if groups are already estimated avoid re running</span>
+        <span class="k">if</span> <span class="n">l</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">[</span><span class="n">l</span><span class="p">]</span>
+
+        <span class="n">state_l</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">project_level</span><span class="p">(</span><span class="n">l</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">overlap</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">state_l_edges</span> <span class="o">=</span> <span class="n">state_l</span><span class="o">.</span><span class="n">get_edge_blocks</span><span class="p">()</span>
+        <span class="n">B</span> <span class="o">=</span> <span class="n">state_l</span><span class="o">.</span><span class="n">get_B</span><span class="p">()</span>
+        <span class="n">D</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">K</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_shape</span><span class="p">()</span>
+
+        <span class="n">n_wb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">W</span><span class="p">,</span> <span class="n">B</span><span class="p">))</span>  <span class="c1">## number of half-edges incident on word-node w and labeled as word-group tw</span>
+        <span class="n">n_w_key_b</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">K</span><span class="p">[</span><span class="n">ik</span><span class="p">],</span> <span class="n">B</span><span class="p">))</span> <span class="k">for</span> <span class="n">ik</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbranches</span><span class="p">)]</span>  <span class="c1">## number of half-edges incident on word-node w and labeled as word-group tw</span>
+        <span class="n">n_db</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">D</span><span class="p">,</span> <span class="n">B</span><span class="p">))</span>  <span class="c1">## number of half-edges incident on document-node d and labeled as document-group td</span>
+        <span class="n">n_dbw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">D</span><span class="p">,</span> <span class="n">B</span><span class="p">))</span> <span class="c1">## number of half-edges incident on document-node d and labeled as word-group tw</span>
+        <span class="n">n_dbw_key</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">D</span><span class="p">,</span> <span class="n">B</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbranches</span><span class="p">)]</span> <span class="c1">## number of half-edges incident on document-node d and labeled as keyword-group tw_key</span>
+
+        <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">edges</span><span class="p">():</span>
+            <span class="n">z1</span><span class="p">,</span> <span class="n">z2</span> <span class="o">=</span> <span class="n">state_l_edges</span><span class="p">[</span><span class="n">e</span><span class="p">]</span>
+            <span class="n">v1</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">source</span><span class="p">()</span>
+            <span class="n">v2</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">target</span><span class="p">()</span>
+            <span class="n">weight</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">ep</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">][</span><span class="n">e</span><span class="p">]</span>
+            <span class="n">n_db</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">v1</span><span class="p">),</span> <span class="n">z1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">weight</span>
+            <span class="n">kind</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">][</span><span class="n">v2</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">kind</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">n_wb</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span> <span class="o">-</span> <span class="n">D</span><span class="p">,</span> <span class="n">z2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">weight</span>
+                <span class="n">n_dbw</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">v1</span><span class="p">),</span> <span class="n">z2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">weight</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">n_w_key_b</span><span class="p">[</span><span class="n">kind</span><span class="o">-</span><span class="mi">2</span><span class="p">][</span><span class="nb">int</span><span class="p">(</span><span class="n">v2</span><span class="p">)</span> <span class="o">-</span> <span class="n">D</span> <span class="o">-</span> <span class="n">W</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">(</span><span class="n">K</span><span class="p">[:(</span><span class="n">kind</span><span class="o">-</span><span class="mi">2</span><span class="p">)]),</span> <span class="n">z2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">weight</span>
+                <span class="n">n_dbw_key</span><span class="p">[</span><span class="n">kind</span><span class="o">-</span><span class="mi">2</span><span class="p">][</span><span class="nb">int</span><span class="p">(</span><span class="n">v1</span><span class="p">),</span> <span class="n">z2</span><span class="p">]</span> <span class="o">+=</span> <span class="n">weight</span>
+
+        <span class="c1">#p_w = np.sum(n_wb, axis=1) / float(np.sum(n_wb))</span>
+
+        <span class="n">ind_d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n_db</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">Bd</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ind_d</span><span class="p">)</span>
+        <span class="n">n_db</span> <span class="o">=</span> <span class="n">n_db</span><span class="p">[:,</span> <span class="n">ind_d</span><span class="p">]</span>
+
+        <span class="n">ind_w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n_wb</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">Bw</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">ind_w</span><span class="p">)</span>
+        <span class="n">n_wb</span> <span class="o">=</span> <span class="n">n_wb</span><span class="p">[:,</span> <span class="n">ind_w</span><span class="p">]</span>
+
+        <span class="n">ind_w2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n_dbw</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">n_dbw</span> <span class="o">=</span> <span class="n">n_dbw</span><span class="p">[:,</span> <span class="n">ind_w2</span><span class="p">]</span>
+
+        <span class="n">ind_w_key</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">ind_w2_keyword</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">Bk</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">ik</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbranches</span><span class="p">):</span>
+            <span class="n">ind_w_key</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n_w_key_b</span><span class="p">[</span><span class="n">ik</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">Bk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ind_w_key</span><span class="p">[</span><span class="n">ik</span><span class="p">]))</span>
+            <span class="n">n_w_key_b</span><span class="p">[</span><span class="n">ik</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_w_key_b</span><span class="p">[</span><span class="n">ik</span><span class="p">][:,</span> <span class="n">ind_w_key</span><span class="p">[</span><span class="n">ik</span><span class="p">]]</span>
+            
+            <span class="n">ind_w2_keyword</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n_dbw_key</span><span class="p">[</span><span class="n">ik</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">n_dbw_key</span><span class="p">[</span><span class="n">ik</span><span class="p">]</span> <span class="o">=</span> <span class="n">n_dbw_key</span><span class="p">[</span><span class="n">ik</span><span class="p">][:,</span> <span class="n">ind_w2_keyword</span><span class="p">[</span><span class="n">ik</span><span class="p">]]</span>
+        
+
+        <span class="c1"># group membership of each word-node P(t_w | w)</span>
+        <span class="n">p_tw_w</span> <span class="o">=</span> <span class="p">(</span><span class="n">n_wb</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n_wb</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="n">p_tk_w_key</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ik</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbranches</span><span class="p">):</span>
+            <span class="c1"># group membership of each keyword-node P(t_k | keyword)</span>
+            <span class="n">p_tk_w_key</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">n_w_key_b</span><span class="p">[</span><span class="n">ik</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n_w_key_b</span><span class="p">[</span><span class="n">ik</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+        
+        <span class="c1">## topic-distribution for words P(w | t_w)</span>
+        <span class="n">p_w_tw</span> <span class="o">=</span> <span class="n">n_wb</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n_wb</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:]</span>
+        
+        <span class="n">p_w_key_tk</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ik</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbranches</span><span class="p">):</span>
+            <span class="c1">## topickey-distribution for keywords P(keyword | t_w_key)</span>
+            <span class="n">p_w_key_tk</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">n_w_key_b</span><span class="p">[</span><span class="n">ik</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n_w_key_b</span><span class="p">[</span><span class="n">ik</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)[</span><span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">,</span> <span class="p">:])</span>
+        
+        <span class="c1">## Mixture of word-groups into documetns P(t_w | d)</span>
+        <span class="n">p_tw_d</span> <span class="o">=</span> <span class="p">(</span><span class="n">n_dbw</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n_dbw</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="n">p_tk_d</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ik</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbranches</span><span class="p">):</span>
+            <span class="c1">## Mixture of word-groups into documetns P(t_w | d)</span>
+            <span class="n">p_tk_d</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">n_dbw_key</span><span class="p">[</span><span class="n">ik</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n_dbw_key</span><span class="p">[</span><span class="n">ik</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+        
+        <span class="c1"># group membership of each doc-node P(t_d | d)</span>
+        <span class="n">p_td_d</span> <span class="o">=</span> <span class="p">(</span><span class="n">n_db</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n_db</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="n">result</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;Bd&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Bd</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;Bw&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Bw</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;Bk&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Bk</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;p_tw_w&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_tw_w</span>
+        <span class="n">result</span><span class="p">[</span><span class="s2">&quot;p_tk_w_key&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_tk_w_key</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;p_td_d&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_td_d</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;p_w_tw&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_w_tw</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;p_w_key_tk&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_w_key_tk</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;p_tw_d&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_tw_d</span>
+        <span class="n">result</span><span class="p">[</span><span class="s1">&#39;p_tk_d&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">p_tk_d</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">groups</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">result</span>
+
+        <span class="k">return</span> <span class="n">result</span></div>
+    
+<div class="viewcode-block" id="trisbm.metadata"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.metadata">[docs]</a>    <span class="k">def</span> <span class="nf">metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        get the n most common keywords for each keyword-group in level l.</span>
+<span class="sd">        </span>
+<span class="sd">        :return: tuples (keyword,P(kw|tk))</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+
+        <span class="n">dict_groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_groups</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+        <span class="n">Bw</span> <span class="o">=</span> <span class="n">dict_groups</span><span class="p">[</span><span class="s1">&#39;Bk&#39;</span><span class="p">][</span><span class="n">kind</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">p_w_tw</span> <span class="o">=</span> <span class="n">dict_groups</span><span class="p">[</span><span class="s1">&#39;p_w_key_tk&#39;</span><span class="p">][</span><span class="n">kind</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="n">words</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="p">[</span><span class="n">kind</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="c1">## loop over all word-groups</span>
+        <span class="n">dict_group_keywords</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">tw</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">Bw</span><span class="p">):</span>
+            <span class="n">p_w_</span> <span class="o">=</span> <span class="n">p_w_tw</span><span class="p">[:,</span> <span class="n">tw</span><span class="p">]</span>
+            <span class="n">ind_w_</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">p_w_</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">list_words_tw</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">ind_w_</span><span class="p">[:</span><span class="n">n</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">p_w_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">list_words_tw</span> <span class="o">+=</span> <span class="p">[(</span><span class="n">words</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">p_w_</span><span class="p">[</span><span class="n">i</span><span class="p">])]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">break</span>
+            <span class="n">dict_group_keywords</span><span class="p">[</span><span class="n">tw</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_words_tw</span>
+        <span class="k">return</span> <span class="n">dict_group_keywords</span></div>
+
+<div class="viewcode-block" id="trisbm.metadatumdist"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.metadatumdist">[docs]</a>    <span class="k">def</span> <span class="nf">metadatumdist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_index</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+        <span class="n">dict_groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_groups</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
+        <span class="n">p_tk_d</span> <span class="o">=</span> <span class="n">dict_groups</span><span class="p">[</span><span class="s1">&#39;p_tk_d&#39;</span><span class="p">][</span><span class="n">kind</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">list_topics_tk</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">tk</span><span class="p">,</span> <span class="n">p_tk</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">p_tk_d</span><span class="p">[:,</span> <span class="n">doc_index</span><span class="p">]):</span>
+            <span class="n">list_topics_tk</span> <span class="o">+=</span> <span class="p">[(</span><span class="n">tk</span><span class="p">,</span> <span class="n">p_tk</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">list_topics_tk</span></div>
+    
+<div class="viewcode-block" id="trisbm.print_topics"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.print_topics">[docs]</a>    <span class="k">def</span> <span class="nf">print_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">,</span> <span class="n">path_save</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+        <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">        Print topics, topic-distributions, and document clusters for a given level in the hierarchy.</span>
+<span class="sd">        </span>
+<span class="sd">        :param l: level to store</span>
+<span class="sd">        :param format: csv (default) or html</span>
+<span class="sd">        :param path_save: path/to/store/file</span>
+<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="n">D</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">K</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_shape</span><span class="p">()</span>
+
+        <span class="c1">## topics</span>
+        <span class="n">dict_topics</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topics</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l</span><span class="p">,</span> <span class="n">n</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">list_topics</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">dict_topics</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="n">list_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Topic </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">list_topics</span><span class="p">]</span>
+
+        <span class="n">T</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_topics</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">list_columns</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">W</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">list_topics</span><span class="p">:</span>
+            <span class="n">list_w</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">dict_topics</span><span class="p">[</span><span class="n">t</span><span class="p">]]</span>
+            <span class="n">V_t</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_w</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">V_t</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_w</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;csv&#39;</span><span class="p">:</span>
+            <span class="n">fname_save</span> <span class="o">=</span> <span class="s1">&#39;trisbm_level_</span><span class="si">%s</span><span class="s1">_topics.csv&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">l</span><span class="p">)</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_save</span><span class="p">,</span> <span class="n">fname_save</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;html&#39;</span><span class="p">:</span>
+            <span class="n">fname_save</span> <span class="o">=</span> <span class="s1">&#39;trisbm_level_</span><span class="si">%s</span><span class="s1">_topics.html&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">l</span><span class="p">)</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_save</span><span class="p">,</span> <span class="n">fname_save</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;tsv&#39;</span><span class="p">:</span>
+            <span class="n">fname_save</span> <span class="o">=</span> <span class="s1">&#39;trisbm_level_</span><span class="si">%s</span><span class="s1">_topics.tsv&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">l</span><span class="p">)</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_save</span><span class="p">,</span> <span class="n">fname_save</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="c1">## topic distributions</span>
+        <span class="n">list_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;i_doc&#39;</span><span class="p">,</span> <span class="s1">&#39;doc&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Topic </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">list_topics</span><span class="p">]</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">list_columns</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">D</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i_doc</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">D</span><span class="p">):</span>
+            <span class="n">list_topicdist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">topicdist</span><span class="p">(</span><span class="n">i_doc</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="n">l</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i_doc</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">i_doc</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i_doc</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="p">[</span><span class="n">i_doc</span><span class="p">]</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i_doc</span><span class="p">,</span> <span class="mi">2</span><span class="p">:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">list_topicdist</span><span class="p">]</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;csv&#39;</span><span class="p">:</span>
+            <span class="n">fname_save</span> <span class="o">=</span> <span class="s1">&#39;trisbm_level_</span><span class="si">%s</span><span class="s1">_topic-dist.csv&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">l</span><span class="p">)</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_save</span><span class="p">,</span> <span class="n">fname_save</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;html&#39;</span><span class="p">:</span>
+            <span class="n">fname_save</span> <span class="o">=</span> <span class="s1">&#39;trisbm_level_</span><span class="si">%s</span><span class="s1">_topic-dist.html&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">l</span><span class="p">)</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_save</span><span class="p">,</span> <span class="n">fname_save</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+        
+        <span class="c1">## keywords</span>
+        <span class="k">for</span> <span class="n">ik</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">nbranches</span><span class="p">):</span>
+            <span class="n">dict_metadata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l</span><span class="p">,</span> <span class="n">n</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">ik</span><span class="p">)</span>
+
+            <span class="n">list_metadata</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">dict_metadata</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+            <span class="n">list_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Metadatum </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">list_metadata</span><span class="p">]</span>
+
+            <span class="n">T</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_topics</span><span class="p">)</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">list_columns</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">K</span><span class="p">[</span><span class="n">ik</span><span class="o">-</span><span class="mi">2</span><span class="p">]))</span>
+
+            <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">list_metadata</span><span class="p">:</span>
+                <span class="n">list_w</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">dict_metadata</span><span class="p">[</span><span class="n">t</span><span class="p">]]</span>
+                <span class="n">V_t</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_w</span><span class="p">)</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">V_t</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_w</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;csv&#39;</span><span class="p">:</span>
+                <span class="n">fname_save</span> <span class="o">=</span> <span class="s1">&#39;trisbm_level_</span><span class="si">%s</span><span class="s1">_kind_</span><span class="si">%s</span><span class="s1">_metadata.csv&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">ik</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_save</span><span class="p">,</span> <span class="n">fname_save</span><span class="p">)</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;html&#39;</span><span class="p">:</span>
+                <span class="n">fname_save</span> <span class="o">=</span> <span class="s1">&#39;trisbm_level_</span><span class="si">%s</span><span class="s1">_kind_</span><span class="si">%s</span><span class="s1">_metadata.html&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">ik</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_save</span><span class="p">,</span> <span class="n">fname_save</span><span class="p">)</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;tsv&#39;</span><span class="p">:</span>
+                <span class="n">fname_save</span> <span class="o">=</span> <span class="s1">&#39;trisbm_level_</span><span class="si">%s</span><span class="s1">_kind_</span><span class="si">%s</span><span class="s1">_metadata.tsv&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">ik</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_save</span><span class="p">,</span> <span class="n">fname_save</span><span class="p">)</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+            <span class="c1">## metadata distributions</span>
+            <span class="n">list_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;i_doc&#39;</span><span class="p">,</span> <span class="s1">&#39;doc&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;Metadatum </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">list_metadata</span><span class="p">]</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">list_columns</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">D</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">i_doc</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">D</span><span class="p">):</span>
+                <span class="n">list_topicdist</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">metadatumdist</span><span class="p">(</span><span class="n">i_doc</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="n">l</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="n">ik</span><span class="p">)</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i_doc</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">i_doc</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i_doc</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">documents</span><span class="p">[</span><span class="n">i_doc</span><span class="p">]</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i_doc</span><span class="p">,</span> <span class="mi">2</span><span class="p">:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">list_topicdist</span><span class="p">]</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;csv&#39;</span><span class="p">:</span>
+                <span class="n">fname_save</span> <span class="o">=</span> <span class="s1">&#39;trisbm_level_</span><span class="si">%s</span><span class="s1">_kind_</span><span class="si">%s</span><span class="s1">_metadatum-dist.csv&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">ik</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_save</span><span class="p">,</span> <span class="n">fname_save</span><span class="p">)</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;html&#39;</span><span class="p">:</span>
+                <span class="n">fname_save</span> <span class="o">=</span> <span class="s1">&#39;trisbm_level_</span><span class="si">%s</span><span class="s1">_kind_</span><span class="si">%s</span><span class="s1">_metadatum-dist.html&#39;</span> <span class="o">%</span> <span class="p">(</span>
+                    <span class="n">l</span><span class="p">,</span><span class="n">ik</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_save</span><span class="p">,</span> <span class="n">fname_save</span><span class="p">)</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="c1">## doc-groups</span>
+
+        <span class="n">dict_clusters</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clusters</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">l</span><span class="p">,</span> <span class="n">n</span><span class="o">=-</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">list_clusters</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">dict_clusters</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+        <span class="n">list_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Cluster </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">list_clusters</span><span class="p">]</span>
+
+        <span class="n">T</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_clusters</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">list_columns</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="nb">range</span><span class="p">(</span><span class="n">D</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">list_clusters</span><span class="p">:</span>
+            <span class="n">list_d</span> <span class="o">=</span> <span class="p">[</span><span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">dict_clusters</span><span class="p">[</span><span class="n">t</span><span class="p">]]</span>
+            <span class="n">D_t</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_d</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">D_t</span><span class="p">,</span> <span class="n">t</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_d</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;csv&#39;</span><span class="p">:</span>
+            <span class="n">fname_save</span> <span class="o">=</span> <span class="s1">&#39;trisbm_level_</span><span class="si">%s</span><span class="s1">_clusters.csv&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">l</span><span class="p">)</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_save</span><span class="p">,</span> <span class="n">fname_save</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;html&#39;</span><span class="p">:</span>
+            <span class="n">fname_save</span> <span class="o">=</span> <span class="s1">&#39;trisbm_level_</span><span class="si">%s</span><span class="s1">_clusters.html&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">l</span><span class="p">)</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_save</span><span class="p">,</span> <span class="n">fname_save</span><span class="p">)</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+        <span class="c1">## word-distr</span>
+        <span class="n">list_topics</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_groups</span><span class="p">(</span><span class="n">l</span><span class="p">)[</span><span class="s1">&#39;p_w_tw&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+        <span class="n">list_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Topic </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">list_topics</span><span class="p">]</span>
+
+        <span class="n">pwtw_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_groups</span><span class="p">(</span><span class="n">l</span><span class="p">)[</span><span class="s1">&#39;p_w_tw&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">words</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">list_columns</span><span class="p">)</span>
+        <span class="n">pwtw_df</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+        <span class="n">pwtw_df</span> <span class="o">=</span> <span class="n">pwtw_df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">pwtw_df</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;csv&#39;</span><span class="p">:</span>
+            <span class="n">fname_save</span> <span class="o">=</span> <span class="s2">&quot;trisbm_level_</span><span class="si">%d</span><span class="s2">_word-dist.csv&quot;</span> <span class="o">%</span> <span class="n">l</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_save</span><span class="p">,</span> <span class="n">fname_save</span><span class="p">)</span>
+            <span class="n">pwtw_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;html&#39;</span><span class="p">:</span>
+            <span class="n">fname_save</span> <span class="o">=</span> <span class="s2">&quot;trisbm_level_</span><span class="si">%d</span><span class="s2">_word-dist.html&quot;</span> <span class="o">%</span> <span class="n">l</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_save</span><span class="p">,</span> <span class="n">fname_save</span><span class="p">)</span>
+            <span class="n">pwtw_df</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+        
+        
+        <span class="c1">## keyword-distr</span>
+        <span class="k">for</span> <span class="n">ik</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">nbranches</span><span class="p">):</span>
+            <span class="n">list_topics</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">get_groups</span><span class="p">(</span><span class="n">l</span><span class="p">)[</span><span class="s1">&#39;p_w_key_tk&#39;</span><span class="p">][</span><span class="n">ik</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+            <span class="n">list_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Metadatum </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">t</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">list_topics</span><span class="p">]</span>
+
+            <span class="n">pw_key_tk_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">get_groups</span><span class="p">(</span><span class="n">l</span><span class="p">)[</span><span class="s1">&#39;p_w_key_tk&#39;</span><span class="p">][</span><span class="n">ik</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="p">[</span><span class="n">ik</span><span class="o">-</span><span class="mi">2</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="n">list_columns</span><span class="p">)</span>
+            <span class="n">pw_key_tk_df</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+            <span class="n">pw_key_tk_df</span> <span class="o">=</span> <span class="n">pw_key_tk_df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">pw_key_tk_df</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;csv&#39;</span><span class="p">:</span>
+                <span class="n">fname_save</span> <span class="o">=</span> <span class="s2">&quot;trisbm_level_</span><span class="si">%d</span><span class="s2">_kind_</span><span class="si">%s</span><span class="s2">_keyword-dist.csv&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">ik</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_save</span><span class="p">,</span> <span class="n">fname_save</span><span class="p">)</span>
+                <span class="n">pw_key_tk_df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">format</span> <span class="o">==</span> <span class="s1">&#39;html&#39;</span><span class="p">:</span>
+                <span class="n">fname_save</span> <span class="o">=</span> <span class="s2">&quot;trisbm_level_</span><span class="si">%d</span><span class="s2">_kind_</span><span class="si">%s</span><span class="s2">_keyword-dist.html&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">l</span><span class="p">,</span><span class="n">ik</span><span class="p">)</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_save</span><span class="p">,</span> <span class="n">fname_save</span><span class="p">)</span>
+                <span class="n">pw_key_tk_df</span><span class="o">.</span><span class="n">to_html</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="trisbm.draw"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Draw the network</span>
+
+<span class="sd">        :param \*args: positional arguments to pass to self.state.draw</span>
+<span class="sd">        :param \*\*kwargs: keyword argument to pass to self.state.draw</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">colmap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vertex_properties</span><span class="p">[</span><span class="s2">&quot;color&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">new_vertex_property</span><span class="p">(</span>
+            <span class="s2">&quot;vector&lt;double&gt;&quot;</span><span class="p">)</span>
+        <span class="c1">#https://medialab.github.io/iwanthue/</span>
+        <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span>  <span class="p">[</span><span class="mi">174</span><span class="p">,</span><span class="mi">80</span><span class="p">,</span><span class="mi">209</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">108</span><span class="p">,</span><span class="mi">192</span><span class="p">,</span><span class="mi">70</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">207</span><span class="p">,</span> <span class="mi">170</span><span class="p">,</span> <span class="mi">60</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">131</span><span class="p">,</span><span class="mi">120</span><span class="p">,</span><span class="mi">197</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">126</span><span class="p">,</span><span class="mi">138</span><span class="p">,</span><span class="mi">65</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">201</span><span class="p">,</span><span class="mi">90</span><span class="p">,</span><span class="mi">138</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">87</span><span class="p">,</span><span class="mi">172</span><span class="p">,</span><span class="mi">125</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">213</span><span class="p">,</span><span class="mi">73</span><span class="p">,</span><span class="mi">57</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">85</span><span class="p">,</span><span class="mi">175</span><span class="p">,</span><span class="mi">209</span><span class="p">],</span>
+                    <span class="p">[</span><span class="mi">193</span><span class="p">,</span><span class="mi">120</span><span class="p">,</span><span class="mi">81</span><span class="p">]]</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="p">():</span>
+            <span class="n">k</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vertex_properties</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">][</span><span class="n">v</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">:</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">colors</span><span class="p">[</span><span class="n">k</span><span class="p">])</span><span class="o">/</span><span class="mf">255.</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">187</span><span class="p">,</span> <span class="mi">129</span><span class="p">,</span> <span class="mi">164</span><span class="p">])</span><span class="o">/</span><span class="mf">255.</span>
+            <span class="n">colmap</span><span class="p">[</span><span class="n">v</span><span class="p">]</span> <span class="o">=</span> <span class="n">color</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span>
+            <span class="n">subsample_edges</span> <span class="o">=</span> <span class="mi">5000</span><span class="p">,</span> 
+            <span class="n">edge_pen_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">ep</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">],</span>
+            <span class="n">vertex_color</span><span class="o">=</span><span class="n">colmap</span><span class="p">,</span>
+            <span class="n">vertex_fill_color</span><span class="o">=</span><span class="n">colmap</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">trisbm</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../trisbm.html">triSBM</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Filippo Valle.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.1.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
