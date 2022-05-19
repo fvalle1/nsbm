@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>sbmtm &mdash; trisbm 0.5.1 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="tutorial" href="tutorial.html" />
+    <link rel="prev" title="nsbm" href="trisbm.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> trisbm
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">nSBM model</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="trisbm.html">nsbm</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">sbmtm</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">License</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html#cite-this-work">Cite this work</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">trisbm</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>sbmtm</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/sbmtm.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-trisbm.sbmtm">
+<span id="sbmtm"></span><h1>sbmtm<a class="headerlink" href="#module-trisbm.sbmtm" title="Permalink to this headline"></a></h1>
+<p>This module is cloned from <a class="reference external" href="https://github.com/martingerlach/hSBM_Topicmodel/commit/261d870cfc884c4f23ddaa213d07ccbddf348c78">https://github.com/martingerlach/hSBM_Topicmodel/commit/261d870cfc884c4f23ddaa213d07ccbddf348c78</a></p>
+<p>Copyright(C) 2020 martingerlach</p>
+<p>This program is free software: you can redistribute it and / or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.</p>
+<p>This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY
+without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.</p>
+<p>You should have received a copy of the GNU General Public License
+along with this program.  If not, see &lt; http: // www.gnu.org/licenses/&gt;.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">trisbm.trisbm.</span></span><span class="sig-name descname"><span class="pre">sbmtm</span></span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm" title="Permalink to this definition"></a></dt>
+<dd><p>Class for topic-modeling with sbm’s.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.clusters">
+<span class="sig-name descname"><span class="pre">clusters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.clusters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.clusters" title="Permalink to this definition"></a></dt>
+<dd><p>Get n ‘most common’ documents from each document cluster.
+most common refers to largest contribution in group membership vector.
+For the non-overlapping case, each document belongs to one and only one group with prob 1.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.clusters_query">
+<span class="sig-name descname"><span class="pre">clusters_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doc_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.clusters_query"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.clusters_query" title="Permalink to this definition"></a></dt>
+<dd><p>Get all documents in the same group as the query-document.
+Note: Works only for non-overlapping model.
+For overlapping case, we need something else.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.dump_model">
+<span class="sig-name descname"><span class="pre">dump_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'topsbm.pkl'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.dump_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.dump_model" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hierarchical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.fit" title="Permalink to this definition"></a></dt>
+<dd><p>Fit the sbm to the word-document network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>overlap</strong> – bool (default: False). Overlapping or Non-overlapping groups. Overlapping implemented in fit_overlap</p></li>
+<li><p><strong>hierarchical</strong> – bool (default: True). Hierarchical SBM or Flat SBM. Flat SBM not implemented yet.</p></li>
+<li><p><strong>Bmin</strong> – int (default:None): pass an option to the graph-tool inference specifying the minimum number of blocks.</p></li>
+<li><p><strong>n_init</strong> – int (default:1): number of different initial conditions to run in order to avoid local minimum of MDL.</p></li>
+<li><p><strong>parallel</strong> – passed to mcmc_sweep If parallel == False each vertex move attempt is made sequentially, where vertices are visited in random order. Otherwise the moves are attempted by sampling vertices randomly, so that the same vertex can be moved more than once, before other vertices had the chance to move.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.fit_overlap">
+<span class="sig-name descname"><span class="pre">fit_overlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hierarchical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">160</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.fit_overlap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.fit_overlap" title="Permalink to this definition"></a></dt>
+<dd><p>Fit the sbm to the word-document network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hierarchical</strong> – bool (default: True). Hierarchical SBM or Flat SBM. Flat SBM not implemented yet.</p></li>
+<li><p><strong>Bmin</strong> – int (default:20): pass an option to the graph-tool inference specifying the minimum number of blocks.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.get_D">
+<span class="sig-name descname"><span class="pre">get_D</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.get_D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.get_D" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>number of doc-nodes == number of documents</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.get_N">
+<span class="sig-name descname"><span class="pre">get_N</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.get_N"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.get_N" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>number of edges == tokens</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.get_V">
+<span class="sig-name descname"><span class="pre">get_V</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.get_V"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.get_V" title="Permalink to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>number of word-nodes == types</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.get_groups">
+<span class="sig-name descname"><span class="pre">get_groups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.get_groups"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.get_groups" title="Permalink to this definition"></a></dt>
+<dd><p>extract statistics on group membership of nodes form the inferred state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>B_d</strong> – int, number of doc-groups</p></li>
+<li><p><strong>B_w</strong> – int, number of word-groups</p></li>
+<li><p><strong>p_tw_w</strong> – array B_w x V; word-group-membership: prob that word-node w belongs to word-group tw: P(tw | w)</p></li>
+<li><p><strong>p_td_d</strong> – array B_d x D; doc-group membership: prob that doc-node d belongs to doc-group td: P(td | d)</p></li>
+<li><p><strong>p_w_tw</strong> – array V x B_w; topic distribution: prob of word w given topic tw P(w | tw)</p></li>
+<li><p><strong>p_tw_d</strong> – array B_w x d; doc-topic mixtures: prob of word-group tw in doc d P(tw | d)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.get_mdl">
+<span class="sig-name descname"><span class="pre">get_mdl</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.get_mdl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.get_mdl" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.group_membership">
+<span class="sig-name descname"><span class="pre">group_membership</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.group_membership"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.group_membership" title="Permalink to this definition"></a></dt>
+<dd><dl class="simple">
+<dt>Return the group-membership vectors for</dt><dd><ul class="simple">
+<li><p>document-nodes, p_td_d, array with shape Bd x D</p></li>
+<li><p>word-nodes, p_tw_w, array with shape Bw x V</p></li>
+</ul>
+</dd>
+</dl>
+<p>It gives the probability of a nodes belonging to one of the groups.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.group_to_group_mixture">
+<span class="sig-name descname"><span class="pre">group_to_group_mixture</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.group_to_group_mixture"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.group_to_group_mixture" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.load_graph">
+<span class="sig-name descname"><span class="pre">load_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'graph.gt.gz'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.load_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.load_graph" title="Permalink to this definition"></a></dt>
+<dd><p>Load a word-document network generated by make_graph() and saved with save_graph().</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.load_model">
+<span class="sig-name descname"><span class="pre">load_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'topsbm.pkl'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.load_model"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.load_model" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.make_graph">
+<span class="sig-name descname"><span class="pre">make_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list_texts</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">documents</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.make_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.make_graph" title="Permalink to this definition"></a></dt>
+<dd><p>Load a corpus and generate the word-document network</p>
+<p>optional arguments:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>documents</strong> – list of str, titles of documents</p></li>
+<li><p><strong>counts</strong> – save edge-multiplicity as counts (default: True)</p></li>
+<li><p><strong>n_min</strong> – int filter all word-nodes with less than n_min counts (default None)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.make_graph_from_BoW_df">
+<span class="sig-name descname"><span class="pre">make_graph_from_BoW_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.make_graph_from_BoW_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.make_graph_from_BoW_df" title="Permalink to this definition"></a></dt>
+<dd><p>Load a graph from a Bag of Words DataFrame</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – DataFrame should be a DataFrame with where df.index is a list of words and df.columns a list of documents</p></li>
+<li><p><strong>counts</strong> – save edge-multiplicity as counts (default: True)</p></li>
+<li><p><strong>n_min</strong> – filter all word-nodes with less than n_min counts (default None)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.multiflip_mcmc_sweep">
+<span class="sig-name descname"><span class="pre">multiflip_mcmc_sweep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">niter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.multiflip_mcmc_sweep"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.multiflip_mcmc_sweep" title="Permalink to this definition"></a></dt>
+<dd><p>Fit the sbm to the word-document network. Use multtiplip_mcmc_sweep</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>n_steps</strong> – int (default:1): number of steps.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nedges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.plot" title="Permalink to this definition"></a></dt>
+<dd><p>Plot the graph and group structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> – str; where to save the plot. if None, will not be saved</p></li>
+<li><p><strong>nedges</strong> – int; subsample  to plot (faster, less memory)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.plot_topic_dist">
+<span class="sig-name descname"><span class="pre">plot_topic_dist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.plot_topic_dist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.plot_topic_dist" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.print_summary">
+<span class="sig-name descname"><span class="pre">print_summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tofile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.print_summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.print_summary" title="Permalink to this definition"></a></dt>
+<dd><p>Print hierarchy summary</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.print_topics">
+<span class="sig-name descname"><span class="pre">print_topics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">format</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'csv'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path_save</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.print_topics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.print_topics" title="Permalink to this definition"></a></dt>
+<dd><p>Print topics, topic-distributions, and document clusters for a given level in the hierarchy.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>format</strong> – csv (default) or html</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.save_data">
+<span class="sig-name descname"><span class="pre">save_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.save_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.save_data" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.save_graph">
+<span class="sig-name descname"><span class="pre">save_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'graph.gt.gz'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.save_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.save_graph" title="Permalink to this definition"></a></dt>
+<dd><p>Save the word-document network generated by make_graph() as filename.
+Allows for loading the graph without calling make_graph().</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.search_consensus">
+<span class="sig-name descname"><span class="pre">search_consensus</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">force_niter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">niter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.search_consensus"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.search_consensus" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.topicdist">
+<span class="sig-name descname"><span class="pre">topicdist</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">doc_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.topicdist"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.topicdist" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="trisbm.trisbm.sbmtm.topics">
+<span class="sig-name descname"><span class="pre">topics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/sbmtm.html#sbmtm.topics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.sbmtm.topics" title="Permalink to this definition"></a></dt>
+<dd><p>get the n most common words for each word-group in level l.
+return tuples (word,P(w|tw))</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="trisbm.html" class="btn btn-neutral float-left" title="nsbm" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="tutorial.html" class="btn btn-neutral float-right" title="tutorial" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Filippo Valle.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

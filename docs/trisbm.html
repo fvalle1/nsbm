@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>triSBM &mdash; trisbm 0.5.1 documentation</title>
+  <title>nsbm &mdash; trisbm 0.5.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
@@ -18,7 +18,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Welcome to trisbm’s documentation!" href="index.html" /> 
+    <link rel="next" title="sbmtm" href="sbmtm.html" />
+    <link rel="prev" title="Install" href="install.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -36,8 +37,23 @@
   </form>
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">triSBM</a></li>
+              <p class="caption" role="heading"><span class="caption-text">Installation</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Install</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">nSBM model</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">nsbm</a></li>
+<li class="toctree-l1"><a class="reference internal" href="sbmtm.html">sbmtm</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">tutorial</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">License</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+<li class="toctree-l1"><a class="reference internal" href="license.html#cite-this-work">Cite this work</a></li>
 </ul>
 
         </div>
@@ -54,7 +70,7 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-      <li>triSBM</li>
+      <li>nsbm</li>
       <li class="wy-breadcrumbs-aside">
             <a href="_sources/trisbm.rst.txt" rel="nofollow"> View page source</a>
       </li>
@@ -65,7 +81,7 @@
            <div itemprop="articleBody">
              
   <section id="module-trisbm.trisbm">
-<span id="trisbm"></span><h1>triSBM<a class="headerlink" href="#module-trisbm.trisbm" title="Permalink to this headline"></a></h1>
+<span id="nsbm"></span><h1>nsbm<a class="headerlink" href="#module-trisbm.trisbm" title="Permalink to this headline"></a></h1>
 <p>triSBM</p>
 <p>Copyright(C) 2021 fvalle1</p>
 <p>This program is free software: you can redistribute it and / or modify
@@ -156,37 +172,56 @@ model = pickle.load(file)</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="trisbm.trisbm.trisbm.fit_overlap">
 <span class="sig-name descname"><span class="pre">fit_overlap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hierarchical</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">B_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">160</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.fit_overlap" title="Permalink to this definition"></a></dt>
-<dd><p>Fit the sbm to the word-document network.
-- hierarchical, bool (default: True). Hierarchical SBM or Flat SBM.
-Flat SBM not implemented yet.
-- Bmin, int (default:20): pass an option to the graph-tool inference specifying the minimum number of blocks.</p>
+<dd><p>Fit the sbm to the word-document network.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hierarchical</strong> – bool (default: True). Hierarchical SBM or Flat SBM. Flat SBM not implemented yet.</p></li>
+<li><p><strong>Bmin</strong> – int (default:20): pass an option to the graph-tool inference specifying the minimum number of blocks.</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="trisbm.trisbm.trisbm.get_D">
 <span class="sig-name descname"><span class="pre">get_D</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.get_D" title="Permalink to this definition"></a></dt>
-<dd><p>return number of doc-nodes == number of documents</p>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>number of doc-nodes == number of documents</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="trisbm.trisbm.trisbm.get_N">
 <span class="sig-name descname"><span class="pre">get_N</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.get_N" title="Permalink to this definition"></a></dt>
-<dd><p>return number of edges == tokens</p>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>number of edges == tokens</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="trisbm.trisbm.trisbm.get_V">
 <span class="sig-name descname"><span class="pre">get_V</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.get_V" title="Permalink to this definition"></a></dt>
-<dd><p>return number of word-nodes == types</p>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>number of word-nodes == types</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="trisbm.trisbm.trisbm.get_groups">
 <span class="sig-name descname"><span class="pre">get_groups</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm.get_groups"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.trisbm.get_groups" title="Permalink to this definition"></a></dt>
-<dd><p>return groups</p>
-<dl class="field-list simple">
+<dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><p><strong>l</strong> – hierarchy level</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>groups</p>
 </dd>
 </dl>
 </dd></dl>
@@ -250,15 +285,15 @@ Flat SBM not implemented yet.
 <dt class="sig sig-object py" id="trisbm.trisbm.trisbm.make_graph_from_BoW_df">
 <span class="sig-name descname"><span class="pre">make_graph_from_BoW_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">counts</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.make_graph_from_BoW_df" title="Permalink to this definition"></a></dt>
 <dd><p>Load a graph from a Bag of Words DataFrame</p>
-<p>:param :
-:type : type df: DataFrame should be a DataFrame with where df.index is a list of words and df.columns a list of documents
-:param optional arguments:
-:param - counts:
-:type - counts: save edge-multiplicity as counts (default: True)
-:param - n_min:
-:type - n_min: filter all word-nodes with less than n_min counts (default None)
-:param int:
-:type int: filter all word-nodes with less than n_min counts (default None)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>df</strong> – DataFrame should be a DataFrame with where df.index is a list of words and df.columns a list of documents</p></li>
+<li><p><strong>counts</strong> – save edge-multiplicity as counts (default: True)</p></li>
+<li><p><strong>n_min</strong> – filter all word-nodes with less than n_min counts (default None)</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -294,17 +329,26 @@ Flat SBM not implemented yet.
 <dl class="py method">
 <dt class="sig sig-object py" id="trisbm.trisbm.trisbm.multiflip_mcmc_sweep">
 <span class="sig-name descname"><span class="pre">multiflip_mcmc_sweep</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_steps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">inf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">niter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.multiflip_mcmc_sweep" title="Permalink to this definition"></a></dt>
-<dd><p>Fit the sbm to the word-document network. Use multtiplip_mcmc_sweep
-- n_steps, int (default:1): number of steps.</p>
+<dd><p>Fit the sbm to the word-document network. Use multtiplip_mcmc_sweep</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>n_steps</strong> – int (default:1): number of steps.</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="trisbm.trisbm.trisbm.plot">
 <span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nedges</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#trisbm.trisbm.trisbm.plot" title="Permalink to this definition"></a></dt>
-<dd><p>Plot the graph and group structure.
-optional:
-- filename, str; where to save the plot. if None, will not be saved
-- nedges, int; subsample  to plot (faster, less memory)</p>
+<dd><p>Plot the graph and group structure.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> – str; where to save the plot. if None, will not be saved</p></li>
+<li><p><strong>nedges</strong> – int; subsample  to plot (faster, less memory)</p></li>
+</ul>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -374,7 +418,8 @@ return tuples (word,P(w|tw))</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to trisbm’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="install.html" class="btn btn-neutral float-left" title="Install" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sbmtm.html" class="btn btn-neutral float-right" title="sbmtm" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>
