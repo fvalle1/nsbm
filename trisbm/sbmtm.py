@@ -55,9 +55,10 @@ class sbmtm():
         Load a corpus and generate the word-document network
 
         optional arguments:
-        - documents: list of str, titles of documents
-        - counts: save edge-multiplicity as counts (default: True)
-        - n_min, int: filter all word-nodes with less than n_min counts (default None)
+
+        :param documents: list of str, titles of documents
+        :param counts: save edge-multiplicity as counts (default: True)
+        :param n_min: int filter all word-nodes with less than n_min counts (default None)
         '''
         D = len(list_texts)
 
@@ -263,14 +264,12 @@ class sbmtm():
             verbose=False):
         '''
         Fit the sbm to the word-document network.
-        - overlap, bool (default: False). Overlapping or Non-overlapping groups.
-            Overlapping implemented in fit_overlap
-        - hierarchical, bool (default: True). Hierarchical SBM or Flat SBM.
-            Flat SBM not implemented yet.
-        - Bmin, int (default:None): pass an option to the graph-tool inference specifying the minimum number of blocks.
-        - n_init, int (default:1): number of different initial conditions to run in order to avoid local minimum of MDL.
-        - parallel: passed to mcmc_sweep
-        If parallel == False each vertex move attempt is made sequentially, where vertices are visited in random order. Otherwise the moves are attempted by sampling vertices randomly, so that the same vertex can be moved more than once, before other vertices had the chance to move.
+
+        :param overlap: bool (default: False). Overlapping or Non-overlapping groups. Overlapping implemented in fit_overlap
+        :param hierarchical: bool (default: True). Hierarchical SBM or Flat SBM. Flat SBM not implemented yet.
+        :param Bmin: int (default:None): pass an option to the graph-tool inference specifying the minimum number of blocks.
+        :param n_init: int (default:1): number of different initial conditions to run in order to avoid local minimum of MDL.
+        :param parallel: passed to mcmc_sweep If parallel == False each vertex move attempt is made sequentially, where vertices are visited in random order. Otherwise the moves are attempted by sampling vertices randomly, so that the same vertex can be moved more than once, before other vertices had the chance to move.
         '''
 
         sequential = not parallel
@@ -338,9 +337,9 @@ class sbmtm():
             verbose=True):
         '''
         Fit the sbm to the word-document network.
-        - hierarchical, bool (default: True). Hierarchical SBM or Flat SBM.
-        Flat SBM not implemented yet.
-        - Bmin, int (default:20): pass an option to the graph-tool inference specifying the minimum number of blocks.
+
+        :param hierarchical: bool (default: True). Hierarchical SBM or Flat SBM. Flat SBM not implemented yet.
+        :param Bmin: int (default:20): pass an option to the graph-tool inference specifying the minimum number of blocks.
         '''
         sequential = not parallel
         g = self.g
@@ -447,7 +446,8 @@ class sbmtm():
             verbose=True):
         '''
         Fit the sbm to the word-document network. Use multtiplip_mcmc_sweep
-        - n_steps, int (default:1): number of steps.
+        
+        :param n_steps: int (default:1): number of steps.
         '''
         g = self.g
         if g is None:
@@ -495,9 +495,9 @@ class sbmtm():
     def plot(self, filename=None, nedges=1000):
         '''
         Plot the graph and group structure.
-        optional:
-        - filename, str; where to save the plot. if None, will not be saved
-        - nedges, int; subsample  to plot (faster, less memory)
+        
+        :param filename: str; where to save the plot. if None, will not be saved
+        :param nedges: int; subsample  to plot (faster, less memory)
         '''
         self.state.draw(layout='bipartite', output=filename,
                         subsample_edges=nedges, hshortcuts=1, hide=0)
@@ -616,7 +616,8 @@ class sbmtm():
     def print_topics(self, l=0, format='csv', path_save=''):
         '''
         Print topics, topic-distributions, and document clusters for a given level in the hierarchy.
-        format: csv (default) or html
+        
+        :param format: csv (default) or html
         '''
         V = self.get_V()
         D = self.get_D()
@@ -727,16 +728,13 @@ class sbmtm():
     def get_groups(self, l=0):
         '''
         extract statistics on group membership of nodes form the inferred state.
-        - B_d, int, number of doc-groups
-        - B_w, int, number of word-groups
-        - p_tw_w, array B_w x V; word-group-membership:
-             prob that word-node w belongs to word-group tw: P(tw | w)
-        - p_td_d, array B_d x D; doc-group membership:
-             prob that doc-node d belongs to doc-group td: P(td | d)
-        - p_w_tw, array V x B_w; topic distribution:
-             prob of word w given topic tw P(w | tw)
-        - p_tw_d, array B_w x d; doc-topic mixtures:
-             prob of word-group tw in doc d P(tw | d)
+        
+        :param B_d: int, number of doc-groups
+        :param B_w: int, number of word-groups
+        :param p_tw_w: array B_w x V; word-group-membership: prob that word-node w belongs to word-group tw: P(tw | w)
+        :param p_td_d: array B_d x D; doc-group membership: prob that doc-node d belongs to doc-group td: P(td | d)
+        :param p_w_tw: array V x B_w; topic distribution: prob of word w given topic tw P(w | tw)
+        :param p_tw_d: array B_w x d; doc-topic mixtures: prob of word-group tw in doc d P(tw | d)
 
         :return: dictionary
 

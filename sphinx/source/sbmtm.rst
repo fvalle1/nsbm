@@ -1,8 +1,8 @@
-nsbm
+sbmtm
 ======================
 
-.. automodule:: trisbm.trisbm    
-.. autoclass:: trisbm.trisbm.trisbm
+.. automodule:: trisbm.sbmtm    
+.. autoclass:: trisbm.trisbm.sbmtm
     :members: fit
     :private-members:
     :inherited-members:
