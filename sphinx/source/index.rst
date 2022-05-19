@@ -20,7 +20,9 @@ with **multiple layers** of information.
    :alt: tripartite network
    :align: center
 
-trisbm module
+Run multi-partite topic models.
+
+nsbm module
 ==================
 
 install:
@@ -28,11 +30,25 @@ install:
 
 .. toctree::
   :maxdepth: 2
+  :caption: Installation
+
+  install
+
+.. toctree::
+  :maxdepth: 2
+  :caption: nSBM model
 
   trisbm
+  sbmtm
 
-Licence
-=================
-This work `is in part based on <https://www.gnu.org/licenses/gpl-faq.en.html#WhyDoesTheGPLPermitUsersToPublishTheirModifiedVersions>`_ 
-`sbmtm <https://github.com/martingerlach/hSBM_Topicmodel>`_ and it is released under the terms of the GNU General Public License
-available along with this program or at <https://www.gnu.org/licenses/>
+.. toctree::
+  :maxdepth: 1
+  :caption: Examples
+
+  tutorial
+
+.. toctree::
+  :maxdepth: 1
+  :caption: License
+
+  license
