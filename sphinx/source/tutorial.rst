@@ -80,4 +80,4 @@ Save the results
 Stochastic Block Models on graph_tool
 ######################################
 
-For a complete tutorial on how to infer network structure using stochastic block models see: :std:doc:`demos/inference/inference`
+For a complete tutorial on how to infer network structure using stochastic block models see `graph_tool tutorial <https://graph-tool.skewed.de/static/doc/demos/inference/inference.html>`_
