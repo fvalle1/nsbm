@@ -14,6 +14,7 @@
         <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
         <script src="_static/doctools.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -48,7 +49,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="tutorial.html">tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">License</span></p>
 <ul>
@@ -81,7 +82,7 @@
            <div itemprop="articleBody">
              
   <section id="module-trisbm.trisbm">
-<span id="nsbm"></span><h1>nsbm<a class="headerlink" href="#module-trisbm.trisbm" title="Permalink to this headline"></a></h1>
+<span id="nsbm"></span><h1>nsbm<a class="headerlink" href="#module-trisbm.trisbm" title="Permalink to this heading"></a></h1>
 <p>triSBM</p>
 <p>Copyright(C) 2021 fvalle1</p>
 <p>This program is free software: you can redistribute it and / or modify
@@ -97,7 +98,7 @@ GNU General Public License for more details.</p>
 along with this program.  If not, see &lt; http: // www.gnu.org/licenses/&gt;.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="trisbm.trisbm.trisbm">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">trisbm.trisbm.</span></span><span class="sig-name descname"><span class="pre">trisbm</span></span><a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.trisbm" title="Permalink to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">trisbm.trisbm.</span></span><span class="sig-name descname"><span class="pre">trisbm</span></span><a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.trisbm" title="Permalink to this definition"></a></dt>
 <dd><p>Class to run trisbm</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="trisbm.trisbm.trisbm._get_shape">
@@ -269,7 +270,7 @@ model = pickle.load(file)</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="trisbm.trisbm.trisbm.make_graph">
-<span class="sig-name descname"><span class="pre">make_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_kind</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm.make_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.trisbm.make_graph" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">make_graph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">get_kind</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm.make_graph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.trisbm.make_graph" title="Permalink to this definition"></a></dt>
 <dd><p>Create a graph from a pandas DataFrame</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -298,7 +299,7 @@ model = pickle.load(file)</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="trisbm.trisbm.trisbm.make_graph_multiple_df">
-<span class="sig-name descname"><span class="pre">make_graph_multiple_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">pandas.core.frame.DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_keyword_list</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm.make_graph_multiple_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.trisbm.make_graph_multiple_df" title="Permalink to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">make_graph_multiple_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataFrame</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">df_keyword_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/trisbm/trisbm.html#trisbm.make_graph_multiple_df"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#trisbm.trisbm.trisbm.make_graph_multiple_df" title="Permalink to this definition"></a></dt>
 <dd><p>Create a graph from two dataframes one with words, others with keywords or other layers of information</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
