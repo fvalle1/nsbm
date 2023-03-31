@@ -1,13 +1,13 @@
 import sys
 #sys.path.append("/home/jovyan/")
-from trisbm import trisbm
+from nsbm import nsbm
 import numpy as np
 import pandas as pd
 import os
 
 #os.chdir("/home/jovyan/work/")
 
-model = trisbm()
+model = nsbm()
 if "graph.xml.gz" in os.listdir():
     model.load_graph("graph.xml.gz")
 else:
@@ -28,7 +28,7 @@ else:
     ]
     model.make_graph_multiple_df(df, df_key_list)
     
-model.fit(verbose=True)
+model.fit(n_init=5, parallel=True, verbose=True)
     
 # state = model.state.copy(bs=model.state.get_bs() + [np.zeros(1)] * 4, sampling = True)
 
