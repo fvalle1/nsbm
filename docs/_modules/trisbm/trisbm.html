@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>trisbm.trisbm &mdash; trisbm 0.5.1 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=b9afe91b"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -24,11 +27,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> trisbm
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            trisbm
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -45,7 +52,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">License</span></p>
 <ul>
@@ -66,9 +73,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>trisbm.trisbm</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">trisbm.trisbm</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -111,8 +118,10 @@
 <span class="sd">&quot;&quot;&quot;</span>
 
 
-<div class="viewcode-block" id="trisbm"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm">[docs]</a><span class="k">class</span> <span class="nc">trisbm</span><span class="p">(</span><span class="n">sbmtm</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="trisbm">
+<a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm">[docs]</a>
+<span class="k">class</span> <span class="nc">trisbm</span><span class="p">(</span><span class="n">sbmtm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Class to run trisbm</span>
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -121,16 +130,21 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">keywords</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">nbranches</span> <span class="o">=</span> <span class="mi">1</span>
 
-<div class="viewcode-block" id="trisbm.save_graph"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.save_graph">[docs]</a>    <span class="k">def</span> <span class="nf">save_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;graph.xml.gz&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="trisbm.save_graph">
+<a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.save_graph">[docs]</a>
+    <span class="k">def</span> <span class="nf">save_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;graph.xml.gz&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Save the graph</span>
 
 <span class="sd">        :param filename: name of the graph stored</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="trisbm.load_graph"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.load_graph">[docs]</a>    <span class="k">def</span> <span class="nf">load_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;graph.xml.gz&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="trisbm.load_graph">
+<a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.load_graph">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;graph.xml.gz&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load a presaved graph</span>
 
 <span class="sd">        :param filename: graph to load</span>
@@ -148,11 +162,14 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="o">.</span><span class="n">append</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">v</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="p">(</span>
             <span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">][</span><span class="n">v</span><span class="p">]</span> <span class="o">==</span> <span class="n">i_keyword</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="trisbm.make_graph_multiple_df"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.make_graph_multiple_df">[docs]</a>    <span class="k">def</span> <span class="nf">make_graph_multiple_df</span><span class="p">(</span>
+
+<div class="viewcode-block" id="trisbm.make_graph_multiple_df">
+<a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.make_graph_multiple_df">[docs]</a>
+    <span class="k">def</span> <span class="nf">make_graph_multiple_df</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span>
             <span class="n">df_keyword_list</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a graph from two dataframes one with words, others with keywords or other layers of information</span>
 
 <span class="sd">        :param df: DataFrame with words on index and texts on columns</span>
@@ -173,8 +190,11 @@
 
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">make_graph</span><span class="p">(</span><span class="n">df_all</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s2">&quot;kind&quot;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">get_kind</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="trisbm.make_graph"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.make_graph">[docs]</a>    <span class="k">def</span> <span class="nf">make_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">get_kind</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="trisbm.make_graph">
+<a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.make_graph">[docs]</a>
+    <span class="k">def</span> <span class="nf">make_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">get_kind</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Create a graph from a pandas DataFrame</span>
 
 <span class="sd">        :param df: DataFrame with words on index and texts on columns. Actually this is a BoW.</span>
@@ -215,7 +235,10 @@
         <span class="k">for</span> <span class="n">ik</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">nbranches</span><span class="p">):</span>  <span class="c1"># 2 is doc and words</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">keywords</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">a</span><span class="p">[</span><span class="n">D</span><span class="p">:]</span> <span class="o">==</span> <span class="n">ik</span><span class="p">])</span></div>
 
-<div class="viewcode-block" id="trisbm.fit"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span>
+
+<div class="viewcode-block" id="trisbm.fit">
+<a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.fit">[docs]</a>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">n_init</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>
             <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -226,7 +249,7 @@
             <span class="n">B_max</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
             <span class="o">*</span><span class="n">args</span><span class="p">,</span>
             <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Fit using minimize_nested_blockmodel_dl</span>
 
 <span class="sd">        :param n_init: number of initialisation. The best will be kept</span>
@@ -283,8 +306,11 @@
                 <span class="n">dict_groups_L</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">dict_groups_l</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="n">dict_groups_L</span></div>
 
-<div class="viewcode-block" id="trisbm.dump_model"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.dump_model">[docs]</a>    <span class="k">def</span> <span class="nf">dump_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;trisbm.pkl&quot;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="trisbm.dump_model">
+<a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.dump_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">dump_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;trisbm.pkl&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Dump model using pickle</span>
 
 <span class="sd">        To restore the model:</span>
@@ -298,16 +324,22 @@
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="trisbm.get_mdl"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.get_mdl">[docs]</a>    <span class="k">def</span> <span class="nf">get_mdl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="trisbm.get_mdl">
+<a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.get_mdl">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_mdl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Get minimum description length</span>
 
 <span class="sd">        Proxy to self.state.entropy()</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_mdl</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="trisbm._get_shape"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm._get_shape">[docs]</a>    <span class="k">def</span> <span class="nf">_get_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="trisbm._get_shape">
+<a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm._get_shape">[docs]</a>
+    <span class="k">def</span> <span class="nf">_get_shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :return: list of tuples (number of documents, number of words, (number of keywords,...))</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">D</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">a</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># documents</span>
@@ -316,9 +348,12 @@
              <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbranches</span><span class="p">)]</span>  <span class="c1"># keywords</span>
         <span class="k">return</span> <span class="n">D</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">K</span></div>
 
+
     <span class="c1"># Helper functions</span>
-<div class="viewcode-block" id="trisbm.get_groups"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.get_groups">[docs]</a>    <span class="k">def</span> <span class="nf">get_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+<div class="viewcode-block" id="trisbm.get_groups">
+<a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.get_groups">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        :param l: hierarchy level</span>
 <span class="sd">        :return: groups</span>
 
@@ -454,8 +489,11 @@
 
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="trisbm.metadata"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.metadata">[docs]</a>    <span class="k">def</span> <span class="nf">metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="trisbm.metadata">
+<a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.metadata">[docs]</a>
+    <span class="k">def</span> <span class="nf">metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        get the n most common keywords for each keyword-group in level l.</span>
 
 <span class="sd">        :return: tuples (keyword,P(kw|tk))</span>
@@ -481,7 +519,10 @@
             <span class="n">dict_group_keywords</span><span class="p">[</span><span class="n">tw</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_words_tw</span>
         <span class="k">return</span> <span class="n">dict_group_keywords</span></div>
 
-<div class="viewcode-block" id="trisbm.metadatumdist"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.metadatumdist">[docs]</a>    <span class="k">def</span> <span class="nf">metadatumdist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_index</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+
+<div class="viewcode-block" id="trisbm.metadatumdist">
+<a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.metadatumdist">[docs]</a>
+    <span class="k">def</span> <span class="nf">metadatumdist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_index</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
         <span class="n">dict_groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_groups</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
         <span class="n">p_tk_d</span> <span class="o">=</span> <span class="n">dict_groups</span><span class="p">[</span><span class="s1">&#39;p_tk_d&#39;</span><span class="p">][</span><span class="n">kind</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span>
         <span class="n">list_topics_tk</span> <span class="o">=</span> <span class="p">[]</span>
@@ -489,8 +530,11 @@
             <span class="n">list_topics_tk</span> <span class="o">+=</span> <span class="p">[(</span><span class="n">tk</span><span class="p">,</span> <span class="n">p_tk</span><span class="p">)]</span>
         <span class="k">return</span> <span class="n">list_topics_tk</span></div>
 
-<div class="viewcode-block" id="trisbm.print_topics"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.print_topics">[docs]</a>    <span class="k">def</span> <span class="nf">print_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">,</span> <span class="n">path_save</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="trisbm.print_topics">
+<a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.print_topics">[docs]</a>
+    <span class="k">def</span> <span class="nf">print_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">,</span> <span class="n">path_save</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Print topics, topic-distributions, and document clusters for a given level in the hierarchy.</span>
 
 <span class="sd">        :param l: level to store</span>
@@ -675,8 +719,11 @@
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">pass</span></div>
 
-<div class="viewcode-block" id="trisbm.draw"><a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.draw">[docs]</a>    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="trisbm.draw">
+<a class="viewcode-back" href="../../trisbm.html#trisbm.trisbm.trisbm.draw">[docs]</a>
+    <span class="k">def</span> <span class="nf">draw</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Draw the network</span>
 
 <span class="sd">        :param \\*args: positional arguments to pass to self.state.draw</span>
@@ -706,7 +753,9 @@
             <span class="n">subsample_edges</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span>
             <span class="n">edge_pen_width</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">ep</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">],</span>
             <span class="n">vertex_color</span><span class="o">=</span><span class="n">colmap</span><span class="p">,</span>
-            <span class="n">vertex_fill_color</span><span class="o">=</span><span class="n">colmap</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div></div>
+            <span class="n">vertex_fill_color</span><span class="o">=</span><span class="n">colmap</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+</div>
+
 </pre></div>
 
            </div>

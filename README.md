@@ -87,6 +87,13 @@ If a *graph.xml.gz* file is found in the current dir the analysis will be perfor
 python3 tests/run_tests.py
 ```
 
+# Caveats
+
+Please check this stuff in your data:
+- there should be no zero-degree nodes (all nodes should have at least one link)
+- there shouldn't be any duplicate node
+- The `make_form_BoW_df` function discretises the data
+
 # Documentation
 
 [Docs](https://fvalle1.github.io/nsbm/)

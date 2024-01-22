@@ -22,6 +22,15 @@ with **multiple layers** of information.
 
 Run multi-partite topic models.
 
+Caveats
+------------
+
+Please check this stuff in your data:
+
+- there should be no zero-degree nodes (all nodes should have at least one link)
+- there shouldn't be any duplicate node
+- The `make_form_BoW_df` function discretises the data
+
 nsbm module
 ==================
 
