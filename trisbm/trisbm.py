@@ -427,6 +427,8 @@ class trisbm(sbmtm):
 
         T = len(list_topics)
         df = pd.DataFrame(columns=list_columns, index=range(W))
+        if format == 'pandas':
+            to_return = {}
 
         for t in list_topics:
             list_w = [h[0] for h in dict_topics[t]]
@@ -445,6 +447,8 @@ class trisbm(sbmtm):
             fname_save = 'trisbm_level_%s_topics.tsv' % (l)
             filename = os.path.join(path_save, fname_save)
             df.to_csv(filename, index=False, na_rep='', sep='\t')
+        elif format == 'pandas':
+            to_return.update({'trisbm_level_%s_topics' % (l): df.copy()})
         else:
             pass
 
@@ -466,6 +470,8 @@ class trisbm(sbmtm):
             fname_save = 'trisbm_level_%s_topic-dist.html' % (l)
             filename = os.path.join(path_save, fname_save)
             df.to_html(filename, index=False, na_rep='')
+        elif format == 'pandas':
+            to_return.update({'trisbm_level_%s_topic-dist' % (l): df.copy()})
         else:
             pass
 
@@ -496,6 +502,8 @@ class trisbm(sbmtm):
                 fname_save = 'trisbm_level_%s_kind_%s_metadata.tsv' % (l, ik)
                 filename = os.path.join(path_save, fname_save)
                 df.to_csv(filename, index=False, na_rep='', sep='\t')
+            elif format == 'pandas':
+                to_return.update({'trisbm_level_%s_kind_%s_metadata' % (l, ik): df.copy()})
             else:
                 pass
 
@@ -519,6 +527,8 @@ class trisbm(sbmtm):
                     l, ik)
                 filename = os.path.join(path_save, fname_save)
                 df.to_html(filename, index=False, na_rep='')
+            elif format == 'pandas':
+                to_return.update({'trisbm_level_%s_kind_%s_metadatum-dist' % (l, ik): df.copy()})
             else:
                 pass
 
@@ -545,6 +555,8 @@ class trisbm(sbmtm):
             fname_save = 'trisbm_level_%s_clusters.html' % (l)
             filename = os.path.join(path_save, fname_save)
             df.to_html(filename, index=False, na_rep='')
+        elif format == 'pandas':
+            to_return.update({'trisbm_level_%s_clusters' % (l): df.copy()})
         else:
             pass
 
@@ -567,6 +579,8 @@ class trisbm(sbmtm):
             fname_save = "trisbm_level_%d_word-dist.html" % l
             filename = os.path.join(path_save, fname_save)
             pwtw_df.to_html(filename, index=True, na_rep='')
+        elif format == 'pandas':
+            to_return.update({'trisbm_level_%d_word-dist' % (l): pwtw_df.copy()})
         else:
             pass
 
@@ -592,8 +606,13 @@ class trisbm(sbmtm):
                     l, ik)
                 filename = os.path.join(path_save, fname_save)
                 pw_key_tk_df.to_html(filename, index=True, na_rep='')
+            elif format == 'pandas':
+                to_return.update({'trisbm_level_%d_kind_%s_keyword-dist' % (l, ik): pw_key_tk_df.copy()})
             else:
                 pass
+            
+            if format == 'pandas':
+                return to_return
 
     def draw(self, *args, **kwargs) -> None:
         """
