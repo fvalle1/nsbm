@@ -1007,5 +1007,5 @@ class sbmtm():
                 "summary": ro.StrVector([self.print_summary(tofile=False)])
             })
           
-        ro.r.assign("r_data_df", r_data)
-        ro.r("save(r_data_df, file='{}')".format("topsbm_data.RData"))
+        ro.r.assign("topsbm_results", r_data)
+        ro.r("save(topsbm_results, file='{}')".format("topsbm_data.RData"))

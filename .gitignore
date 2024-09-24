@@ -16,3 +16,4 @@ trisbm.egg-info
 *.tar
 .vscode/
 .cache/*
+*.RData
