@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>trisbm.sbmtm &mdash; trisbm 0.5.1 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=b9afe91b"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" /> 
@@ -24,11 +27,15 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> trisbm
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            trisbm
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
@@ -45,7 +52,7 @@
 </ul>
 <p class="caption" role="heading"><span class="caption-text">Examples</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tutorial.html">Tutorial</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">License</span></p>
 <ul>
@@ -66,9 +73,9 @@
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Module code</a> &raquo;</li>
-      <li>trisbm.sbmtm</li>
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">trisbm.sbmtm</li>
       <li class="wy-breadcrumbs-aside">
       </li>
   </ul>
@@ -114,8 +121,10 @@
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
 
-<div class="viewcode-block" id="sbmtm"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm">[docs]</a><span class="k">class</span> <span class="nc">sbmtm</span><span class="p">():</span>
-    <span class="sd">&#39;&#39;&#39;</span>
+<div class="viewcode-block" id="sbmtm">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm">[docs]</a>
+<span class="k">class</span> <span class="nc">sbmtm</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">    Class for topic-modeling with sbm&#39;s.</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
@@ -130,8 +139,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">mdl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>  <span class="c1"># minimum description length of inferred state</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">L</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>  <span class="c1"># number of levels in hierarchy</span>
 
-<div class="viewcode-block" id="sbmtm.make_graph"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.make_graph">[docs]</a>    <span class="k">def</span> <span class="nf">make_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_texts</span><span class="p">,</span> <span class="n">documents</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">counts</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_min</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+<div class="viewcode-block" id="sbmtm.make_graph">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.make_graph">[docs]</a>
+    <span class="k">def</span> <span class="nf">make_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">list_texts</span><span class="p">,</span> <span class="n">documents</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">counts</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_min</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Load a corpus and generate the word-document network</span>
 
 <span class="sd">        optional arguments:</span>
@@ -211,8 +222,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">documents</span> <span class="o">=</span> <span class="p">[</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">v</span><span class="p">]</span>
                           <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="p">()</span> <span class="k">if</span> <span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">][</span><span class="n">v</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="sbmtm.make_graph_from_BoW_df"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.make_graph_from_BoW_df">[docs]</a>    <span class="k">def</span> <span class="nf">make_graph_from_BoW_df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">counts</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_min</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="sbmtm.make_graph_from_BoW_df">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.make_graph_from_BoW_df">[docs]</a>
+    <span class="k">def</span> <span class="nf">make_graph_from_BoW_df</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">,</span> <span class="n">counts</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">n_min</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Load a graph from a Bag of Words DataFrame</span>
 
 <span class="sd">        :param df: DataFrame should be a DataFrame with where df.index is a list of words and df.columns a list of documents</span>
@@ -299,15 +313,21 @@
                           <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="p">()</span> <span class="k">if</span> <span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">][</span><span class="n">v</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
         <span class="k">return</span> <span class="bp">self</span></div>
 
-<div class="viewcode-block" id="sbmtm.save_graph"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.save_graph">[docs]</a>    <span class="k">def</span> <span class="nf">save_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;graph.gt.gz&#39;</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="sbmtm.save_graph">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.save_graph">[docs]</a>
+    <span class="k">def</span> <span class="nf">save_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;graph.gt.gz&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Save the word-document network generated by make_graph() as filename.</span>
 <span class="sd">        Allows for loading the graph without calling make_graph().</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="sbmtm.load_graph"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.load_graph">[docs]</a>    <span class="k">def</span> <span class="nf">load_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;graph.gt.gz&#39;</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="sbmtm.load_graph">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.load_graph">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;graph.gt.gz&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Load a word-document network generated by make_graph() and saved with save_graph().</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="o">=</span> <span class="n">gt</span><span class="o">.</span><span class="n">load_graph</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
@@ -316,11 +336,17 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">documents</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">][</span><span class="n">v</span><span class="p">]</span>
                           <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vertices</span><span class="p">()</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">][</span><span class="n">v</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span></div>
 
-<div class="viewcode-block" id="sbmtm.dump_model"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.dump_model">[docs]</a>    <span class="k">def</span> <span class="nf">dump_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;topsbm.pkl&quot;</span><span class="p">):</span>
+
+<div class="viewcode-block" id="sbmtm.dump_model">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.dump_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">dump_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;topsbm.pkl&quot;</span><span class="p">):</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="sbmtm.load_model"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.load_model">[docs]</a>    <span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;topsbm.pkl&quot;</span><span class="p">):</span>
+
+<div class="viewcode-block" id="sbmtm.load_model">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.load_model">[docs]</a>
+    <span class="k">def</span> <span class="nf">load_model</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;topsbm.pkl&quot;</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">g</span>
         <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">words</span>
@@ -333,7 +359,10 @@
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="bp">self</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="sbmtm.fit"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span>
+
+<div class="viewcode-block" id="sbmtm.fit">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.fit">[docs]</a>
+    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">overlap</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="n">hierarchical</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -342,7 +371,7 @@
             <span class="n">n_init</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
             <span class="n">parallel</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
             <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Fit the sbm to the word-document network.</span>
 
 <span class="sd">        :param overlap: bool (default: False). Overlapping or Non-overlapping groups. Overlapping implemented in fit_overlap</span>
@@ -407,7 +436,10 @@
                     <span class="n">dict_groups_L</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">dict_groups_l</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="n">dict_groups_L</span></div>
 
-<div class="viewcode-block" id="sbmtm.fit_overlap"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.fit_overlap">[docs]</a>    <span class="k">def</span> <span class="nf">fit_overlap</span><span class="p">(</span>
+
+<div class="viewcode-block" id="sbmtm.fit_overlap">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.fit_overlap">[docs]</a>
+    <span class="k">def</span> <span class="nf">fit_overlap</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">n_init</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
             <span class="n">hierarchical</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
@@ -415,7 +447,7 @@
             <span class="n">B_max</span><span class="o">=</span><span class="mi">160</span><span class="p">,</span>
             <span class="n">parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
             <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Fit the sbm to the word-document network.</span>
 
 <span class="sd">        :param hierarchical: bool (default: True). Hierarchical SBM or Flat SBM. Flat SBM not implemented yet.</span>
@@ -465,13 +497,14 @@
                 <span class="n">dict_groups_L</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">dict_groups_l</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="n">dict_groups_L</span></div>
 
+
     <span class="k">def</span> <span class="nf">multiflip_mcmc_sweep</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">n_steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
             <span class="n">beta</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
             <span class="n">niter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
             <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Fit the sbm to the word-document network. Use multtiplip_mcmc_sweep</span>
 <span class="sd">        - n_steps, int (default:1): number of steps.</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -518,13 +551,15 @@
                 <span class="n">dict_groups_L</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">dict_groups_l</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="n">dict_groups_L</span>
 
-<div class="viewcode-block" id="sbmtm.multiflip_mcmc_sweep"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.multiflip_mcmc_sweep">[docs]</a>    <span class="k">def</span> <span class="nf">multiflip_mcmc_sweep</span><span class="p">(</span>
+<div class="viewcode-block" id="sbmtm.multiflip_mcmc_sweep">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.multiflip_mcmc_sweep">[docs]</a>
+    <span class="k">def</span> <span class="nf">multiflip_mcmc_sweep</span><span class="p">(</span>
             <span class="bp">self</span><span class="p">,</span>
             <span class="n">n_steps</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
             <span class="n">beta</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span>
             <span class="n">niter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
             <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Fit the sbm to the word-document network. Use multtiplip_mcmc_sweep</span>
 <span class="sd">        </span>
 <span class="sd">        :param n_steps: int (default:1): number of steps.</span>
@@ -572,8 +607,11 @@
                 <span class="n">dict_groups_L</span><span class="p">[</span><span class="n">l</span><span class="p">]</span> <span class="o">=</span> <span class="n">dict_groups_l</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">groups</span> <span class="o">=</span> <span class="n">dict_groups_L</span></div>
 
-<div class="viewcode-block" id="sbmtm.plot"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nedges</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="sbmtm.plot">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.plot">[docs]</a>
+    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">nedges</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Plot the graph and group structure.</span>
 <span class="sd">        </span>
 <span class="sd">        :param filename: str; where to save the plot. if None, will not be saved</span>
@@ -582,8 +620,11 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">layout</span><span class="o">=</span><span class="s1">&#39;bipartite&#39;</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span>
                         <span class="n">subsample_edges</span><span class="o">=</span><span class="n">nedges</span><span class="p">,</span> <span class="n">hshortcuts</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">hide</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="sbmtm.print_summary"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.print_summary">[docs]</a>    <span class="k">def</span> <span class="nf">print_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tofile</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="sbmtm.print_summary">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.print_summary">[docs]</a>
+    <span class="k">def</span> <span class="nf">print_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tofile</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Print hierarchy summary</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">if</span> <span class="n">tofile</span><span class="p">:</span>
@@ -596,8 +637,11 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">print_summary</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="sbmtm.topics"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.topics">[docs]</a>    <span class="k">def</span> <span class="nf">topics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="sbmtm.topics">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.topics">[docs]</a>
+    <span class="k">def</span> <span class="nf">topics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        get the n most common words for each word-group in level l.</span>
 <span class="sd">        return tuples (word,P(w|tw))</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -621,7 +665,10 @@
             <span class="n">dict_group_words</span><span class="p">[</span><span class="n">tw</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_words_tw</span>
         <span class="k">return</span> <span class="n">dict_group_words</span></div>
 
-<div class="viewcode-block" id="sbmtm.topicdist"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.topicdist">[docs]</a>    <span class="k">def</span> <span class="nf">topicdist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_index</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+
+<div class="viewcode-block" id="sbmtm.topicdist">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.topicdist">[docs]</a>
+    <span class="k">def</span> <span class="nf">topicdist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_index</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="n">dict_groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_groups</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
         <span class="n">p_tw_d</span> <span class="o">=</span> <span class="n">dict_groups</span><span class="p">[</span><span class="s1">&#39;p_tw_d&#39;</span><span class="p">]</span>
         <span class="n">list_topics_tw</span> <span class="o">=</span> <span class="p">[]</span>
@@ -629,8 +676,11 @@
             <span class="n">list_topics_tw</span> <span class="o">+=</span> <span class="p">[(</span><span class="n">tw</span><span class="p">,</span> <span class="n">p_tw</span><span class="p">)]</span>
         <span class="k">return</span> <span class="n">list_topics_tw</span></div>
 
-<div class="viewcode-block" id="sbmtm.clusters"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.clusters">[docs]</a>    <span class="k">def</span> <span class="nf">clusters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="sbmtm.clusters">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.clusters">[docs]</a>
+    <span class="k">def</span> <span class="nf">clusters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Get n &#39;most common&#39; documents from each document cluster.</span>
 <span class="sd">        most common refers to largest contribution in group membership vector.</span>
 <span class="sd">        For the non-overlapping case, each document belongs to one and only one group with prob 1.</span>
@@ -655,8 +705,11 @@
             <span class="n">dict_group_docs</span><span class="p">[</span><span class="n">td</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_docs_td</span>
         <span class="k">return</span> <span class="n">dict_group_docs</span></div>
 
-<div class="viewcode-block" id="sbmtm.clusters_query"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.clusters_query">[docs]</a>    <span class="k">def</span> <span class="nf">clusters_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_index</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="sbmtm.clusters_query">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.clusters_query">[docs]</a>
+    <span class="k">def</span> <span class="nf">clusters_query</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc_index</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Get all documents in the same group as the query-document.</span>
 <span class="sd">        Note: Works only for non-overlapping model.</span>
 <span class="sd">        For overlapping case, we need something else.</span>
@@ -680,8 +733,11 @@
 
         <span class="k">return</span> <span class="n">list_doc_query</span></div>
 
-<div class="viewcode-block" id="sbmtm.group_membership"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.group_membership">[docs]</a>    <span class="k">def</span> <span class="nf">group_membership</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="sbmtm.group_membership">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.group_membership">[docs]</a>
+    <span class="k">def</span> <span class="nf">group_membership</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Return the group-membership vectors for</span>
 <span class="sd">            - document-nodes, p_td_d, array with shape Bd x D</span>
 <span class="sd">            - word-nodes, p_tw_w, array with shape Bw x V</span>
@@ -693,8 +749,11 @@
         <span class="n">p_td_d</span> <span class="o">=</span> <span class="n">dict_groups</span><span class="p">[</span><span class="s1">&#39;p_td_d&#39;</span><span class="p">]</span>
         <span class="k">return</span> <span class="n">p_td_d</span><span class="p">,</span> <span class="n">p_tw_w</span></div>
 
-<div class="viewcode-block" id="sbmtm.print_topics"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.print_topics">[docs]</a>    <span class="k">def</span> <span class="nf">print_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">,</span> <span class="n">path_save</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="sbmtm.print_topics">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.print_topics">[docs]</a>
+    <span class="k">def</span> <span class="nf">print_topics</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;csv&#39;</span><span class="p">,</span> <span class="n">path_save</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        Print topics, topic-distributions, and document clusters for a given level in the hierarchy.</span>
 <span class="sd">        </span>
 <span class="sd">        :param format: csv (default) or html</span>
@@ -798,15 +857,21 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">pass</span></div>
 
+
     <span class="c1">###########</span>
     <span class="c1"># HELPER FUNCTIONS</span>
     <span class="c1">###########</span>
-<div class="viewcode-block" id="sbmtm.get_mdl"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.get_mdl">[docs]</a>    <span class="k">def</span> <span class="nf">get_mdl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="sbmtm.get_mdl">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.get_mdl">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_mdl</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">mdl</span></div>
 
+
     <span class="c1"># get group-topic statistics</span>
-<div class="viewcode-block" id="sbmtm.get_groups"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.get_groups">[docs]</a>    <span class="k">def</span> <span class="nf">get_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+<div class="viewcode-block" id="sbmtm.get_groups">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.get_groups">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_groups</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        extract statistics on group membership of nodes form the inferred state.</span>
 <span class="sd">        </span>
 <span class="sd">        :param B_d: int, number of doc-groups</span>
@@ -895,7 +960,10 @@
 
         <span class="k">return</span> <span class="n">result</span></div>
 
-<div class="viewcode-block" id="sbmtm.search_consensus"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.search_consensus">[docs]</a>    <span class="k">def</span> <span class="nf">search_consensus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_niter</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span> <span class="n">niter</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+
+<div class="viewcode-block" id="sbmtm.search_consensus">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.search_consensus">[docs]</a>
+    <span class="k">def</span> <span class="nf">search_consensus</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">force_niter</span><span class="o">=</span><span class="mi">100000</span><span class="p">,</span> <span class="n">niter</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
         <span class="c1"># collect nested partitions</span>
         <span class="n">bs</span> <span class="o">=</span> <span class="p">[]</span>
 
@@ -920,27 +988,39 @@
 
         <span class="k">return</span> <span class="n">pv</span></div>
 
+
     <span class="c1"># helper functions</span>
 
-<div class="viewcode-block" id="sbmtm.get_V"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.get_V">[docs]</a>    <span class="k">def</span> <span class="nf">get_V</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+<div class="viewcode-block" id="sbmtm.get_V">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.get_V">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_V</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        :return: number of word-nodes == types</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">a</span> <span class="o">==</span> <span class="mi">1</span><span class="p">))</span>  <span class="c1"># no. of types</span></div>
 
-<div class="viewcode-block" id="sbmtm.get_D"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.get_D">[docs]</a>    <span class="k">def</span> <span class="nf">get_D</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="sbmtm.get_D">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.get_D">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_D</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        :return: number of doc-nodes == number of documents</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">vp</span><span class="p">[</span><span class="s1">&#39;kind&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">a</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>  <span class="c1"># no. of types</span></div>
 
-<div class="viewcode-block" id="sbmtm.get_N"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.get_N">[docs]</a>    <span class="k">def</span> <span class="nf">get_N</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;</span>
+
+<div class="viewcode-block" id="sbmtm.get_N">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.get_N">[docs]</a>
+    <span class="k">def</span> <span class="nf">get_N</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">        :return: number of edges == tokens</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">.</span><span class="n">num_edges</span><span class="p">())</span>  <span class="c1"># no. of types</span></div>
 
-<div class="viewcode-block" id="sbmtm.group_to_group_mixture"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.group_to_group_mixture">[docs]</a>    <span class="k">def</span> <span class="nf">group_to_group_mixture</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+
+<div class="viewcode-block" id="sbmtm.group_to_group_mixture">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.group_to_group_mixture">[docs]</a>
+    <span class="k">def</span> <span class="nf">group_to_group_mixture</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">norm</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="n">V</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_V</span><span class="p">()</span>
         <span class="n">D</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_D</span><span class="p">()</span>
         <span class="n">N</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_N</span><span class="p">()</span>
@@ -974,7 +1054,10 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">n_td_tw</span></div>
 
-<div class="viewcode-block" id="sbmtm.plot_topic_dist"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.plot_topic_dist">[docs]</a>    <span class="k">def</span> <span class="nf">plot_topic_dist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>
+
+<div class="viewcode-block" id="sbmtm.plot_topic_dist">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.plot_topic_dist">[docs]</a>
+    <span class="k">def</span> <span class="nf">plot_topic_dist</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>
         <span class="n">groups</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_groups</span><span class="p">(</span><span class="n">l</span><span class="p">)</span>
         <span class="n">p_w_tw</span> <span class="o">=</span> <span class="n">groups</span><span class="p">[</span><span class="s1">&#39;p_w_tw&#39;</span><span class="p">]</span>
         <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
@@ -993,7 +1076,10 @@
         <span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;p_tw_d_</span><span class="si">%d</span><span class="s2">.png&quot;</span> <span class="o">%</span> <span class="n">l</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="sbmtm.save_data"><a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.save_data">[docs]</a>    <span class="k">def</span> <span class="nf">save_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+<div class="viewcode-block" id="sbmtm.save_data">
+<a class="viewcode-back" href="../../sbmtm.html#trisbm.trisbm.sbmtm.save_data">[docs]</a>
+    <span class="k">def</span> <span class="nf">save_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">get_levels</span><span class="p">())</span> <span class="o">-</span> <span class="mi">2</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
             <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Saving level </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">print_topics</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="n">i</span><span class="p">)</span>
@@ -1002,7 +1088,9 @@
             <span class="n">e</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">get_levels</span><span class="p">()[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">get_matrix</span><span class="p">()</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">matshow</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">todense</span><span class="p">())</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s2">&quot;mat_</span><span class="si">%d</span><span class="s2">.png&quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">print_summary</span><span class="p">()</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print_summary</span><span class="p">()</span></div>
+</div>
+
 </pre></div>
 
            </div>

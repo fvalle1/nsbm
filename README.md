@@ -3,7 +3,6 @@
 [![Python package](https://github.com/fvalle1/trisbm/actions/workflows/python-package.yml/badge.svg)](https://github.com/fvalle1/trisbm/actions/workflows/python-package.yml)
 [![Conda test](https://github.com/fvalle1/nsbm/actions/workflows/miniconda.yml/badge.svg)](https://github.com/fvalle1/nsbm/actions/workflows/miniconda.yml)
 [![Docker](https://github.com/fvalle1/trisbm/actions/workflows/docker.yml/badge.svg)](https://github.com/fvalle1/trisbm/actions/workflows/docker.yml)
-[![conda](https://anaconda.org/conda-forge/nsbm/badges/installer/conda.svg)](https://anaconda.org/conda-forge/nsbm)
 [![GPL](https://anaconda.org/conda-forge/nsbm/badges/license.svg
 )](LICENSE)
 
@@ -87,6 +86,13 @@ If a *graph.xml.gz* file is found in the current dir the analysis will be perfor
 ```bash
 python3 tests/run_tests.py
 ```
+
+# Caveats
+
+Please check this stuff in your data:
+- there should be no zero-degree nodes (all nodes should have at least one link)
+- there shouldn't be any duplicate node
+- The `make_form_BoW_df` function discretises the data
 
 # Documentation
 
