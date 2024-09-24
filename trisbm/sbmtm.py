@@ -621,7 +621,7 @@ class sbmtm():
         p_td_d = dict_groups['p_td_d']
         return p_td_d, p_tw_w
 
-    def print_topics(self, l=0, format='csv', path_save='')->dict|None:
+    def print_topics(self, l=0, format='csv', path_save=''):
         '''
         Print topics, topic-distributions, and document clusters for a given level in the hierarchy.
 
