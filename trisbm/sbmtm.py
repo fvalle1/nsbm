@@ -621,7 +621,7 @@ class sbmtm():
         p_td_d = dict_groups['p_td_d']
         return p_td_d, p_tw_w
 
-    def print_topics(self, l=0, format='csv', path_save=''):
+    def print_topics(self, l=0, format='csv', path_save='')->dict|None:
         '''
         Print topics, topic-distributions, and document clusters for a given level in the hierarchy.
 
@@ -970,3 +970,42 @@ class sbmtm():
                 pickle.dump(data, f)
         
         return data
+    
+    def save_rdata(self):
+        import rpy2.robjects as ro
+        import rpy2.robjects.packages as rpackages
+        from rpy2.robjects import r
+        from rpy2.robjects.conversion import localconverter
+        from rpy2.robjects import pandas2ri, numpy2ri
+
+        # Ensure the 'base' package is loaded
+        rpackages.importr('base')
+        pandas2ri.activate()
+        numpy2ri.activate()
+        
+        def process_topic_df(df):
+            for col in df.columns:
+                if df[col].dtype == 'object':
+                    try:
+                        df[col] = df[col].astype(float)
+                    except ValueError:
+                        df[col] = df[col].astype(str)
+            return ro.conversion.py2rpy(df)
+
+        # Convert Python data to R objects
+        with localconverter(ro.default_converter + pandas2ri.converter + numpy2ri.converter):
+            r_data = ro.ListVector({
+                "words": ro.StrVector(self.words),
+                "documents": ro.StrVector(self.documents),
+                "mdl": ro.FloatVector([self.mdl]),  # Wrap the float in a list
+                "levels": ro.ListVector([
+                    (l, ro.ListVector({
+                        "topics": ro.ListVector({k:process_topic_df(v) for k,v in self.print_topics(l=l, format='pandas').items()}),
+                        "block_matrix": ro.conversion.py2rpy(self.state.get_levels()[l].get_matrix().toarray())
+                    })) for l in range(len(self.state.get_levels()) - 2)
+                ]),
+                "summary": ro.StrVector([self.print_summary(tofile=False)])
+            })
+          
+        ro.r.assign("r_data_df", r_data)
+        ro.r("save(r_data_df, file='{}')".format("topsbm_data.RData"))
