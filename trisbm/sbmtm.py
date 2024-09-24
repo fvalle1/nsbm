@@ -992,19 +992,24 @@ class sbmtm():
                         df[col] = df[col].astype(str)
             return ro.conversion.py2rpy(df)
 
+        def parse_summary(text):
+            summary = text.split("\n")[:-1]
+            summary = [{v.split(":")[0]:int(v.split(":")[1]) for v in s.split(",")} for s in summary]
+            return ro.ListVector(summary)
+
         # Convert Python data to R objects
         with localconverter(ro.default_converter + pandas2ri.converter + numpy2ri.converter):
             r_data = ro.ListVector({
                 "words": ro.StrVector(self.words),
                 "documents": ro.StrVector(self.documents),
-                "mdl": ro.FloatVector([self.mdl]),  # Wrap the float in a list
+                "minimum_description_length": ro.FloatVector([self.mdl]),  # Wrap the float in a list
                 "levels": ro.ListVector([
                     (l, ro.ListVector({
                         "topics": ro.ListVector({k:process_topic_df(v) for k,v in self.print_topics(l=l, format='pandas').items()}),
                         "block_matrix": ro.conversion.py2rpy(self.state.get_levels()[l].get_matrix().toarray())
                     })) for l in range(len(self.state.get_levels()) - 2)
                 ]),
-                "summary": ro.StrVector([self.print_summary(tofile=False)])
+                "summary": parse_summary(self.print_summary(tofile=False))
             })
           
         ro.r.assign("topsbm_results", r_data)

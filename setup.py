@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="trisbm",
-    version="0.7.2",
+    version="0.7.3",
     author="Filippo Valle",
     author_email="filippo.valle@unito.it",
     description="Package to run nSBM model.",
