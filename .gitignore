@@ -15,5 +15,12 @@ trisbm.egg-info
 .DS_Store
 *.tar
 .vscode/
+.vscode-server/
+.local/
+.dotnet/
+.ipython/
+.jupyter/
+.npm/
+.ssh/
 .cache/*
 *.RData
