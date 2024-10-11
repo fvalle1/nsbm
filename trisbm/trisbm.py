@@ -103,7 +103,7 @@ class trisbm(sbmtm):
         self.g = gt.Graph(directed=False)
         name = self.g.vp["name"] = self.g.new_vp("string")
         kind = self.g.vp["kind"] = self.g.new_vp("int")
-        weight = self.g.ep["count"] = self.g.new_ep("float")
+        weight = self.g.ep["count"] = self.g.new_ep("int")
 
         for doc in df.columns:
             d = self.g.add_vertex()
