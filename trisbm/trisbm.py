@@ -165,6 +165,7 @@ class trisbm(sbmtm):
         best_state = None
         state_args["deg_corr"] = True
         #state_args["overlap"] = overlap
+        sequential = not parallel
 
         if B_max is None:
             B_max = self.g.num_vertices()
