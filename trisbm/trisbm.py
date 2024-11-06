@@ -40,6 +40,7 @@ class trisbm(sbmtm):
         super().__init__()
         self.keywords = []
         self.nbranches = 1
+        fit_params = {}
 
     def save_graph(self, filename="graph.xml.gz") -> None:
         """
@@ -166,6 +167,12 @@ class trisbm(sbmtm):
         state_args["deg_corr"] = True
         #state_args["overlap"] = overlap
         sequential = not parallel
+        self.fit_params ={
+            "n_init": n_init,
+            "overlap": overlap,
+            "B_min": B_min,
+            "B_max": B_max
+        }
 
         if B_max is None:
             B_max = self.g.num_vertices()
@@ -450,6 +457,7 @@ class trisbm(sbmtm):
             df.to_csv(filename, index=False, na_rep='', sep='\t')
         elif format == 'pandas':
             to_return.update({'trisbm_level_%s_topics' % (l): df.copy()})
+            to_return.update({'trisbm_level_%s_topic_sizes' % (l): df.count()})
         else:
             pass
 
@@ -473,6 +481,7 @@ class trisbm(sbmtm):
             df.to_html(filename, index=False, na_rep='')
         elif format == 'pandas':
             to_return.update({'trisbm_level_%s_topic-dist' % (l): df.copy()})
+            to_return.update({'trisbm_level_%s_centered_topic-dist' % (l): df.set_index("doc").drop("i_doc", axis=1).subtract(df.set_index("doc").drop("i_doc", axis=1).mean(axis=0), axis=1)})
         else:
             pass
 
@@ -505,6 +514,7 @@ class trisbm(sbmtm):
                 df.to_csv(filename, index=False, na_rep='', sep='\t')
             elif format == 'pandas':
                 to_return.update({'trisbm_level_%s_kind_%s_metadata' % (l, ik): df.copy()})
+                to_return.update({'trisbm_level_%s_metadata' % (l): df.count()})
             else:
                 pass
 
@@ -530,6 +540,7 @@ class trisbm(sbmtm):
                 df.to_html(filename, index=False, na_rep='')
             elif format == 'pandas':
                 to_return.update({'trisbm_level_%s_kind_%s_metadatum-dist' % (l, ik): df.copy()})
+                to_return.update({'trisbm_level_%s_kind_%s_centered_metadatum-dist' % (l, ik): df.set_index("doc").drop("i_doc", axis=1).subtract(df.set_index("doc").drop("i_doc", axis=1).mean(axis=0), axis=1)})
             else:
                 pass
 
@@ -612,7 +623,14 @@ class trisbm(sbmtm):
             else:
                 pass
             
+            
             if format == 'pandas':
+                #centered clusters
+                df_topics = to_return["trisbm_level_%s_topic-dist" %l]
+                df_clusters = to_return["trisbm_level_%s_clusters" %l]
+                search = lambda doc: df_clusters[df_clusters==doc].dropna(how="all", axis=1).columns[0]
+                df_topics["topic"]=list(map(search,df_topics["doc"]))
+                to_return.update({"trisbm_level_%s_centered_topic-dist"%l: df_topics.set_index("doc").drop("i_doc", axis=1).groupby("topic").mean()})
                 return to_return
 
     def draw(self, *args, **kwargs) -> None:

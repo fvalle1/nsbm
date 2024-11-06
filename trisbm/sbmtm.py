@@ -567,6 +567,8 @@ class sbmtm():
         dict_groups = self.get_groups(l)
         Bd = dict_groups['Bd']
         p_td_d = dict_groups['p_td_d']
+        if n< 0:
+            n = len(p_td_d[0])
 
         docs = self.documents
         # loop over all word-groups
@@ -660,6 +662,7 @@ class sbmtm():
             df.to_csv(filename, index=False, na_rep='', sep='\t')
         elif format == 'pandas':
             to_return.update({'topsbm_level_%s_topics' % (l): df.copy()})
+            to_return.update({'topsbm_level_%s_topic_sizes' % (l): df.count()})
         else:
             pass
         
@@ -951,13 +954,15 @@ class sbmtm():
             "g": self.g,
             "words": list(self.words),
             "documents": list(self.documents),
-            "mdl": self.mdl,
+            "minimum_description_length": self.mdl,
+            "fit_params": self.fit_params
         }
         data.update({
             "levels":
-                [{"topics": self.print_topics(l=l, format='pandas'),
+                [{"results": self.print_topics(l=l, format='pandas'),
                   "block_matrix": self.state.get_levels()[l].get_matrix().todense(),
-                  # "plot_topic_dist": self.plot_topic_dist(l)
+                  "centered_averaged_clusters": [], #average per cluster
+                #   "centered_topics": {k:process_centered_topic_df(v) for k,v in self.print_topics(l=l, format='pandas').items()},
                   }
                  for l in range(len(self.state.get_levels()) - 2)
                  ],
@@ -984,6 +989,8 @@ class sbmtm():
         numpy2ri.activate()
         
         def process_topic_df(df):
+            if type(df) == pd.Series:
+                df = df.to_frame()
             for col in df.columns:
                 if df[col].dtype == 'object':
                     try:
@@ -991,7 +998,8 @@ class sbmtm():
                     except ValueError:
                         df[col] = df[col].astype(str)
             return ro.conversion.py2rpy(df)
-
+        
+            
         def parse_summary(text):
             summary = text.split("\n")[:-1]
             summary = [{v.split(":")[0].replace(" ",""):int(v.split(":")[1]) for v in s.split(",")} for s in summary]
@@ -1004,16 +1012,17 @@ class sbmtm():
         # Convert Python data to R objects
         with localconverter(ro.default_converter + pandas2ri.converter + numpy2ri.converter):
             r_data = ro.ListVector({
-                "words": ro.StrVector(self.words),
-                "documents": ro.StrVector(self.documents),
+                "features": ro.StrVector(self.words),
+                "samples": ro.StrVector(self.documents),
                 "minimum_description_length": ro.FloatVector([self.mdl]),  # Wrap the float in a list
                 "levels": ro.ListVector([
                     (l, ro.ListVector({
-                        "topics": ro.ListVector({k:process_topic_df(v) for k,v in self.print_topics(l=l, format='pandas').items()}),
+                        "results": ro.ListVector({k:process_topic_df(v) for k,v in self.print_topics(l=l, format='pandas').items()}),
                         "block_matrix": ro.conversion.py2rpy(self.state.get_levels()[l].get_matrix().toarray())
                     })) for l in range(len(self.state.get_levels()) - 2)
                 ]),
-                "summary": parse_summary(self.print_summary(tofile=False))
+                "summary": parse_summary(self.print_summary(tofile=False)),
+                "fit_params": ro.ListVector({k:v for k,v in self.fit_params.items() if v is not None})
             })
           
         ro.r.assign("topsbm_results", r_data)
