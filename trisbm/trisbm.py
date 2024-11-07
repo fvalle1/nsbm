@@ -513,8 +513,8 @@ class trisbm(sbmtm):
                 filename = os.path.join(path_save, fname_save)
                 df.to_csv(filename, index=False, na_rep='', sep='\t')
             elif format == 'pandas':
-                to_return.update({'trisbm_level_%s_kind_%s_metadata' % (l, ik): df.copy()})
-                to_return.update({'trisbm_level_%s_metadata' % (l): df.count()})
+                to_return.update({'trisbm_level_%s_kind_%s_topics' % (l, ik): df.copy()})
+                to_return.update({'trisbm_level_%s_kind%s_topic_sizes' % (l, ik): df.count()})
             else:
                 pass
 
@@ -539,8 +539,8 @@ class trisbm(sbmtm):
                 filename = os.path.join(path_save, fname_save)
                 df.to_html(filename, index=False, na_rep='')
             elif format == 'pandas':
-                to_return.update({'trisbm_level_%s_kind_%s_metadatum-dist' % (l, ik): df.copy()})
-                to_return.update({'trisbm_level_%s_kind_%s_centered_metadatum-dist' % (l, ik): df.set_index("doc").drop("i_doc", axis=1).subtract(df.set_index("doc").drop("i_doc", axis=1).mean(axis=0), axis=1)})
+                to_return.update({'trisbm_level_%s_kind_%s_topic-dist' % (l, ik): df.copy()})
+                to_return.update({'trisbm_level_%s_kind_%s_centered_topic-dist' % (l, ik): df.set_index("doc").drop("i_doc", axis=1).subtract(df.set_index("doc").drop("i_doc", axis=1).mean(axis=0), axis=1)})
             else:
                 pass
 
@@ -619,7 +619,7 @@ class trisbm(sbmtm):
                 filename = os.path.join(path_save, fname_save)
                 pw_key_tk_df.to_html(filename, index=True, na_rep='')
             elif format == 'pandas':
-                to_return.update({'trisbm_level_%d_kind_%s_keyword-dist' % (l, ik): pw_key_tk_df.copy()})
+                to_return.update({'trisbm_level_%d_kind_%s_word-dist' % (l, ik): pw_key_tk_df.copy()})
             else:
                 pass
             
@@ -631,6 +631,10 @@ class trisbm(sbmtm):
                 search = lambda doc: df_clusters[df_clusters==doc].dropna(how="all", axis=1).columns[0]
                 df_topics["topic"]=list(map(search,df_topics["doc"]))
                 to_return.update({"trisbm_level_%s_centered_topic-dist"%l: df_topics.set_index("doc").drop("i_doc", axis=1).groupby("topic").mean()})
+                for ik in range(2, 2 + self.nbranches):
+                    df_topics = to_return["trisbm_level_%s_kind_%s_topic-dist" %(l, ik)]
+                    df_topics["topic"]=list(map(search,df_topics["doc"]))
+                    to_return.update({"trisbm_level_%s_kind_%s_centered_topic-dist"%(l, ik): df_topics.set_index("doc").drop("i_doc", axis=1).groupby("topic").mean()})
                 return to_return
 
     def draw(self, *args, **kwargs) -> None:

@@ -999,30 +999,34 @@ class sbmtm():
                         df[col] = df[col].astype(str)
             return ro.conversion.py2rpy(df)
         
+        def parse_possible_none(x):
+            return x if x is not None else ro.NULL
             
         def parse_summary(text):
             summary = text.split("\n")[:-1]
             summary = [{v.split(":")[0].replace(" ",""):int(v.split(":")[1]) for v in s.split(",")} for s in summary]
             return ro.ListVector({
-                "l": ro.IntVector([s["l"] for s in summary]),
-                "B": ro.IntVector([s["B"] for s in summary]),
-                "N": ro.IntVector([s["N"] for s in summary]),
+                "level": ro.IntVector([s["l"] for s in summary]),
+                "number_of_Blocks": ro.IntVector([s["B"] for s in summary]),
+                "number_of_Nodes": ro.IntVector([s["N"] for s in summary]),
+                "features": ro.StrVector(self.words),
+                "samples": ro.StrVector(self.documents),
+                "number_of_branches": parse_possible_none(self.nbranches),
+                "minimum_description_length": ro.FloatVector([self.mdl]),  # Wrap the float in a list
             })
 
+        
         # Convert Python data to R objects
         with localconverter(ro.default_converter + pandas2ri.converter + numpy2ri.converter):
             r_data = ro.ListVector({
-                "features": ro.StrVector(self.words),
-                "samples": ro.StrVector(self.documents),
-                "minimum_description_length": ro.FloatVector([self.mdl]),  # Wrap the float in a list
                 "levels": ro.ListVector([
-                    (l, ro.ListVector({
+                    ("level%d"%l, ro.ListVector({
                         "results": ro.ListVector({k:process_topic_df(v) for k,v in self.print_topics(l=l, format='pandas').items()}),
                         "block_matrix": ro.conversion.py2rpy(self.state.get_levels()[l].get_matrix().toarray())
                     })) for l in range(len(self.state.get_levels()) - 2)
                 ]),
                 "summary": parse_summary(self.print_summary(tofile=False)),
-                "fit_params": ro.ListVector({k:v for k,v in self.fit_params.items() if v is not None})
+                "fit_params": ro.ListVector({k:parse_possible_none(v) for k,v in self.fit_params.items()})
             })
           
         ro.r.assign("topsbm_results", r_data)
