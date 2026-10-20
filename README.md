@@ -3,7 +3,6 @@
 [![Python package](https://github.com/fvalle1/trisbm/actions/workflows/python-package.yml/badge.svg)](https://github.com/fvalle1/trisbm/actions/workflows/python-package.yml)
 [![Conda test](https://github.com/fvalle1/nsbm/actions/workflows/miniconda.yml/badge.svg)](https://github.com/fvalle1/nsbm/actions/workflows/miniconda.yml)
 [![Docker](https://github.com/fvalle1/trisbm/actions/workflows/docker.yml/badge.svg)](https://github.com/fvalle1/trisbm/actions/workflows/docker.yml)
-[![conda](https://anaconda.org/conda-forge/nsbm/badges/installer/conda.svg)](https://anaconda.org/conda-forge/nsbm)
 [![GPL](https://anaconda.org/conda-forge/nsbm/badges/license.svg
 )](LICENSE)
 
@@ -37,17 +36,34 @@ import numpy as np
 
 df = pd.DataFrame(
 index = ["w{}".format(w) for w in range(1000)],
-columns = ["doc{}".format(w) for w in range(250)],
+columns = ["doc{}".format(d) for d in range(250)],
 data = np.random.randint(1, 100, 250000).reshape((1000, 250)))
 
-df_key_list = [
+df_key_list = []
+
+## keywords
+df_key_list.append(
     pd.DataFrame(
-index = ["w{}".format(w) for w in range(100+ik)],
-columns = ["doc{}".format(w) for w in range(250)],
-data = np.random.randint(1, 5+ik, (100+ik)*250).reshape((100+ik, 250)))
+    index = ["keyword{}".format(w) for w in range(100)],
+    columns = ["doc{}".format(d) for d in range(250)],
+    data = np.random.randint(1, 10, (100, 250)))
+)
     
-    for ik in range(3)
-]
+## authors
+df_key_list.append(
+    pd.DataFrame(
+    index = ["author{}".format(w) for w in range(10)],
+    columns = ["doc{}".format(d) for d in range(250)],
+    data = np.random.randint(1, 5, (10, 250)))
+)
+    
+## other features
+df_key_list.append(
+    pd.DataFrame(
+    index = ["feature{}".format(w) for w in range(25)],
+    columns = ["doc{}".format(d) for d in range(250)],
+    data = np.random.randint(1, 5, (25, 250)))
+)
 
 model = nsbm()
 model.make_graph_multiple_df(df, df_key_list)
@@ -70,6 +86,13 @@ If a *graph.xml.gz* file is found in the current dir the analysis will be perfor
 ```bash
 python3 tests/run_tests.py
 ```
+
+# Caveats
+
+Please check this stuff in your data:
+- there should be no zero-degree nodes (all nodes should have at least one link)
+- there shouldn't be any duplicate node
+- The `make_form_BoW_df` function discretises the data
 
 # Documentation
 

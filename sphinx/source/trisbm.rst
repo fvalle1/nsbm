@@ -1,4 +1,4 @@
-triSBM
+nsbm
 ======================
 
 .. automodule:: trisbm.trisbm    
