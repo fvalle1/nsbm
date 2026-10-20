@@ -134,8 +134,8 @@ class trisbm(sbmtm):
         :param deg_corr: use deg corrected model
         :param overlap: use overlapping model
         :param parallel: perform parallel moves
-        :param  \*args: positional arguments to pass to gt.minimize_nested_blockmodel_dl
-        :param  \*\*kwargs: keywords arguments to pass to gt.minimize_nested_blockmodel_dl
+        :param *args: positional arguments to pass to gt.minimize_nested_blockmodel_dl
+        :param **kwargs: keywords arguments to pass to gt.minimize_nested_blockmodel_dl
         """
         
         sequential = not parallel
@@ -538,8 +538,8 @@ class trisbm(sbmtm):
         """
         Draw the network
 
-        :param \*args: positional arguments to pass to self.state.draw
-        :param \*\*kwargs: keyword argument to pass to self.state.draw
+        :param *args: positional arguments to pass to self.state.draw
+        :param **kwargs: keyword argument to pass to self.state.draw
         """
         colmap = self.g.vertex_properties["color"] = self.g.new_vertex_property(
             "vector<double>")
